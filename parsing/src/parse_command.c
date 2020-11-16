@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 18:04:47 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/16 18:43:41 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,6 @@ char **parse_command(char** str,t_envp *envp)
 		while (**str == ' ')
 			(*str)++;
 	}
+	args[i] = 0;
 	return (args);
 }
