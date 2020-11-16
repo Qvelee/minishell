@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 19:56:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/16 20:29:03 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,11 @@ int	main(int argc, char **argv, char **envp)
 		write(1, RESET, 5);
 		str = read_line(term);
 		temp = str;
-		//printf("Your commands are:\n");
 		while (*str && *str != '\n')
 		{
 			command = parse_command(&str, _envp);
 			do_command(command, &_envp, term);
 			str++;
-			/*printf("Your arguments are: {");
-			while (*command)
-				printf("[%s] ",*command++);
-			str++;
-			printf("}\n");*/
 		}
 		free(temp);
 	}
