@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 18:07:34 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/16 19:27:22 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int	main(int argc, char **argv, char **envp)
 	set_terminal_mode(term);
 	while (1)
 	{
+		write(1, GREEN, 5);
+		write(1,"minishell: ", 12);
+		write(1, RESET, 5);
 		str = read_line(term);
 		temp = str;
 		//printf("Your commands are:\n");
