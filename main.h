@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 18:03:37 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/16 19:58:08 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <errno.h>
-
+# include <termios.h>
 // delete this!
 #include <stdio.h>
 
@@ -29,6 +29,7 @@
 **	Utils headers.
 */
 
+typedef struct termios t_term;
 
 typedef struct	s_envp
 {
@@ -37,10 +38,10 @@ typedef struct	s_envp
 	struct s_envp	*next;
 }				t_envp;
 
-int		do_command(char **args, t_envp **envp_list);
+int		do_command(char **args, t_envp **envp_list, struct termios term);
 t_envp	*envp_create_list(char **_envp);
 void	envp_lst_clear(t_envp **envp_list, void (*delete)(void*));
-
+int		remove_terminal_mode(struct termios term);
 void	free_matrix(char **memory);
 void	exit_minishell(int code, char **args, t_envp **envp_list);
 char	*envp_get_var_value(t_envp *envp_list, char *variable);
