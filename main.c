@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 19:27:22 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/16 19:41:23 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	t_envp *_envp;
 
 	_envp = envp_create_list(envp);
-	set_terminal_mode(term);
+	//set_terminal_mode(term);
 	while (1)
 	{
 		write(1, GREEN, 5);
@@ -51,6 +51,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(temp);
 	}
-	remove_terminal_mode(term);
+	//remove_terminal_mode(term);
 	return (0);
 }
