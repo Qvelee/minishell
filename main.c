@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 20:29:03 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/17 20:08:38 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 		write(1, GREEN, 5);
 		write(1,"minishell: ", 12);
 		write(1, RESET, 5);
-		str = read_line(term);
+		str = read_line(term,_envp);
 		temp = str;
 		while (*str && *str != '\n')
 		{

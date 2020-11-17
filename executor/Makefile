@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/11/16 18:12:56 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/11/17 19:58:53 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,9 +66,9 @@ D_FILES = $(patsubst %.o, %.d, $(MAIN_OBJ)) $(patsubst %.o, %.d, $(EXEC_OBJ)) $(
 
 ###
 
-all: crtmpdirs $(NAME)
+all: $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR) $(NAME)
 
-crtmpdirs:
+$(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR):
 	mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
 
 $(NAME): $(MAIN_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
