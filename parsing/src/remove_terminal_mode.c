@@ -6,11 +6,13 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:50:48 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/13 13:05:57 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/17 22:42:12 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <termios.h>
+#include "parse.h"
+#include <term.h>
 
 int	remove_terminal_mode(struct termios term)
 {
@@ -22,5 +24,6 @@ int	remove_terminal_mode(struct termios term)
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return (-1);
+	tputs(tgetstr("ei",0),1,&ft_putchar);
 	return (1);
 }

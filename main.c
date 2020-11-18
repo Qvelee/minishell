@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/17 20:08:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 01:03:35 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,41 @@
 #include <termios.h>
 #include "parse.h"
 #include "main.h"
+#include "libft.h"
+#include "signal.h"
 
-int	main(int argc, char **argv, char **envp)
+void ft_nothing(int __attribute__ ((unused))sig)
 {
-	argc = argc;
-	argv = argv;
+	write (1,&(char){10},1);
+	write(1, GREEN, 5);
+	write(1,"minishell: ", 12);
+	write(1, RESET, 5);
+}
+
+int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, char **envp)
+{
 	struct termios term;
 	char *str;
 	char **command;
 	char *temp;
+	char *term_name;
 	t_envp *_envp;
+	char **my_exit;
 
+	signal(SIGINT,ft_nothing);
+	my_exit = malloc(2*sizeof(char*));
+	my_exit[0] = ft_strdup("exit");
+	my_exit[1] = 0;
 	_envp = envp_create_list(envp);
-	set_terminal_mode(term);
-	while (1)
+	term_name = envp_get_var_value(_envp,"TERM");
+	set_terminal_mode(term,term_name);
+	str = "NE 4";
+	write(1, GREEN, 5);
+	write(1,"minishell: ", 12);
+	write(1, RESET, 5);
+	str = read_line(term,_envp);
+	while (str && *str && *str != 4)
 	{
-		write(1, GREEN, 5);
-		write(1,"minishell: ", 12);
-		write(1, RESET, 5);
-		str = read_line(term,_envp);
 		temp = str;
 		while (*str && *str != '\n')
 		{
@@ -44,7 +60,11 @@ int	main(int argc, char **argv, char **envp)
 			str++;
 		}
 		free(temp);
+		write(1, GREEN, 5);
+		write(1,"minishell: ", 12);
+		write(1, RESET, 5);
+		str = read_line(term,_envp);
 	}
-
+	do_command((char*[2]){"exit", 0}, &_envp,term);
 	return (0);
 }

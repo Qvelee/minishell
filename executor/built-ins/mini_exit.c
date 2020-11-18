@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:32:15 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 19:51:00 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 01:08:10 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ int			mini_exit(char **args)
 		else
 			return (error_too_many_args());
 	}
-	free_matrix(args);
+	//free_matrix(args);
 	exit(norm_exit(0));
 }

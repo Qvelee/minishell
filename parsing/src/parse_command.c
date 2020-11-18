@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 18:43:41 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/17 21:34:19 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,6 @@ char *parse_env(char **str, t_envp *envp)
 	return (add);
 }
 
-char *parse_slash(char** str)
-{
-
-}
-
 char *parse_arg(char** str,t_envp *envp)
 {
 	char *var;
@@ -158,7 +153,10 @@ char **parse_command(char** str,t_envp *envp)
 	while (**str != '\n' && **str != 0 && !check_end(**str))
 	{
 		if (i > size)
-			args = ft_realloc(args,size,size *= 2 );
+		{
+			args = ft_realloc(args,size,size * 2 );
+			size *= 2;
+		}
 		args[i] = parse_arg(str,envp);
 		i++;
 		while (**str == ' ')
