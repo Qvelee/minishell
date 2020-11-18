@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
+#    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/11/16 18:12:56 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/11/18 12:27:13 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,15 +69,15 @@ D_FILES = $(patsubst %.o, %.d, $(MAIN_OBJ)) $(patsubst %.o, %.d, $(EXEC_OBJ)) $(
 all: crtmpdirs $(NAME)
 
 crtmpdirs:
-	mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
+	@mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
 
 $(NAME): $(MAIN_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
-	ar rcs $(NAME) $^
-	echo -e "\033[1m\033[32m$(NAME) created!\033[0m"
+	@ar rcs $(NAME) $^
+	@echo -e "\033[1m\033[32m$(NAME) created!\033[0m"
 
 $(addprefix $(MAIN_OBJ_DIR), %.o): $(addprefix $(MAIN_SRC_DIR), %.c)
-	echo -e "\033[36mCompiling $< ..."
-	$(COMP) $(FLAGS) -I../libft/includes -I.. -I. -c $< -o $@ -MMD
+	@echo -e "\033[36mCompiling $< ..."
+	@$(COMP) $(FLAGS) -I../libft/includes -I.. -I. -c $< -o $@ -MMD
 
 $(addprefix $(EXEC_OBJ_DIR), %.o): $(addprefix $(EXEC_SRC_DIR), %.c)
 	@echo -e "\033[36mCompiling $< ..."
@@ -98,7 +98,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo -e "\033[31m\033[1m$(NAME), LIBFT.a, etc. files deleted!\033[0m"
+	@echo -e "\033[31m\033[1m$(NAME), etc. files deleted!\033[0m"
 
 re: fclean all
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 18:05:35 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 15:07:26 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define EXECUTOR_H
 
 # include <linux/limits.h>
-
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "main.h"
 # include "libft.h"
 
-void	mini_echo(char **args);
+int		mini_echo(char **args);
 int		mini_pwd(void);
 int		mini_cd(char **args, t_envp **envp);
 int		mini_export(char **args, t_envp **envp_list);
@@ -26,7 +27,7 @@ int		error_arg_export(char *argument);
 void	print_line(char *line);
 int		mini_unset(char **args, t_envp **envp);
 int		mini_exit(char **args);
-void	mini_env(t_envp *envp);
+int		mini_env(t_envp *envp);
 t_envp	*envp_lst_new(char *variable, int type);
 void	envp_add_to_lst_back(t_envp *envp_element, t_envp **envp_list);
 t_envp	*envp_last_element(t_envp *envp_list);

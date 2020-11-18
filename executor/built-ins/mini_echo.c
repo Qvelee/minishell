@@ -6,13 +6,13 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:25:40 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/11 19:57:14 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/18 15:01:01 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
 
-void	mini_echo(char **args)
+int		mini_echo(char **args)
 {
 	int			index;
 	int			flag;
@@ -28,4 +28,5 @@ void	mini_echo(char **args)
 	}
 	if (!flag)
 		write(1, "\n", 1);
+	return (0);
 }
