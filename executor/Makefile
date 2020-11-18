@@ -6,7 +6,11 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2020/11/18 12:27:13 by nelisabe         ###   ########.fr        #
+=======
+#    Updated: 2020/11/17 19:58:53 by sgertrud         ###   ########.fr        #
+>>>>>>> e8a3d3edb202b862cda979ceac436d47d3a45d3f
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,10 +70,15 @@ D_FILES = $(patsubst %.o, %.d, $(MAIN_OBJ)) $(patsubst %.o, %.d, $(EXEC_OBJ)) $(
 
 ###
 
-all: crtmpdirs $(NAME)
+all: $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR) $(NAME)
 
+<<<<<<< HEAD
 crtmpdirs:
 	@mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
+=======
+$(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR):
+	mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
+>>>>>>> e8a3d3edb202b862cda979ceac436d47d3a45d3f
 
 $(NAME): $(MAIN_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
 	@ar rcs $(NAME) $^

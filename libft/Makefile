@@ -6,13 +6,13 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/11/16 17:03:14 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/11/17 20:20:31 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = clang
 NAME=libft.a
-SRC = srcs/
+SRC = src/
 OBJ = obj/
 INCLUDES = includes
 REG_OBJ_FILES = ft_memset.o ft_memcpy.o ft_bzero.o ft_memcmp.o ft_memccpy.o\

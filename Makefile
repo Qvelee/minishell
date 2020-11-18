@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/11/16 18:15:26 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/11/17 20:22:33 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 NAME = minishell
 INCLUDES = . parsing executor libft/includes
 LIB_DIR = parsing executor libft
-LIB_NAMES = exec parsing ft
+LIB_NAMES = exec parsing ft termcap
 UNAME = $(shell uname)
 CFLAGS = -g -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory
@@ -25,7 +25,7 @@ LIBS :
 	make -C executor
 	make -C parsing
 	make -C libft
-$(NAME): main.h
+$(NAME): main.c main.h executor/libexec.a parsing/libparsing.a libft/libft.a
 	$(CC) $(CFLAGS) main.c $(addprefix -I,$(INCLUDES)) $(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
 
 clean:
