@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 20:32:53 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/13 20:33:01 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 11:44:31 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ char		*ft_strjoin_gnl(char const *s1, char const *s2)
 
 	copy1 = (char*)s1;
 	if (!(out = (char*)malloc(ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1)))
+	{
+		free(copy1);
 		return (0);
+	}
 	head = out;
 	while (s1 && *s1++)
 		*out++ = *(s1 - 1);

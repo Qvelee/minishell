@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/18 03:26:01 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 13:03:59 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*read_line(struct termios term,t_envp *envp)
 		sym[ret] = 0;
 		if (((sym[0] > 0 && sym[0] <= 31) || sym[0] == 127) && sym[0] != 4)
 		{
-			handle_escape_sequence(sym,envp,&i);
+			handle_escape_sequence(sym,envp, str,&i);
 		}
 		else
 		{

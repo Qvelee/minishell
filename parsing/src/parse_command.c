@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/17 21:34:19 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 11:43:28 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char *parse_arg(char** str,t_envp *envp)
 			(*str)++;
 			arg = ft_strjoin_gnl(arg,add);
 			free(add);
+			add = 0;
 		}
 		else if (**str == '\"')
 		{
@@ -120,13 +121,14 @@ char *parse_arg(char** str,t_envp *envp)
 				add = parse_env(str, envp);
 				arg = ft_strjoin_gnl(arg,add);
 			}
-			else
-			{
-				add = ft_substr(*str,0,1);
-				(*str)++;
-				arg = ft_strjoin_gnl(arg,add);
-				free(add);
-			}
+		else
+		{
+			add = ft_substr(*str,0,1);
+			(*str)++;
+			arg = ft_strjoin_gnl(arg,add);
+			free(add);
+			add = 0;
+		}
 	}
 	return (arg);
 }

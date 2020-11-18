@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:05:06 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/18 00:58:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 12:45:07 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		set_terminal_mode(struct termios term,char *term_name);
 int		remove_terminal_mode(struct termios term);
 char	*read_line(struct termios term, t_envp *envp);
 int		check_end(char c);
-int		handle_escape_sequence(char *command, t_envp *envp, int *i);
+int		handle_escape_sequence(char *command, t_envp *envp, char *str, int *i);
 char	**parse_command(char **str, t_envp *envp);
 char	*parse_d_quote(char **str, t_envp *envp);
 char	*parse_quote(char **str);

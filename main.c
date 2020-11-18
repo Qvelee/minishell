@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/18 01:03:35 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/11/18 11:46:56 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 	char *term_name;
 	t_envp *_envp;
 	char **my_exit;
+	int i;
 
 	signal(SIGINT,ft_nothing);
 	my_exit = malloc(2*sizeof(char*));
@@ -57,6 +58,10 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 		{
 			command = parse_command(&str, _envp);
 			do_command(command, &_envp, term);
+			i = 0;
+			while (command[i])
+				free(command[i++]);
+			free(command);
 			str++;
 		}
 		free(temp);
