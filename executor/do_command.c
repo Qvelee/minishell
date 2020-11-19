@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/18 15:58:02 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/19 15:38:53 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,17 @@ int		built_in(char **args, t_envp **envp_list, t_term term)
 	return (-2);
 }
 
-static int		command(char **args, t_envp **envp_list)
-{
-	char	**envp;
-	pid_t	pid;
-	int		return_value;
-
-	return_value = -2;
-	envp = envp_lst_to_matrix(*envp_list);
-	pid = fork();
-	if (pid == 0)
-		execve(args[0], args, envp);
-	else if (pid > 0)
-		wait(&return_value);
-	free(envp);
-	return (return_value);
-}
-
 int				do_command(char **args, t_envp **envp_list, t_term term)
 {
 	int		return_value;
 	t_term	t;
 	
 	t = term;
-	return_value = built_in(args, envp_list, term);
-	return_value = command(args, envp_list);
+	int		index = -1;
+	while (args[++index])
+		printf("%s\n", args[index]);
+	// if ((return_value = built_in(args, envp_list, term) == -2))
+		// return_value = command(args, envp_list);
+	// printf("end of do_command\n");
 	return (return_value);
 }

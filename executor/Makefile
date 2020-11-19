@@ -6,11 +6,7 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2020/11/18 12:27:13 by nelisabe         ###   ########.fr        #
-=======
-#    Updated: 2020/11/17 19:58:53 by sgertrud         ###   ########.fr        #
->>>>>>> e8a3d3edb202b862cda979ceac436d47d3a45d3f
+#    Updated: 2020/11/19 15:19:56 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +14,7 @@ NAME =				libexec.a
 
 COMP =				clang -g
 
-FLAGS =				-Wall -Wextra -Werror
+FLAGS =				#-Wall -Wextra -Werror
 
 MAIN_HEADER =		./executor_public.h
 
@@ -35,7 +31,8 @@ ENVP_SRC_DIR =		./envp/
 
 MAIN_SRC =			exit_minishell.c
 
-EXEC_SRC =			do_command.c
+EXEC_SRC =			do_command.c \
+					commands.c
 
 BTIN_SRC =			mini_echo.c \
 					mini_pwd.c \
@@ -72,13 +69,8 @@ D_FILES = $(patsubst %.o, %.d, $(MAIN_OBJ)) $(patsubst %.o, %.d, $(EXEC_OBJ)) $(
 
 all: $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR) $(NAME)
 
-<<<<<<< HEAD
-crtmpdirs:
-	@mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
-=======
 $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR):
 	mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
->>>>>>> e8a3d3edb202b862cda979ceac436d47d3a45d3f
 
 $(NAME): $(MAIN_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
 	@ar rcs $(NAME) $^

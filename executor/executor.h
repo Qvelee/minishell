@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/18 15:07:26 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/19 13:59:39 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <linux/limits.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <dirent.h>
 # include "main.h"
 # include "libft.h"
 
@@ -28,6 +29,7 @@ void	print_line(char *line);
 int		mini_unset(char **args, t_envp **envp);
 int		mini_exit(char **args);
 int		mini_env(t_envp *envp);
+int		command(char **args, t_envp **envp_list);
 t_envp	*envp_lst_new(char *variable, int type);
 void	envp_add_to_lst_back(t_envp *envp_element, t_envp **envp_list);
 t_envp	*envp_last_element(t_envp *envp_list);
