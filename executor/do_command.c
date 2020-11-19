@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/19 15:38:53 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/19 16:25:55 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int				do_command(char **args, t_envp **envp_list, t_term term)
 	t_term	t;
 	
 	t = term;
-	int		index = -1;
-	while (args[++index])
-		printf("%s\n", args[index]);
-	// if ((return_value = built_in(args, envp_list, term) == -2))
-		// return_value = command(args, envp_list);
+	// int		index = -1;
+	// while (args[++index])
+		// printf("%s\n", args[index]);
+	if ((return_value = built_in(args, envp_list, term) == -2))
+		return_value = command(args, envp_list);
 	// printf("end of do_command\n");
 	return (return_value);
 }
