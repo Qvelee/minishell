@@ -6,7 +6,7 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/11/19 15:19:56 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/11/20 17:45:24 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ ENVP_SRC_DIR =		./envp/
 MAIN_SRC =			exit_minishell.c
 
 EXEC_SRC =			do_command.c \
-					commands.c
+					commands.c \
+					errors_management.c
 
 BTIN_SRC =			mini_echo.c \
 					mini_pwd.c \

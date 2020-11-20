@@ -6,24 +6,53 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/19 16:24:01 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/20 20:19:54 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
+int		run_exec(char *command, char **args, char **envp)
+{
+	pid_t	pid;
+	pid_t	wpid;
+	int		status;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(command, args, envp);
+		return (error_print_return(args[0]));
+	}
+	else if (pid > 0)
+	{
+		if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
+			return (error_print_return("minishell"));
+		while (!WIFEXITED(status) && !WIFSIGNALED(status))
+			if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
+				return (error_print_return("minishell"));
+		return (WEXITSTATUS(status));
+	}
+	else
+		return (error_print_return("minishell"));
+}
+
 int		check_directory(char *command, char *directory)
 {
 	struct dirent	*dir;
 	DIR				*dirp;
+	int				ret;
 
+	errno = 0;
+	ret = 1;
 	if (!(dirp = opendir(directory)))
-		return (0);
+		return (ret);
 	while ((dir = readdir(dirp)))
 		if (!ft_strcmp(command, dir->d_name))
-			return (1);
-	closedir(dirp);
-	return (0);
+			ret = 0;
+	if (closedir(dirp) == -1)
+		return (error_print_return(directory));
+	return (ret);
 }
 
 char	*find_executable(char *command, char *path)
@@ -35,14 +64,17 @@ char	*find_executable(char *command, char *path)
 
 	executable = NULL;
 	index = -1;
-	pathes = ft_split(path, ":");
+	if (!(pathes = ft_split(path, ":")))
+		return (NULL);
 	while (pathes[++index])
-		if (check_directory(command, pathes[index]))
+		if (!check_directory(command, pathes[index]))
 			break ;
 	if (pathes[index])
 	{
-		temp = ft_strjoin(pathes[index], "/");
-		executable = ft_strjoin(temp, command);
+		if (!(temp = ft_strjoin(pathes[index], "/")))
+			return (error_return_char(NULL, NULL, pathes));
+		if (!(executable = ft_strjoin(temp, command)))
+			return (error_return_char(temp, NULL, pathes));
 		free(temp);
 	}
 	free_matrix(pathes);
@@ -53,33 +85,16 @@ int		command(char **args, t_envp **envp_list)
 {
 	char	**envp;
 	char	*command;
-	pid_t	pid;
-	pid_t	wpid;
 	int		return_value;
 
-	return_value = -2;
-	
-	if (!(command = find_executable(args[0], envp_get_var_value(*envp_list, "PATH"))))
-	{
-		printf("minishell: |%s| command not found\n", args[0]);
-		return (return_value);
-	}
-	envp = envp_lst_to_matrix(*envp_list);
-	pid = fork();
-	if (pid == 0)
-	{
-		if (execve(command, args, envp) == -1)
-			perror(args[0]);
-		exit(1);
-	}
-	else if (pid > 0)
-	{
-		wpid = waitpid(pid, &return_value, WNOHANG);
-		while (!WIFEXITED(return_value) && !WIFSIGNALED(return_value))
-			wpid = waitpid(pid, &return_value, WNOHANG);
-	}
-	else if (pid < 0)
-		perror("minishell");
+	errno = 0;
+	if (!(command = find_executable(args[0], \
+		envp_get_var_value(*envp_list, "PATH"))))
+		return (127);
+	if (!(envp = envp_lst_to_matrix(*envp_list)))
+		return (error_return_int(12, command, NULL, NULL));
+	return_value = run_exec(command, args, envp);
+	free(command);
 	free(envp);
 	return (return_value);
 }

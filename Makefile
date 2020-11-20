@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
+#    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/11/17 20:22:33 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/11/20 09:30:44 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 NAME = minishell
 INCLUDES = . parsing executor libft/includes
 LIB_DIR = parsing executor libft
-LIB_NAMES = exec parsing ft termcap
+LIB_NAMES = exec parsing ft tinfo
 UNAME = $(shell uname)
 CFLAGS = -g -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory

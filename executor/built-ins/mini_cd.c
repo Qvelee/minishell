@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 15:02:03 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/20 17:20:41 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static int	error_cd(int mode, char *set)
 
 	if (mode == 1)
 	{
+		error = strerror(errno);
 		write(2, "cd: ", 4);
 		write(2, set, ft_strlen(set));
 		write(2, ": ", 2);
-		error = strerror(errno);
 		write(2, error, ft_strlen(error));
 		free(error);
 		write(2, "\n", 1);

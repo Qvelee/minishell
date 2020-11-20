@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/19 15:33:09 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/20 09:10:50 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,6 @@ char *parse_env(char **str, t_envp *envp)
 	return (add);
 }
 
-char *parse_slash(char** str)
-{
-
-}
-
 char *parse_arg(char** str,t_envp *envp)
 {
 	char *var;
@@ -107,6 +102,7 @@ char *parse_arg(char** str,t_envp *envp)
 			(*str)++;
 			arg = ft_strjoin_gnl(arg,add);
 			free(add);
+			add = 0;
 		}
 		else if (**str == '\"')
 		{
@@ -125,13 +121,14 @@ char *parse_arg(char** str,t_envp *envp)
 				add = parse_env(str, envp);
 				arg = ft_strjoin_gnl(arg,add);
 			}
-			else
-			{
-				add = ft_substr(*str,0,1);
-				(*str)++;
-				arg = ft_strjoin_gnl(arg,add);
-				free(add);
-			}
+		else
+		{
+			add = ft_substr(*str,0,1);
+			(*str)++;
+			arg = ft_strjoin_gnl(arg,add);
+			free(add);
+			add = 0;
+		}
 	}
 	return (arg);
 }
@@ -158,7 +155,10 @@ char **parse_command(char** str,t_envp *envp)
 	while (**str != '\n' && **str != 0 && !check_end(**str))
 	{
 		if (i > size)
-			args = ft_realloc(args,size,size *= 2 );
+		{
+			args = ft_realloc(args,size,size * 2 );
+			size *= 2;
+		}
 		args[i] = parse_arg(str,envp);
 		i++;
 		while (**str == ' ')

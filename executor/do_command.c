@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/19 16:25:55 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/20 17:24:36 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		run_built_in(int index, char **args, t_envp **envp_list,\
 {
 	int		return_value;
 
-	return_value = -2;
+	return_value = 127;
 	if (index == 0)
 		return_value = mini_echo(args);
 	if (index == 1)
@@ -50,7 +50,7 @@ int		built_in(char **args, t_envp **envp_list, t_term term)
 	while (commands[++index] && args[0])
 		if (!ft_strncmp(commands[index], args[0], 7))
 			return (run_built_in(index, args, envp_list, term));
-	return (-2);
+	return (127);
 }
 
 int				do_command(char **args, t_envp **envp_list, t_term term)
@@ -59,11 +59,7 @@ int				do_command(char **args, t_envp **envp_list, t_term term)
 	t_term	t;
 	
 	t = term;
-	// int		index = -1;
-	// while (args[++index])
-		// printf("%s\n", args[index]);
-	if ((return_value = built_in(args, envp_list, term) == -2))
+	if ((return_value = built_in(args, envp_list, term) == 127))
 		return_value = command(args, envp_list);
-	// printf("end of do_command\n");
 	return (return_value);
 }
