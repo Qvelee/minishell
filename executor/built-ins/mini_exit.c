@@ -6,19 +6,19 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:32:15 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 17:19:11 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 20:28:07 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
 
-static int	error_too_many_args()
+static int		error_too_many_args()
 {
 	write(2, "minishell: exit: too many arguments\n", 36);
 	return (1);
 }
 
-static int	error_numeric_argument(char *wrong_argument, char **args, \
+static int		error_numeric_argument(char *wrong_argument, char **args, \
 	t_envp **envp_list, t_term term)
 {
 	write(2, "minishell: exit: ", 17);
@@ -30,19 +30,46 @@ static int	error_numeric_argument(char *wrong_argument, char **args, \
 	return (2);
 }
 
-static int	norm_exit(int code, char **args, t_envp **envp_list, t_term term)
+static int		check_overflow(long int code, char *argument)
 {
+	int			str_len;
+	int			num_len;
+
+	if ((int)code == 0)
+		return (0);
+	str_len = ft_strlen(argument);
+	num_len = 1;
+	if ((argument[0] == '+' && code < 0) || (argument[0] != '-' && code < 0))
+		return (1);
+	if (argument[0] == '+')
+		str_len--;
+	if (code < 0)
+	{
+		code *= -1;
+		str_len--;
+	}
+	while ((code /= 10) > 0)
+		num_len++;
+	if (str_len != num_len)			
+		return (1);
+	return (0);
+}
+
+static long int	norm_exit(long int code, char **args, t_envp **envp_list, \
+	t_term term)
+{
+	if (check_overflow(code, args[1]))
+		return (error_numeric_argument(args[1], args, envp_list, term));
+	write(1, "exit\n", 5);
 	remove_terminal_mode(term);
 	envp_lst_clear(envp_list, free);
 	free_matrix(args);
-	write(1, "exit\n", 5);
 	return (code);
 }
 
-int			mini_exit(char **args, t_envp **envp_list, t_term term)
+int				mini_exit(char **args, t_envp **envp_list, t_term term)
 {
-	int	index;
-	int ret;
+	int			index;
 
 	index = -1;
 	errno = 0;
@@ -51,13 +78,11 @@ int			mini_exit(char **args, t_envp **envp_list, t_term term)
 		if (!args[2])
 		{
 			while (args[1][++index])
-				if (!ft_isdigit(args[1][index]))
+				if (!ft_isdigit(args[1][index]) && !(index == 0 && \
+					(args[1][index] == '-' || args[1][index] == '+')))
 					break ;
 			if (args[1][index] == '\0')
-			{
-				ret = ft_atoi(args[1]);
-				exit(norm_exit(ret, args, envp_list, term));
-			}
+				exit(norm_exit(ft_atol(args[1]), args, envp_list, term));
 			else
 				exit(error_numeric_argument(args[1], args, envp_list, term));
 		}
