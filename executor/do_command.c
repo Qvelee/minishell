@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 16:53:34 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 17:14:04 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ static int		run_built_in(int index, char **args, t_envp **envp_list,\
 	if (index == 5)
 		return_value = mini_env(*envp_list);
 	if (index == 6)
-	{
-		remove_terminal_mode(term);
-		envp_lst_clear(envp_list, free);
-		return_value = mini_exit(args);
-	}
+		return_value = mini_exit(args, envp_list, term);
 	return (return_value);
 }
 

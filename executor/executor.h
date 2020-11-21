@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 14:02:53 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 17:13:13 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		mini_export(char **args, t_envp **envp_list);
 int		error_arg_export(char *argument);
 void	print_line(char *line);
 int		mini_unset(char **args, t_envp **envp);
-int		mini_exit(char **args);
+int		mini_exit(char **args, t_envp **envp_list, t_term term);
 int		mini_env(t_envp *envp);
 int		command(char **args, t_envp **envp_list);
 char	*error_return_char(char *memory_1, char *memory_2, char **matrix);

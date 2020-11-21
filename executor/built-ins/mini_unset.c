@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 19:43:31 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 13:50:43 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 17:21:07 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	error_arg(char *argument)
 {
-	write(2, "unset: \'", 9);
+	write(2, "minishell: unset: `", 19);
 	write(2, argument, ft_strlen(argument));
-	write(2, "\': not a valid identifier\n", 26);
+	write(2, "\': Not a valid identifier\n", 26);
 	return (1);
 }
 

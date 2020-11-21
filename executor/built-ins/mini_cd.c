@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 16:50:19 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 17:05:28 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	error_cd(int mode, char *set)
 	if (mode == 1)
 	{
 		error = strerror(errno);
-		write(2, "cd: ", 4);
+		write(2, "minishell: cd: ", 15);
 		write(2, set, ft_strlen(set));
 		write(2, ": ", 2);
 		write(2, error, ft_strlen(error));
@@ -27,12 +27,12 @@ static int	error_cd(int mode, char *set)
 	}
 	if (mode == 2)
 	{
-		write(2, "cd: too many arguments\n", 23);
+		write(2, "minishell: cd: Too many arguments\n", 35);
 		return (1);
 	}
 	if (mode == 3)
 	{
-		write(2, "cd: ", 4);
+		write(2, "minishell: cd: ", 11);
 		write(2, set, ft_strlen(set));
 		write(2, " not set\n", 9);
 		return (1);
