@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/20 17:20:41 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 16:50:19 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	error_cd(int mode, char *set)
 		write(2, set, ft_strlen(set));
 		write(2, ": ", 2);
 		write(2, error, ft_strlen(error));
-		free(error);
 		write(2, "\n", 1);
 	}
 	if (mode == 2)
@@ -59,6 +58,7 @@ static char	*get_oldpwd(t_envp *envp)
 static char	*get_pwd(void)
 {
 	char	*error;
+	char	*temp;
 	char	*pwd;
 
 	pwd = NULL;
@@ -68,8 +68,10 @@ static char	*get_pwd(void)
 		write(2, error, ft_strlen(error));
 		return (NULL);
 	}
+	temp = pwd;
 	if (!(pwd = envp_create_envp_str("PWD", pwd)))
-		return (NULL);
+		pwd = NULL;
+	free(temp);
 	return (pwd);
 }
 
