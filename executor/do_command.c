@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/20 17:24:36 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 14:46:42 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int		run_built_in(int index, char **args, t_envp **envp_list,\
 {
 	int		return_value;
 
-	return_value = 127;
 	if (index == 0)
 		return_value = mini_echo(args);
 	if (index == 1)
@@ -53,13 +52,49 @@ int		built_in(char **args, t_envp **envp_list, t_term term)
 	return (127);
 }
 
-int				do_command(char **args, t_envp **envp_list, t_term term)
+int		save_ret_value(int value, t_envp **envp_list)
 {
-	int		return_value;
-	t_term	t;
-	
+	char	*value_to_save;
+	char	*temp;
+
+	if (!(temp = ft_itoa(value)))
+		return (12);
+	if (!(value_to_save = envp_create_envp_str("?", temp)))
+	{
+		free(temp);
+		return (12);
+	}
+	free(temp);
+	if (envp_replace_variable(envp_list, value_to_save, 0))
+	{
+		free(value_to_save);
+		return (12);
+	}
+	return (0);
+}
+
+int			do_command(char **args, t_envp **envp_list, t_term term)
+{
+	static int	return_value;
+	t_term		t;
+
 	t = term;
-	if ((return_value = built_in(args, envp_list, term) == 127))
+	return_value = built_in(args, envp_list, term);
+	if (return_value == 0)
+		;
+	else if (return_value != 127)
+		check_memory_error(return_value, args, envp_list, term);
+	else
+	{
 		return_value = command(args, envp_list);
+		if (return_value == 0)
+			;
+		else if (return_value != 127)
+			check_memory_error(return_value, args, envp_list, term);
+		else
+			error_command_not_found(args[0]);
+	}
+	if (save_ret_value(return_value, envp_list))
+		check_memory_error(12, args, envp_list, term);
 	return (return_value);
 }
