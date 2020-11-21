@@ -6,13 +6,25 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 13:46:34 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/21 16:16:03 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int		run_exec(char *command, char **args, char **envp)
+static int	exec_error(char **args)
+{
+	if (errno == 2)
+	{
+		if (args[0][0] == '/' || args[0][0] == '.')
+			return (error_print_return(args[0]));
+		else
+			return (127);
+	}
+	return (error_print_return(args[0]));
+}
+
+static int	run_exec(char *command, char **args, char **envp)
 {
 	pid_t	pid;
 	pid_t	wpid;
@@ -22,22 +34,22 @@ int		run_exec(char *command, char **args, char **envp)
 	if (pid == 0)
 	{
 		execve(command, args, envp);
-		return (error_print_return(args[0]));
+		exit(exec_error(args));
 	}
 	else if (pid > 0)
 	{
 		if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
-			return (error_print_return("minishell"));
+			return (error_print_return(args[0]));
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
 			if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
-				return (error_print_return("minishell"));
+				return (error_print_return(args[0]));
 		return (WEXITSTATUS(status));
 	}
 	else
-		return (error_print_return("minishell"));
+		return (error_print_return(args[0]));
 }
 
-int		check_directory(char *command, char *directory)
+static int	check_directory(char *command, char *directory)
 {
 	struct dirent	*dir;
 	DIR				*dirp;
@@ -55,42 +67,50 @@ int		check_directory(char *command, char *directory)
 	return (ret);
 }
 
-char	*find_executable(char *command, char *path)
+static int	find_executable_in_path(char **final_command, char *command, \
+	char *path)
 {
 	char	**pathes;
-	char	*executable;
 	char	*temp;
 	int		index;
 
-	executable = NULL;
+	if (!path)
+		return (2);
+	*final_command = NULL;
 	index = -1;
 	if (!(pathes = ft_split(path, ":")))
-		return (NULL);
+		return (12);
 	while (pathes[++index])
 		if (!check_directory(command, pathes[index]))
 			break ;
 	if (pathes[index])
 	{
 		if (!(temp = ft_strjoin(pathes[index], "/")))
-			return (error_return_char(NULL, NULL, pathes));
-		if (!(executable = ft_strjoin(temp, command)))
-			return (error_return_char(temp, NULL, pathes));
+			return (error_return_int(12, NULL, NULL, pathes));
+		if (!(*final_command = ft_strjoin(temp, command)))
+			return (error_return_int(12, temp, NULL, pathes));
 		free(temp);
 	}
 	free_matrix(pathes);
-	return (executable);
+	if (!(*final_command))
+		return (2);
+	return (0);
 }
 
-int		command(char **args, t_envp **envp_list)
+int			command(char **args, t_envp **envp_list)
 {
 	char	**envp;
 	char	*command;
 	int		return_value;
 
 	errno = 0;
-	if (!(command = find_executable(args[0], \
-		envp_get_var_value(*envp_list, "PATH"))))
-		return (127);
+	return_value = find_executable_in_path(&command, args[0], \
+		envp_get_var_value(*envp_list, "PATH"));
+	if (return_value == 12)
+		return (12);
+	else if (return_value == 2)
+		if (!(command = ft_strdup(args[0])))
+			return (12);
 	if (!(envp = envp_lst_to_matrix(*envp_list)))
 		return (error_return_int(12, command, NULL, NULL));
 	return_value = run_exec(command, args, envp);
