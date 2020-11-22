@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 14:09:13 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 18:10:29 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	exec_error(char **args)
 {
 	if (errno == 2)
 	{
-		if (args[0][0] == '/' || args[0][0] == '.')
+		if (ft_strchr(args[0], '/') || args[0][0] == '.')
 			return (error_print_return(args[0]));
 		else
 			return (127);
