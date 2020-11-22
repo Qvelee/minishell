@@ -6,14 +6,14 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 19:15:43 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 14:17:45 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include <termios.h>
 
-static int		run_built_in(int index, char **args, t_envp **envp_list,\
+static int	run_built_in(int index, char **args, t_envp **envp_list,\
 				t_term term)
 {
 	int		return_value;
@@ -35,7 +35,7 @@ static int		run_built_in(int index, char **args, t_envp **envp_list,\
 	return (return_value);
 }
 
-int		built_in(char **args, t_envp **envp_list, t_term term)
+static int	built_in(char **args, t_envp **envp_list, t_term term)
 {
 	char	*commands[8] =	{"echo", "pwd", "cd", "export", \
 							"unset", "env", "exit", NULL};
@@ -48,7 +48,7 @@ int		built_in(char **args, t_envp **envp_list, t_term term)
 	return (127);
 }
 
-int		save_ret_value(int value, t_envp **envp_list)
+static int	save_ret_value(int value, t_envp **envp_list)
 {
 	char	*value_to_save;
 	char	*temp;
