@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 17:05:28 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 15:26:18 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,14 @@ static int	error_cd(int mode, char *set)
 		write(2, "\n", 1);
 	}
 	if (mode == 2)
-	{
-		write(2, "minishell: cd: Too many arguments\n", 35);
-		return (1);
-	}
+		write(2, "minishell: cd: too many arguments\n", 35);
 	if (mode == 3)
 	{
-		write(2, "minishell: cd: ", 11);
+		write(2, "minishell: cd: ", 15);
 		write(2, set, ft_strlen(set));
 		write(2, " not set\n", 9);
-		return (1);
 	}
-	return (errno);
+	return (1);
 }
 
 static char	*get_oldpwd(t_envp *envp)
@@ -55,30 +51,36 @@ static char	*get_oldpwd(t_envp *envp)
 	return (old_pwd);
 }
 
-static char	*get_pwd(void)
+static int	get_pwd(char **pwd)
 {
 	char	*error;
 	char	*temp;
-	char	*pwd;
 
-	pwd = NULL;
-	if (!(pwd = getcwd(pwd, PATH_MAX)))
+	*pwd = NULL;
+	if (!(*pwd = getcwd(*pwd, PATH_MAX)))
 	{
 		error = strerror(errno);
+		write(2, "minishell: cd: ", 15);		
 		write(2, error, ft_strlen(error));
-		return (NULL);
+		write(2, "\n", 1);
+		return (errno);
 	}
-	temp = pwd;
-	if (!(pwd = envp_create_envp_str("PWD", pwd)))
-		pwd = NULL;
+	temp = *pwd;
+	if (!(*pwd = envp_create_envp_str("PWD", *pwd)))
+	{
+		*pwd = NULL;
+		free(temp);
+		return (12);
+	}
 	free(temp);
-	return (pwd);
+	return (0);
 }
 
 static int	cd_to_directory(t_envp **envp, char *directory)
 {
 	char	*old_pwd;
 	char	*pwd;
+	int		err;
 
 	errno = 0;
 	if ((chdir(directory) != -1))
@@ -90,8 +92,8 @@ static int	cd_to_directory(t_envp **envp, char *directory)
 			free(old_pwd);
 			return (12);
 		}
-		if (!(pwd = get_pwd()))
-			return (12);
+		if ((err = get_pwd(&pwd)))
+			return (err);
 		if (envp_replace_variable(envp, pwd, 0))
 		{
 			free(pwd);
