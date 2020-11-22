@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:32:15 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 16:27:13 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 18:13:07 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int		check_overflow(long int code, char *argument)
 static long int	norm_exit(long int code, char **args, t_envp **envp_list, \
 	t_term term)
 {
-	if (check_overflow(code, args[1]))
+	if (args[1] && check_overflow(code, args[1]))
 		return (error_numeric_argument(args[1], args, envp_list, term));
 	write(1, "exit\n", 5);
 	remove_terminal_mode(term);
