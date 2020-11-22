@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:39:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 15:50:31 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 14:58:42 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	check_memory_error(int code, char **args, t_envp **envp_list, \
 	free_matrix(args);
 	envp_lst_clear(envp_list, free);
 	remove_terminal_mode(term);
-	write(2, "minishell: out of memory", 24);
+	write(2, "minishell: Out of memory\n", 25);
 	exit(12);
 }
 
