@@ -6,11 +6,17 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:46:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/15 12:34:19 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 18:42:22 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
+
+/*
+**	envp_create_envp_str creates envp-type string (like: NAME=value),
+**	usinng specified variable and type. if memory error occured,
+**	NULL is returned and no leaks are possible.
+*/
 
 char	*envp_create_envp_str(char *variable, char *value)
 {
@@ -18,11 +24,14 @@ char	*envp_create_envp_str(char *variable, char *value)
 
 	if (!(variable = ft_strjoin(variable, "=")))
 		return (NULL);
-	if (!(envp_str = ft_strjoin(variable, value)))
-		return (NULL);
+	envp_str = ft_strjoin(variable, value);
 	free(variable);
 	return (envp_str);
 }
+
+/*
+**	envp_change_type changes type of element with specidied variable.
+*/
 
 void	envp_change_type(t_envp *envp_list, char *variable, int type)
 {
@@ -31,6 +40,12 @@ void	envp_change_type(t_envp *envp_list, char *variable, int type)
 	if ((link = envp_find_variable(envp_list, variable)))
 		link->type = type;
 }
+
+/*
+**	envp_remove_from_list deletes element with specified variable
+**	from list (used memory will be freed). link of previous element
+**	will be changed to next element adress (relatively deleted).
+*/
 
 void	envp_remove_from_list(t_envp **envp_list, char *variable)
 {
@@ -57,8 +72,8 @@ void	envp_remove_from_list(t_envp **envp_list, char *variable)
 }
 
 /*
-**	envp_create_list creates list from matrix and returns delete
-**	to the first list's element. if error occures, no memory leaks
+**	envp_create_list creates list from matrix and returns link
+**	to the first list's element. if error occured, no memory leaks
 **	are possible and return will be NULL.
 */
 

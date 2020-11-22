@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:27:23 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 15:24:19 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 18:29:28 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 /*
 **	envp_compare works like strcmp, but considers '=' symbol as 
 **	the end of the line.
-**	This function allows to check variable without '=' at the
-**	end.
-**	var_in_envp -	ALWAYS MUST BE VARIABLE FROM LIST.
-**	var_to_check -	ALWAYS MUST BE VARIABLE TO COMPARE WITH.
-**	Examples:
-**	key	: key will return 0;
-**	key= : key= will return 0;
-**	key= : key will return 0!!;
-**	but
-**	key : key= will return not 0;
 */
 
 int		envp_compare(char *var_in_envp, char *var_to_check)
@@ -86,9 +76,14 @@ t_envp	*envp_find_variable(t_envp *envp_list, char *variable)
 }
 
 /*
-**	envp_replace_variable changes list's element parameters variable and type
-**	to specified if that variavle exists, if not, it will be added to the
-**	end of the list.
+**	envp_replace_variable check if variable is already in list.
+**	if yes:
+**		if variable type is not 1, it will be changed to specified.
+**		old variable will be freed and link will be changed to new varibale.
+**	if no:
+**		new element of list will be created with specified variable and type.
+**		function will add it to the end of the list.
+**	if memory error happaned, value != 0 is returned.
 */
 
 int		envp_replace_variable(t_envp **envp_list, char *variable, int type)
@@ -106,7 +101,7 @@ int		envp_replace_variable(t_envp **envp_list, char *variable, int type)
 	else
 	{
 		if (!(envp_element = envp_lst_new(variable, type)))
-			return (1);
+			return (12);
 		envp_add_to_lst_back(envp_element, envp_list);
 	}
 	return (0);
@@ -116,9 +111,10 @@ int		envp_replace_variable(t_envp **envp_list, char *variable, int type)
 **	envp_lst_to_matrix creates NULL terminated array of pointers
 **	to strings, pointed by envp_list->variable, except type != 1
 **	elements.
-**	useged of this array after colling any list-changing functions
+**	usege of this array after colling any list-changing functions
 **	is dangerous, because function just copies list's pointers and
 **	not allocate new memery for them.
+**	if memmory error happaned, NULL is returned.
 */
 
 char	**envp_lst_to_matrix(t_envp *envp_list)
