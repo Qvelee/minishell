@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:32:15 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/21 20:28:07 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/22 16:27:13 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int		error_too_many_args()
 {
+	write(2, "exit\n", 5);
 	write(2, "minishell: exit: too many arguments\n", 36);
 	return (1);
 }
@@ -21,6 +22,7 @@ static int		error_too_many_args()
 static int		error_numeric_argument(char *wrong_argument, char **args, \
 	t_envp **envp_list, t_term term)
 {
+	write(2, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);
 	write(2, wrong_argument, ft_strlen(wrong_argument));
 	write(2, ": numeric argument required\n", 28);
@@ -35,7 +37,9 @@ static int		check_overflow(long int code, char *argument)
 	int			str_len;
 	int			num_len;
 
-	if ((int)code == 0)
+	if (!ft_strcmp(argument, "9223372036854775808"))
+		return (1);
+	if (!ft_strcmp(argument, "-9223372036854775808"))
 		return (0);
 	str_len = ft_strlen(argument);
 	num_len = 1;
@@ -50,7 +54,7 @@ static int		check_overflow(long int code, char *argument)
 	}
 	while ((code /= 10) > 0)
 		num_len++;
-	if (str_len != num_len)			
+	if (str_len != num_len)
 		return (1);
 	return (0);
 }
