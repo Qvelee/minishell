@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:25:40 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/25 13:42:14 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/11/25 13:45:21 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@ int			mini_echo(char **args)
 	errno = 0;
 	index = 0;
 	flag = 0;
-	while (args[++index])
-		if (!(temp = check_flag(args[index])))
-			break ;
-		else
-			flag = temp;
+	while (args[++index] && (temp = check_flag(args[index])))
+		flag = temp;
 	while (args[index])
 	{
 		write(1, args[index], ft_strlen(args[index]));
