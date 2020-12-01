@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 18:18:47 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/01 13:06:10 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,17 @@
 # include "main.h"
 # include "libft.h"
 
+typedef struct	s_commands
+{
+	char				**command;
+	int					fd_in;
+	int					fd_out;
+	struct s_commands	*next;
+}				t_commands;
+
 void	check_memory_error(int code, char **args, t_envp **envp_list, t_term term);
+int		parse_command_ex(char **args, t_commands **commands);
+int		built_in(char **args, t_envp **envp_list, t_term term);
 int		mini_echo(char **args);
 int		mini_pwd(void);
 int		mini_cd(char **args, t_envp **envp);
@@ -56,5 +66,9 @@ int		envp_replace_variable(t_envp **envp_list, char *variable, int type);
 char	**envp_lst_to_matrix(t_envp *envp_list);
 void	envp_lst_clear(t_envp **envp_list, void (*delete)(void*));
 
+t_commands	*comm_lst_new(char **args, int fd_in, int fd_out);
+t_commands	*comm_last_element(t_commands *commands);
+void		comm_add_back(t_commands *command, t_commands **commands);
+void		comm_lst_clr(t_commands **commands);
 
 #endif

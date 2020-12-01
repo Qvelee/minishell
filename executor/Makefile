@@ -6,7 +6,7 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/11/20 17:45:24 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/12/01 11:53:59 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,12 @@ MAIN_SRC =			exit_minishell.c
 
 EXEC_SRC =			do_command.c \
 					commands.c \
-					errors_management.c
+					errors_management.c \
+					exec_utils.c \
+					parse_command.c
 
-BTIN_SRC =			mini_echo.c \
+BTIN_SRC =			built_in.c \
+					mini_echo.c \
 					mini_pwd.c \
 					mini_cd.c \
 					mini_export.c \

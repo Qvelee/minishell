@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 18:10:29 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/01 15:50:33 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ static int	run_exec(char *command, char **args, char **envp)
 	}
 	else if (pid > 0)
 	{
-		if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
-			return (error_print_return(args[0]));
-		while (!WIFEXITED(status) && !WIFSIGNALED(status))
-			if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
-				return (error_print_return(args[0]));
-		return (WEXITSTATUS(status));
+		// if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
+			// return (error_print_return(args[0]));
+		// while (!WIFEXITED(status) && !WIFSIGNALED(status))
+			// if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
+				// return (error_print_return(args[0]));
+		// return (WEXITSTATUS(status));
+		return (pid);
 	}
 	else
 		return (error_print_return(args[0]));

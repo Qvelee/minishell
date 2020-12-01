@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   check_end.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:56:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 15:14:53 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/01 13:22:51 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	check_end(char c)
 {
-	return (c == '\n' || c == ';' || c == '|' || c == '&' || c == 0);
+	return (c == '\n' || c == ';' || c == '&' || c == 0);
 }
 int check_spec_sym(char c)
 {
-	return (c == '$' || c == ';' || c == '|' || c == '&' || c == 0);
+	return (c == '$' || c == ';' || c == '&' || c == 0);
 }
