@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
+/*   exec_treatment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/01 15:50:33 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/02 15:46:14 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	exec_error(char **args)
 		if (ft_strchr(args[0], '/') || args[0][0] == '.')
 			return (error_print_return(args[0]));
 		else
-			return (127);
+			return (error_command_not_found(args[0]));
 	}
 	return (error_print_return(args[0]));
 }
@@ -37,15 +37,7 @@ static int	run_exec(char *command, char **args, char **envp)
 		exit(exec_error(args));
 	}
 	else if (pid > 0)
-	{
-		// if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
-			// return (error_print_return(args[0]));
-		// while (!WIFEXITED(status) && !WIFSIGNALED(status))
-			// if ((wpid = waitpid(pid, &status, WUNTRACED)) == -1)
-				// return (error_print_return(args[0]));
-		// return (WEXITSTATUS(status));
-		return (pid);
-	}
+		return (pid * -1);
 	else
 		return (error_print_return(args[0]));
 }

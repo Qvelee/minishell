@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/01 13:06:10 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/02 20:01:43 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <linux/limits.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include <dirent.h>
 # include "main.h"
 # include "libft.h"
@@ -27,6 +28,21 @@ typedef struct	s_commands
 	int					fd_out;
 	struct s_commands	*next;
 }				t_commands;
+
+typedef struct	s_exec
+{
+	int		return_value;
+	int		fd_pipe[2];
+	int		fd_out;
+	int		fd_in;
+	int		tmp_in;
+	int		tmp_out;
+	int		count;
+	int		index;
+	int		*pids;
+	int		status;
+}				t_exec;
+
 
 void	check_memory_error(int code, char **args, t_envp **envp_list, t_term term);
 int		parse_command_ex(char **args, t_commands **commands);
@@ -46,6 +62,11 @@ int		error_return_int(int return_value, char *memory_1, char *memory_2, \
 	char **matrix);
 int		error_print_return(char *massage);
 int		error_command_not_found(char *command);
+int		error_syntax(char symbol);
+
+int			save_ret_value(int value, t_envp **envp_list);
+int			run_commands(t_commands *commands, t_envp **envp_list, t_term term);
+int			redirect_output(char *path, int *fd_out, int *fd_in, int mode);
 
 /*
 **	envp treatment prototypes
@@ -70,5 +91,7 @@ t_commands	*comm_lst_new(char **args, int fd_in, int fd_out);
 t_commands	*comm_last_element(t_commands *commands);
 void		comm_add_back(t_commands *command, t_commands **commands);
 void		comm_lst_clr(t_commands **commands);
+int			comm_lst_size(t_commands *commands);
+int			comm_error_return_int(int return_value, char **memory);
 
 #endif

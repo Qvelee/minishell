@@ -6,34 +6,67 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/01 15:11:49 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/02 20:16:02 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-char		**create_simple_command(char **args, int start, int index)
+int			init_sim_comm(int *index, int *fd, char ***simple_command, \
+							int bytes)
 {
-	char	**simple_command;
-	int		sindex;
-
-	simple_command = (char**)malloc(sizeof(char*) * ((index - start) + 1));
-	sindex = 0;
-	while (start < index)
-	{
-		simple_command[sindex] = args[start];
-		sindex++;
-		start++;
-	}
-	simple_command[sindex] = NULL;
-	return (simple_command);
+	*index = 0;
+	fd[0] = -1;
+	fd[1] = -1;
+	if (!(*simple_command = (char**)malloc(sizeof(char*) * bytes)))
+		return (12);
+	return (0);
 }
 
-int			comm_cut_to_simple_commands(char **args, t_commands **commands)
+int			redirection(char *argument, char *value, \
+								int *fd_out, int *fd_in)
+{
+	if (!ft_strcmp(argument, ">"))
+		return (redirect_output(value, fd_out, fd_in, 1));
+	if (!ft_strcmp(argument, ">>"))
+		return (redirect_output(value, fd_out, fd_in, 2));
+	return (-1);
+}
+
+int			create_simple_command(t_commands **commands, char **args, \
+									int start, int end)
+{
+	t_commands	*command;
+	char		**simple_command;
+	int			fd[2];
+	int			index;
+	int			ret;
+
+	if (init_sim_comm(&index, fd, &simple_command, end - start + 1))
+		return (12);
+	while (start < end)
+	{
+		if ((ret = redirection(args[start], args[start + 1], \
+								&fd[0], &fd[1])) == -1)
+			simple_command[index++] = args[start++];
+		else if (ret == 0)
+			start += 2;
+		else
+			return (comm_error_return_int(ret, simple_command));
+	}
+	simple_command[index] = NULL;
+	if (!(command = comm_lst_new(simple_command, fd[0], fd[1])))
+		return (comm_error_return_int(12, simple_command));
+	comm_add_back(command, commands);
+	return (0);
+}
+
+int			cut_to_simple_commands(char **args, t_commands **commands)
 {
 	t_commands	*command;
 	int			index;
 	int			start;
+	int			ret;
 	char		**simple_command;;
 
 	index = -1;
@@ -42,24 +75,23 @@ int			comm_cut_to_simple_commands(char **args, t_commands **commands)
 	while (args[++index])
 		if (!ft_strcmp(args[index], "|"))
 		{
-			simple_command = create_simple_command(args, start, index);
-			command = comm_lst_new(simple_command, -1, -1);
-			comm_add_back(command, commands);
+			if ((ret = create_simple_command(commands, args, start, index)))
+				return (ret);
 			start = index + 1;
 		}
-	simple_command = create_simple_command(args, start, index);
-	command = comm_lst_new(simple_command, -1, -1);
-	comm_add_back(command, commands);
+	if ((ret = create_simple_command(commands, args, start, index)))
+		return (ret);
 	return (0);
 }
 
 int			parse_command_ex(char **args, t_commands **commands)
 {
-	t_commands	*temp;
-	int			index;
+	int		ret;
 
-	index = -1;
-	comm_cut_to_simple_commands(args, commands);
-	temp = *commands;
+	if ((ret = cut_to_simple_commands(args, commands)))
+	{
+		comm_lst_clr(commands);
+		return (ret);
+	}
 	return (0);
 }

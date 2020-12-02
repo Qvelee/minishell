@@ -6,7 +6,7 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/01 11:53:59 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/12/02 15:46:13 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,11 @@ ENVP_SRC_DIR =		./envp/
 MAIN_SRC =			exit_minishell.c
 
 EXEC_SRC =			do_command.c \
-					commands.c \
+					executor.c \
+					exec_treatment.c \
 					errors_management.c \
+					errors_management_2.c \
+					redirects_treatment.c \
 					exec_utils.c \
 					parse_command.c
 

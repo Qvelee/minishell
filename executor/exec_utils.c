@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 13:46:58 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/01 13:49:29 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/02 20:12:01 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_commands	*comm_last_element(t_commands *commands)
 	return (commands);
 }
 
-t_commands	*comm_lst_new(char **args, int fd_in, int fd_out)
+t_commands	*comm_lst_new(char **args, int fd_out, int fd_in)
 {
 	t_commands	*new_element;
 
@@ -63,4 +63,17 @@ void		comm_add_back(t_commands *command, t_commands **commands)
 		temp = comm_last_element(*commands);
 		temp->next = command;
 	}
+}
+
+int			comm_lst_size(t_commands *commands)
+{
+	int		count;
+
+	count = 0;
+	while (commands)
+	{
+		count++;
+		commands = commands->next;
+	}
+	return (count);
 }
