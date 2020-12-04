@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/02 20:16:02 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/04 13:33:21 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@ int			redirection(char *argument, char *value, \
 								int *fd_out, int *fd_in)
 {
 	if (!ft_strcmp(argument, ">"))
-		return (redirect_output(value, fd_out, fd_in, 1));
+		return (redirect_output(value, fd_out, 1));
 	if (!ft_strcmp(argument, ">>"))
-		return (redirect_output(value, fd_out, fd_in, 2));
+		return (redirect_output(value, fd_out, 2));
+	if (!ft_strcmp(argument, "<"))
+		return (redirect_input(value, fd_in, 1));
+	if (!ft_strcmp(argument, "<<"))
+		return (redirect_input(value, fd_in, 2));
 	return (-1);
 }
 

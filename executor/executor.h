@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/02 20:01:43 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/03 13:07:39 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_commands
 	char				**command;
 	int					fd_in;
 	int					fd_out;
+	char				*fd_in_end;
 	struct s_commands	*next;
 }				t_commands;
 
@@ -66,7 +67,8 @@ int		error_syntax(char symbol);
 
 int			save_ret_value(int value, t_envp **envp_list);
 int			run_commands(t_commands *commands, t_envp **envp_list, t_term term);
-int			redirect_output(char *path, int *fd_out, int *fd_in, int mode);
+int			redirect_output(char *path, int *fd_out, int mode);
+int			redirect_input(char *path, int *fd_in, int mode);
 
 /*
 **	envp treatment prototypes

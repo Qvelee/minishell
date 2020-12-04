@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:41:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/02 20:01:46 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/03 11:35:59 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		error_syntax(char symbol)
 		write(2, "newline", 7);
 	else
 		write(2, &symbol, 1);
-	write(2, "\'", 1);
+	write(2, "\'\n", 2);
 	return (2);
 }
 

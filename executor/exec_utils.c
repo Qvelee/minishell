@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 13:46:58 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/02 20:12:01 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/03 13:08:01 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_commands	*comm_lst_new(char **args, int fd_out, int fd_in)
 	new_element->command = args;
 	new_element->fd_in = fd_in;
 	new_element->fd_out = fd_out;
+	new_element->fd_in_end = NULL;
 	new_element->next = NULL;
 	return (new_element);
 }

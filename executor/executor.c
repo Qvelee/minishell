@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/02 20:07:01 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/04 13:09:18 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ int			run_commands(t_commands *commands, t_envp **envp_list, t_term term)
 	exec.fd_in = dup(exec.tmp_in);
 	while (commands)
 	{
+		if (commands->fd_in != -1)
+		{
+			close(exec.fd_in);
+			exec.fd_in = commands->fd_in;
+		}
 		dup2(exec.fd_in, 0);
 		close(exec.fd_in);
 		if (commands->next)
