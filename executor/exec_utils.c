@@ -6,13 +6,13 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 16:41:53 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/06 19:53:21 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int			end_of_commands(t_exec *exec)
+static int	wait_all_processes(t_exec *exec)
 {
 	exec->index = -1;
 	while (++exec->index < exec->count)
@@ -32,10 +32,42 @@ int			end_of_commands(t_exec *exec)
 		else
 			exec->return_value = exec->pids[exec->index];
 	}
-	if ((dup2(exec->tmp_in, 0) == -1) || (dup2(exec->tmp_out, 1) == -1))
-		exec->return_value = error_fd(NULL, -1, -1, -1);
-	if ((exec->status = try_close(exec->tmp_in, exec->tmp_out, -1)))
-		exec->return_value = exec->status;
+	return (exec->return_value);
+}
+
+int			error_running(int return_value, t_commands *command, t_exec *exec)
+{
+	int		ret;
+	int		tmp;
+
+	wait_all_processes(exec);
+	if ((tmp = error_print_return(NULL)))
+		ret = tmp;
+	if ((tmp = try_close(command->fd_in, command->fd_out, -1)))
+		ret = tmp;
+	if ((tmp = try_close(exec->fd_in, exec->fd_out, -1)))
+		ret = tmp;
+	if ((dup2(exec->tmp_in, 0) == -1))
+		ret = error_print_return(NULL);
+	if ((dup2(exec->tmp_out, 1) == -1))
+		ret = error_print_return(NULL);
+	if ((tmp = try_close(exec->tmp_in, exec->tmp_out, -1)))
+		ret = tmp;
+	free(exec->pids);
+	return (ret);
+}
+
+int			end_of_commands(t_exec *exec)
+{
+	int 	temp;
+
+	wait_all_processes(exec);
+	if ((dup2(exec->tmp_in, 0) == -1))
+		exec->return_value = error_print_return(NULL);
+	if ((dup2(exec->tmp_out, 1) == -1))
+		exec->return_value = error_print_return(NULL);
+	if ((temp = try_close(exec->tmp_in, exec->tmp_out, -1)))
+		exec->return_value = temp;
 	free(exec->pids);
 	return (exec->return_value);
 }

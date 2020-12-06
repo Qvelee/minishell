@@ -6,23 +6,25 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:32:15 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 18:13:07 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/06 18:45:43 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
 
-static int		error_too_many_args()
+static int		error_too_many_args(int mode)
 {
-	write(2, "exit\n", 5);
+	if (!mode)
+		write(1, "exit\n", 5);
 	write(2, "minishell: exit: too many arguments\n", 36);
 	return (1);
 }
 
 static int		error_numeric_argument(char *wrong_argument, char **args, \
-	t_envp **envp_list, t_term term)
+	t_envp **envp_list, int mode, t_term term)
 {
-	write(2, "exit\n", 5);
+	if (!mode)
+		write(1, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);
 	write(2, wrong_argument, ft_strlen(wrong_argument));
 	write(2, ": numeric argument required\n", 28);
@@ -60,18 +62,19 @@ static int		check_overflow(long int code, char *argument)
 }
 
 static long int	norm_exit(long int code, char **args, t_envp **envp_list, \
-	t_term term)
+	int mode, t_term term)
 {
 	if (args[1] && check_overflow(code, args[1]))
-		return (error_numeric_argument(args[1], args, envp_list, term));
-	write(1, "exit\n", 5);
+		return (error_numeric_argument(args[1], args, envp_list, mode, term));
+	if (!mode)
+		write(1, "exit\n", 5);
 	remove_terminal_mode(term);
 	envp_lst_clear(envp_list, free);
 	free_matrix(args);
 	return (code);
 }
 
-int				mini_exit(char **args, t_envp **envp_list, t_term term)
+int				mini_exit(char **args, t_envp **envp_list, int mode, t_term term)
 {
 	int			index;
 
@@ -86,12 +89,12 @@ int				mini_exit(char **args, t_envp **envp_list, t_term term)
 					(args[1][index] == '-' || args[1][index] == '+')))
 					break ;
 			if (args[1][index] == '\0')
-				exit(norm_exit(ft_atol(args[1]), args, envp_list, term));
+				exit(norm_exit(ft_atol(args[1]), args, envp_list, mode, term));
 			else
-				exit(error_numeric_argument(args[1], args, envp_list, term));
+				exit(error_numeric_argument(args[1], args, envp_list, mode, term));
 		}
 		else
-			return (error_too_many_args());
+			return (error_too_many_args(mode));
 	}
-	exit(norm_exit(0, args, envp_list, term));
+	exit(norm_exit(0, args, envp_list, mode, term));
 }
