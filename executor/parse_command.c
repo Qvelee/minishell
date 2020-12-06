@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/04 13:33:21 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/06 16:18:45 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int			init_sim_comm(int *index, int *fd, char ***simple_command, \
 							int bytes)
 {
 	*index = 0;
-	fd[0] = -1;
-	fd[1] = -1;
+	fd[0] = 0;
+	fd[1] = 0;
 	if (!(*simple_command = (char**)malloc(sizeof(char*) * bytes)))
 		return (12);
 	return (0);
@@ -55,8 +55,10 @@ int			create_simple_command(t_commands **commands, char **args, \
 			simple_command[index++] = args[start++];
 		else if (ret == 0)
 			start += 2;
+		else if (ret < 0)
+			return (comm_error_return_int(ret * -1, simple_command));
 		else
-			return (comm_error_return_int(ret, simple_command));
+			break ;
 	}
 	simple_command[index] = NULL;
 	if (!(command = comm_lst_new(simple_command, fd[0], fd[1])))

@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/04 13:09:18 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/06 17:01:24 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,65 +34,45 @@ int			run_simple_command(char **args, t_envp **envp_list, t_term term)
 	return (return_value);
 }
 
-int			init_exec(t_exec *exec, t_commands *commands)
+static int	set_fd_out(int *current_fd_out, int *command_fd_out)
 {
-	int		index;
+	int		ret;
 
-	exec->tmp_in = dup(0);
-	exec->tmp_out = dup(1);
-	exec->count = comm_lst_size(commands);
-	if (!(exec->pids = (int*)malloc(sizeof(int) * exec->count)))
+	ret = 0;
+	if (*command_fd_out > 0)
 	{
-		close(exec->tmp_in);
-		close(exec->tmp_out);
-		return (12);
+		try_close(*current_fd_out, -1, -1);
+		*current_fd_out = *command_fd_out;
 	}
-	index = -1;
-	while (++index < exec->count)
-		exec->pids[index] = 0;
-	exec->index = 0;
-	return (0);
+	dup2(*current_fd_out, 1);
+	try_close(*current_fd_out, -1, -1);
+	return (ret);
 }
 
-int			end_of_commands(t_exec *exec)
+static int	set_fd_in(int *current_fd_in, int *command_fd_in)
 {
-	dup2(exec->tmp_in, 0);
-	dup2(exec->tmp_out, 1);
-	close(exec->tmp_in);
-	close(exec->tmp_out);
-	exec->index = -1;
-	while (++exec->index < exec->count)
+	int		ret;
+
+	ret = 0;
+	if (*command_fd_in > 0)
 	{
-		if (exec->pids[exec->index] < 0)
-		{
-			exec->pids[exec->index] *= -1;
-			waitpid(exec->pids[exec->index], &exec->status, WUNTRACED);
-			while (!WIFEXITED(exec->status) && !WIFSIGNALED(exec->status))
-				waitpid(exec->pids[exec->index], &exec->status, WUNTRACED);
-			exec->return_value = WEXITSTATUS(exec->status);
-		}
-		else
-			exec->return_value = exec->pids[exec->index];
+		try_close(*current_fd_in, -1, -1);
+		*current_fd_in = *command_fd_in;
 	}
-	free(exec->pids);
-	return (exec->return_value);
+	dup2(*current_fd_in, 0);
+	try_close(*current_fd_in, -1, -1);
+	return (ret);
 }
 
 int			run_commands(t_commands *commands, t_envp **envp_list, t_term term)
 {
 	t_exec	exec;
 
-	init_exec(&exec, commands);
-	exec.fd_in = dup(exec.tmp_in);
+	if ((exec.return_value = init_exec(&exec, commands)))
+		return (exec.return_value);
 	while (commands)
 	{
-		if (commands->fd_in != -1)
-		{
-			close(exec.fd_in);
-			exec.fd_in = commands->fd_in;
-		}
-		dup2(exec.fd_in, 0);
-		close(exec.fd_in);
+		set_fd_in(&exec.fd_in, &commands->fd_in);
 		if (commands->next)
 		{
 			pipe(exec.fd_pipe);
@@ -101,14 +81,12 @@ int			run_commands(t_commands *commands, t_envp **envp_list, t_term term)
 		}
 		else
 			exec.fd_out = dup(exec.tmp_out);
-		if (commands->fd_out != -1)
-		{
-			close(exec.fd_out);
-			exec.fd_out = commands->fd_out;
-		}
-		dup2(exec.fd_out, 1);
-		close(exec.fd_out);
-		exec.return_value = run_simple_command(commands->command, envp_list, term);
+		set_fd_out(&exec.fd_out, &commands->fd_out);
+		if (commands->fd_in != -1 && commands->fd_out != -1)
+			exec.return_value = \
+				run_simple_command(commands->command, envp_list, term);
+		else
+			exec.return_value = 1;
 		commands = commands->next;
 		exec.pids[exec.index++] = exec.return_value;
 	}

@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:39:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 17:55:34 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/06 13:37:42 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@ int		error_command_not_found(char *command)
 	return (127);
 }
 
-int		error_print_return(char *massage)
+int		error_print_return(char *message)
 {
 	char	*error;
 
 	error = strerror(errno);
 	write(2, "minishell: ", 11);
-	write(2, massage, ft_strlen(massage));
-	write(2, ": ", 2);
+	if (message)
+	{
+		write(2, message, ft_strlen(message));
+		write(2, ": ", 2);
+	}
 	write(2, error, ft_strlen(error));
 	write(2, "\n", 1);
 	return (errno);

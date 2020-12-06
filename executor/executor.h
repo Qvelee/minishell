@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/03 13:07:39 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/06 14:43:30 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,15 @@ int		error_return_int(int return_value, char *memory_1, char *memory_2, \
 int		error_print_return(char *massage);
 int		error_command_not_found(char *command);
 int		error_syntax(char symbol);
+int		error_fd(char *path, int fd_1, int fd_2, int fd_3);
+int		try_close(int fd_1, int fd_2, int fd_3);
 
 int			save_ret_value(int value, t_envp **envp_list);
 int			run_commands(t_commands *commands, t_envp **envp_list, t_term term);
 int			redirect_output(char *path, int *fd_out, int mode);
 int			redirect_input(char *path, int *fd_in, int mode);
+int			init_exec(t_exec *exec, t_commands *commands);
+int			end_of_commands(t_exec *exec);
 
 /*
 **	envp treatment prototypes
