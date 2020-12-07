@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 16:18:45 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 17:52:34 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			create_simple_command(t_commands **commands, char **args, \
 	int			ret;
 
 	if (init_sim_comm(&index, fd, &simple_command, end - start + 1))
-		return (12);
+		return (error_print_return(NULL));
 	while (start < end)
 	{
 		if ((ret = redirection(args[start], args[start + 1], \
@@ -56,13 +56,13 @@ int			create_simple_command(t_commands **commands, char **args, \
 		else if (ret == 0)
 			start += 2;
 		else if (ret < 0)
-			return (comm_error_return_int(ret * -1, simple_command));
+			return (comm_return_int(ret * -1, simple_command));
 		else
 			break ;
 	}
 	simple_command[index] = NULL;
 	if (!(command = comm_lst_new(simple_command, fd[0], fd[1])))
-		return (comm_error_return_int(12, simple_command));
+		return (comm_return_int(error_print_return(NULL), simple_command));
 	comm_add_back(command, commands);
 	return (0);
 }

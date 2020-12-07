@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:41:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 16:24:37 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:32:26 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		error_syntax(char symbol)
 	return (2);
 }
 
-int		comm_error_return_int(int return_value, char **memory)
+int		comm_return_int(int return_value, char **memory)
 {
 	if (memory)
 		free(memory);

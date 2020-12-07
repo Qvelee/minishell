@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 19:53:21 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 17:26:22 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,32 @@ static int	wait_all_processes(t_exec *exec)
 
 int			error_running(int return_value, t_commands *command, t_exec *exec)
 {
-	int		ret;
-	int		tmp;
-
 	wait_all_processes(exec);
-	if ((tmp = error_print_return(NULL)))
-		ret = tmp;
-	if ((tmp = try_close(command->fd_in, command->fd_out, -1)))
-		ret = tmp;
-	if ((tmp = try_close(exec->fd_in, exec->fd_out, -1)))
-		ret = tmp;
+	try_close(command->fd_in, command->fd_out, -1);
+	try_close(exec->fd_in, exec->fd_out, -1);
 	if ((dup2(exec->tmp_in, 0) == -1))
-		ret = error_print_return(NULL);
+		error_print_return("can't restore stdin");
 	if ((dup2(exec->tmp_out, 1) == -1))
-		ret = error_print_return(NULL);
-	if ((tmp = try_close(exec->tmp_in, exec->tmp_out, -1)))
-		ret = tmp;
+		error_print_return("can't restore stout");
+	try_close(exec->tmp_in, exec->tmp_out, -1);
 	free(exec->pids);
-	return (ret);
+	return (return_value);
 }
 
 int			end_of_commands(t_exec *exec)
 {
-	int 	temp;
+	int 	ret;
+	int		tmp;
 
-	wait_all_processes(exec);
+	ret = wait_all_processes(exec);
 	if ((dup2(exec->tmp_in, 0) == -1))
-		exec->return_value = error_print_return(NULL);
+		ret = error_print_return("can't restore stdin");
 	if ((dup2(exec->tmp_out, 1) == -1))
-		exec->return_value = error_print_return(NULL);
-	if ((temp = try_close(exec->tmp_in, exec->tmp_out, -1)))
-		exec->return_value = temp;
+		ret = error_print_return("can't restore stout");
+	if ((tmp = try_close(exec->tmp_in, exec->tmp_out, -1)))
+		ret = tmp;
 	free(exec->pids);
-	return (exec->return_value);
+	return (ret);
 }
 
 int			init_exec(t_exec *exec, t_commands *commands)
@@ -84,7 +77,7 @@ int			init_exec(t_exec *exec, t_commands *commands)
 	if (!(exec->pids = (int*)malloc(sizeof(int) * exec->count)))
 	{
 		try_close(exec->tmp_in, exec->tmp_out, -1);
-		return (12);
+		return (error_print_return(NULL));
 	}
 	index = -1;
 	while (++index < exec->count)

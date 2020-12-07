@@ -6,22 +6,32 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:39:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 13:37:42 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 17:38:18 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void	check_memory_error(int code, char **args, t_envp **envp_list, \
-	t_term term)
+int 	check_fatal_error(int code)
 {
-	if (code != 12)
-		return ;
+	const int	errors[10] = {5, 9, 11, 12, 14, 23, 24, 28, 77, 121};
+	int			index;
+
+	index = -1;
+	while (++index < 10)
+		if (code == errors[index])
+			break ;
+	if (index == 10)
+		return (0);
+	return (code);
+}
+
+void	exit_fatal(int code, char **args, t_envp **envp_list, t_term term)
+{
 	free_matrix(args);
 	envp_lst_clear(envp_list, free);
 	remove_terminal_mode(term);
-	write(2, "minishell: Out of memory\n", 25);
-	exit(12);
+	exit(code);
 }
 
 int		error_command_not_found(char *command)
@@ -47,17 +57,6 @@ int		error_print_return(char *message)
 	write(2, error, ft_strlen(error));
 	write(2, "\n", 1);
 	return (errno);
-}
-
-char	*error_return_char(char *memory_1, char *memory_2, char **matrix)
-{
-	if (memory_1)
-		free(memory_1);
-	if (memory_2)
-		free(memory_1);
-	if (matrix)
-		free_matrix(matrix);
-	return (NULL);
 }
 
 int		error_return_int(int return_value, char *memory_1, char *memory_2, \

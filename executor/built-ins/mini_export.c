@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 22:49:09 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 15:40:56 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:39:47 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			mini_export(char **args,  t_envp **envp)
 		index = 0;
 		while (args[++index])
 			if (handle_argument(args[index], envp))
-				return (12);
+				return (error_print_return(NULL));
 	}
 	return (0);
 }

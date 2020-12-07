@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 15:26:18 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:39:06 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	get_pwd(char **pwd)
 	{
 		*pwd = NULL;
 		free(temp);
-		return (12);
+		return (error_print_return(NULL));
 	}
 	free(temp);
 	return (0);
@@ -86,18 +86,18 @@ static int	cd_to_directory(t_envp **envp, char *directory)
 	if ((chdir(directory) != -1))
 	{
 		if (!(old_pwd = get_oldpwd(*envp)))
-			return (12);
+			return (error_print_return(NULL));
 		if (envp_replace_variable(envp, old_pwd, 0))
 		{
 			free(old_pwd);
-			return (12);
+			return (error_print_return(NULL));
 		}
 		if ((err = get_pwd(&pwd)))
 			return (err);
 		if (envp_replace_variable(envp, pwd, 0))
 		{
 			free(pwd);
-			return (12);
+			return (error_print_return(NULL));
 		}
 	}
 	else

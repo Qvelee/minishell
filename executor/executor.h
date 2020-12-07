@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 19:22:24 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 17:39:41 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct	s_exec
 }				t_exec;
 
 
-void	check_memory_error(int code, char **args, t_envp **envp_list, t_term term);
+int		check_fatal_error(int code);
 int		parse_command_ex(char **args, t_commands **commands);
 int		built_in(char **args, t_envp **envp_list, int mode, t_term term);
 int		mini_echo(char **args);
@@ -58,7 +58,6 @@ int		mini_unset(char **args, t_envp **envp);
 int		mini_env(t_envp *envp);
 int		mini_exit(char **args, t_envp **envp_list, int mode, t_term term);
 int		command(char **args, t_envp **envp_list);
-char	*error_return_char(char *memory_1, char *memory_2, char **matrix);
 int		error_return_int(int return_value, char *memory_1, char *memory_2, \
 	char **matrix);
 int		error_print_return(char *massage);
@@ -67,6 +66,7 @@ int		error_syntax(char symbol);
 int		error_fd(char *path, int fd_1, int fd_2, int fd_3);
 int		try_close(int fd_1, int fd_2, int fd_3);
 int		error_running(int return_value, t_commands *command, t_exec *exec);
+void	exit_fatal(int code, char **args, t_envp **envp_list, t_term term);
 
 int			save_ret_value(int value, t_envp **envp_list);
 int			run_commands(t_commands *commands, t_envp **envp_list, t_term term);
@@ -99,6 +99,6 @@ t_commands	*comm_last_element(t_commands *commands);
 void		comm_add_back(t_commands *command, t_commands **commands);
 void		comm_lst_clr(t_commands **commands);
 int			comm_lst_size(t_commands *commands);
-int			comm_error_return_int(int return_value, char **memory);
+int			comm_return_int(int return_value, char **memory);
 
 #endif

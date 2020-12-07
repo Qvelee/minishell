@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/02 15:46:14 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:42:58 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,13 @@ int			command(char **args, t_envp **envp_list)
 	return_value = find_executable_in_path(&command, args[0], \
 		envp_get_var_value(*envp_list, "PATH"));
 	if (return_value == 12)
-		return (12);
+		return (error_print_return(NULL));
 	else if (return_value == 2)
 		if (!(command = ft_strdup(args[0])))
-			return (12);
+			return (error_print_return(NULL));
 	if (!(envp = envp_lst_to_matrix(*envp_list)))
-		return (error_return_int(12, command, NULL, NULL));
+		return (error_return_int(error_print_return(NULL), command, \
+														NULL, NULL));
 	return_value = run_exec(command, args, envp);
 	free(command);
 	free(envp);

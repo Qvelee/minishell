@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:39:27 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 15:49:56 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 14:28:06 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		get_input(char *word, int *fd)
 	int		ret;
 	
 	if (!(path = ft_strjoin("/tmp/", word)))
-		return (-12);
+		return (error_print_return(NULL) * -1);
 	if ((*fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0444)) == -1)	
 		return (error_return_int(error_fd(path, -1, -1, -1), path, \
 															NULL, NULL));
