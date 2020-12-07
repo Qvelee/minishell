@@ -6,13 +6,12 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 17:44:29 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 18:11:14 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-//do the correct return system
 //not destroy terminal mode in exit if pipe
 
 static int	run_command(t_commands *commands, t_envp **envp_list, int count, \
@@ -35,6 +34,17 @@ static int	run_command(t_commands *commands, t_envp **envp_list, int count, \
 	else
 		return_value = 1;
 	return (return_value);
+}
+
+static int	do_pipe(int *fd_pipe, int *fd_in, int *fd_out)
+{
+	int 	ret;
+
+	if ((ret = pipe(fd_pipe)) == -1)
+		return (1);
+	*fd_in = fd_pipe[0];
+	*fd_out = fd_pipe[1];
+	return (0);
 }
 
 static int	set_fd_out(int *current_fd_out, int *command_fd_out)
@@ -71,17 +81,6 @@ static int	set_fd_in(int *current_fd_in, int *command_fd_in)
 	if ((ret = try_close(*current_fd_in, -1, -1)))
 		return (ret);
 	return (ret);
-}
-
-static int	do_pipe(int *fd_pipe, int *fd_in, int *fd_out)
-{
-	int 	ret;
-
-	if ((ret = pipe(fd_pipe)) == -1)
-		return (1);
-	*fd_in = fd_pipe[0];
-	*fd_out = fd_pipe[1];
-	return (0);
 }
 
 int			run_commands(t_commands *commands, t_envp **envp_list, t_term term)
