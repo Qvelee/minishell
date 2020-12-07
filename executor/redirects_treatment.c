@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:39:27 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 18:24:14 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:24:12 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,19 @@ int		get_next_input(char **line)
 	return (ret);
 }
 
-int		get_input(char *word, int *fd)
+int		get_input(char *word, int *fd, t_envp *envp)
 {
 	char	*line;
 	char	*path;
 	int		ret;
 	
+	set_terminal_mode(envp_get_var_value(envp, "TERM"));
 	if (!(path = ft_strjoin("/tmp/", word)))
 		return (error_print_return(NULL) * -1);
-	if ((*fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0444)) == -1)	
+	if ((*fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 		return (error_return_int(error_fd(path, -1, -1, -1), path, \
 															NULL, NULL));
-	while (get_next_input(&line))
+	while ((line = read_line(envp)))
 	{
 		if (!ft_strcmp(line, word))
 			break ;
@@ -66,10 +67,11 @@ int		get_input(char *word, int *fd)
 															NULL, NULL));
 	free(line);
 	free(path);
+	remove_terminal_mode();
 	return (0);
 }
 
-int		redirect_input(char *path, int *fd_in, int mode)
+int		redirect_input(char *path, int *fd_in, int mode, t_envp *envp)
 {
 	int		ret;
 
@@ -86,7 +88,7 @@ int		redirect_input(char *path, int *fd_in, int mode)
 				return (error_fd(path, -1, -1, -1));
 		}
 		else
-			if ((ret = get_input(path, fd_in)))
+			if ((ret = get_input(path, fd_in, envp)))
 				return (ret);
 	}
 	return (0);

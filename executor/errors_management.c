@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:39:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 17:38:18 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 19:19:49 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int 	check_fatal_error(int code)
 	return (code);
 }
 
-void	exit_fatal(int code, char **args, t_envp **envp_list, t_term term)
+void	exit_fatal(int code, char **args, t_envp **envp_list)
 {
 	free_matrix(args);
 	envp_lst_clear(envp_list, free);
-	remove_terminal_mode(term);
+	remove_terminal_mode();
 	exit(code);
 }
 

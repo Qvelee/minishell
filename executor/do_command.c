@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 18:30:33 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:17:08 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,25 @@ int			save_ret_value(int value, t_envp **envp_list)
 	return (0);
 }
 
-int			do_command(char **args, t_envp **envp_list, t_term term)
+int			do_command(char **args, t_envp **envp_list)
 {
 	int			return_value;
 	t_commands	*commands;
 
-	if (!(return_value = parse_command_ex(args, &commands)))
+	if (!(return_value = parse_command_ex(args, &commands, *envp_list)))
 	{
-		if ((return_value = run_commands(commands, envp_list, term)))
+		if ((return_value = run_commands(commands, envp_list)))
 		{
 			comm_lst_clr(&commands);
 			if (check_fatal_error(return_value))
-				exit_fatal(return_value, args, envp_list, term);
+				exit_fatal(return_value, args, envp_list);
 		}
 	}
 	else
 		if (check_fatal_error(return_value))
-			exit_fatal(return_value, args, envp_list, term);
+			exit_fatal(return_value, args, envp_list);
 	comm_lst_clr(&commands);
 	if (save_ret_value(return_value, envp_list))
-		exit_fatal(12, args, envp_list, term);
+		exit_fatal(12, args, envp_list);
 	return (return_value);
 }

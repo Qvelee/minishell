@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 17:52:34 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:17:25 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ int			init_sim_comm(int *index, int *fd, char ***simple_command, \
 }
 
 int			redirection(char *argument, char *value, \
-								int *fd_out, int *fd_in)
+								int *fd_out, int *fd_in, t_envp *envp)
 {
 	if (!ft_strcmp(argument, ">"))
 		return (redirect_output(value, fd_out, 1));
 	if (!ft_strcmp(argument, ">>"))
 		return (redirect_output(value, fd_out, 2));
 	if (!ft_strcmp(argument, "<"))
-		return (redirect_input(value, fd_in, 1));
+		return (redirect_input(value, fd_in, 1, envp));
 	if (!ft_strcmp(argument, "<<"))
-		return (redirect_input(value, fd_in, 2));
+		return (redirect_input(value, fd_in, 2, envp));
 	return (-1);
 }
 
 int			create_simple_command(t_commands **commands, char **args, \
-									int start, int end)
+									int start, int end, t_envp *envp)
 {
 	t_commands	*command;
 	char		**simple_command;
@@ -51,7 +51,7 @@ int			create_simple_command(t_commands **commands, char **args, \
 	while (start < end)
 	{
 		if ((ret = redirection(args[start], args[start + 1], \
-								&fd[0], &fd[1])) == -1)
+								&fd[0], &fd[1], envp)) == -1)
 			simple_command[index++] = args[start++];
 		else if (ret == 0)
 			start += 2;
@@ -67,7 +67,7 @@ int			create_simple_command(t_commands **commands, char **args, \
 	return (0);
 }
 
-int			cut_to_simple_commands(char **args, t_commands **commands)
+int			cut_to_simple_commands(char **args, t_commands **commands, t_envp *envp)
 {
 	t_commands	*command;
 	int			index;
@@ -81,20 +81,20 @@ int			cut_to_simple_commands(char **args, t_commands **commands)
 	while (args[++index])
 		if (!ft_strcmp(args[index], "|"))
 		{
-			if ((ret = create_simple_command(commands, args, start, index)))
+			if ((ret = create_simple_command(commands, args, start, index, envp)))
 				return (ret);
 			start = index + 1;
 		}
-	if ((ret = create_simple_command(commands, args, start, index)))
+	if ((ret = create_simple_command(commands, args, start, index, envp)))
 		return (ret);
 	return (0);
 }
 
-int			parse_command_ex(char **args, t_commands **commands)
+int			parse_command_ex(char **args, t_commands **commands, t_envp *envp)
 {
 	int		ret;
 
-	if ((ret = cut_to_simple_commands(args, commands)))
+	if ((ret = cut_to_simple_commands(args, commands, envp)))
 	{
 		comm_lst_clr(commands);
 		return (ret);

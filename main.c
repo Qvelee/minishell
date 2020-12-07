@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/07 18:34:19 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:01:18 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 		while (*str && *str != '\n')
 		{
 			command = parse_command(&str, _envp);
+			remove_terminal_mode();
 			do_command(command, &_envp);
+			set_terminal_mode(envp_get_var_value(_envp, "TERM"));
 			i = 0;
 			while (command[i])
 				free(command[i++]);

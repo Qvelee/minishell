@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:32:15 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/06 18:45:43 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 19:35:19 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static int		error_too_many_args(int mode)
 }
 
 static int		error_numeric_argument(char *wrong_argument, char **args, \
-	t_envp **envp_list, int mode, t_term term)
+	t_envp **envp_list, int mode)
 {
 	if (!mode)
 		write(1, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);
 	write(2, wrong_argument, ft_strlen(wrong_argument));
 	write(2, ": numeric argument required\n", 28);
-	remove_terminal_mode(term);
+	remove_terminal_mode();
 	envp_lst_clear(envp_list, free);
 	free_matrix(args);
 	return (2);
@@ -62,19 +62,20 @@ static int		check_overflow(long int code, char *argument)
 }
 
 static long int	norm_exit(long int code, char **args, t_envp **envp_list, \
-	int mode, t_term term)
+	int mode)
 {
 	if (args[1] && check_overflow(code, args[1]))
-		return (error_numeric_argument(args[1], args, envp_list, mode, term));
+		return (error_numeric_argument(args[1], args, envp_list, mode));
 	if (!mode)
 		write(1, "exit\n", 5);
-	remove_terminal_mode(term);
+	if (!mode || mode == 2)
+		remove_terminal_mode();
 	envp_lst_clear(envp_list, free);
 	free_matrix(args);
 	return (code);
 }
 
-int				mini_exit(char **args, t_envp **envp_list, int mode, t_term term)
+int				mini_exit(char **args, t_envp **envp_list, int mode)
 {
 	int			index;
 
@@ -89,12 +90,12 @@ int				mini_exit(char **args, t_envp **envp_list, int mode, t_term term)
 					(args[1][index] == '-' || args[1][index] == '+')))
 					break ;
 			if (args[1][index] == '\0')
-				exit(norm_exit(ft_atol(args[1]), args, envp_list, mode, term));
+				exit(norm_exit(ft_atol(args[1]), args, envp_list, mode));
 			else
-				exit(error_numeric_argument(args[1], args, envp_list, mode, term));
+				exit(error_numeric_argument(args[1], args, envp_list, mode));
 		}
 		else
 			return (error_too_many_args(mode));
 	}
-	exit(norm_exit(0, args, envp_list, mode, term));
+	exit(norm_exit(0, args, envp_list, mode));
 }

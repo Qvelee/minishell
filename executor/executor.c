@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 18:11:14 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 19:55:57 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 //not destroy terminal mode in exit if pipe
 
-static int	run_command(t_commands *commands, t_envp **envp_list, int count, \
-															t_term term)
+static int	run_command(t_commands *commands, t_envp **envp_list, int count)
 {
 	int		return_value;
 	int		mode;
@@ -28,7 +27,7 @@ static int	run_command(t_commands *commands, t_envp **envp_list, int count, \
 	if (commands->fd_in != -1 && commands->fd_out != -1)
 	{
 		if ((return_value = \
-				built_in(commands->command, envp_list, mode, term)) == 127)
+				built_in(commands->command, envp_list, mode)) == 127)
 			return_value = command(commands->command, envp_list);
 	}
 	else
@@ -83,7 +82,7 @@ static int	set_fd_in(int *current_fd_in, int *command_fd_in)
 	return (ret);
 }
 
-int			run_commands(t_commands *commands, t_envp **envp_list, t_term term)
+int			run_commands(t_commands *commands, t_envp **envp)
 {
 	t_exec	exec;
 
@@ -92,20 +91,21 @@ int			run_commands(t_commands *commands, t_envp **envp_list, t_term term)
 	while (commands)
 	{
 		if ((exec.return_value = set_fd_in(&exec.fd_in, &commands->fd_in)))
-			return (error_running(exec.return_value, commands, &exec));
+			return (error_running(exec.return_value, commands, &exec, *envp));
 		if (commands->next)
 			if (do_pipe(exec.fd_pipe, &exec.fd_in, &exec.fd_out))
-				return (error_running(exec.return_value, commands, &exec));
+				return (error_running(exec.return_value, commands, &exec, \
+																	*envp));
 		if (!commands->next)
 			if ((exec.fd_out = dup(exec.tmp_out)) == -1)
-				return (error_running(exec.fd_out, commands, &exec));
+				return (error_running(exec.fd_out, commands, &exec, *envp));
 		if ((exec.return_value = set_fd_out(&exec.fd_out, &commands->fd_out)))
-			return (error_running(exec.return_value, commands, &exec));
-		exec.return_value = run_command(commands, envp_list, exec.count, term);
+			return (error_running(exec.return_value, commands, &exec, *envp));
+		exec.return_value = run_command(commands, envp, exec.count);
 		if (check_fatal_error(exec.return_value))
-			return (error_running(exec.return_value, commands, &exec));
+			return (error_running(exec.return_value, commands, &exec, *envp));
 		exec.pids[exec.index++] = exec.return_value;
 		commands = commands->next;
 	}
-	return (end_of_commands(&exec));
+	return (end_of_commands(&exec, *envp));
 }

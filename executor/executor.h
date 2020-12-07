@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 17:39:41 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:18:14 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ typedef struct	s_exec
 	int		status;
 }				t_exec;
 
+int		set_terminal_mode(char *term_name);
+char	*read_line(t_envp *envp);
 
 int		check_fatal_error(int code);
-int		parse_command_ex(char **args, t_commands **commands);
-int		built_in(char **args, t_envp **envp_list, int mode, t_term term);
+int		parse_command_ex(char **args, t_commands **commands, t_envp *envp);
+int		built_in(char **args, t_envp **envp_list, int mode);
 int		mini_echo(char **args);
 int		mini_pwd(void);
 int		mini_cd(char **args, t_envp **envp);
@@ -56,7 +58,7 @@ int		error_arg_export(char *argument);
 void	print_line(char *line);
 int		mini_unset(char **args, t_envp **envp);
 int		mini_env(t_envp *envp);
-int		mini_exit(char **args, t_envp **envp_list, int mode, t_term term);
+int		mini_exit(char **args, t_envp **envp_list, int mode);
 int		command(char **args, t_envp **envp_list);
 int		error_return_int(int return_value, char *memory_1, char *memory_2, \
 	char **matrix);
@@ -65,15 +67,15 @@ int		error_command_not_found(char *command);
 int		error_syntax(char symbol);
 int		error_fd(char *path, int fd_1, int fd_2, int fd_3);
 int		try_close(int fd_1, int fd_2, int fd_3);
-int		error_running(int return_value, t_commands *command, t_exec *exec);
-void	exit_fatal(int code, char **args, t_envp **envp_list, t_term term);
+int		error_running(int return_value, t_commands *command, t_exec *exec, t_envp *envp_list);
+void	exit_fatal(int code, char **args, t_envp **envp_list);
 
 int			save_ret_value(int value, t_envp **envp_list);
-int			run_commands(t_commands *commands, t_envp **envp_list, t_term term);
+int			run_commands(t_commands *commands, t_envp **envp_list);
 int			redirect_output(char *path, int *fd_out, int mode);
-int			redirect_input(char *path, int *fd_in, int mode);
+int			redirect_input(char *path, int *fd_in, int mode, t_envp *envp);
 int			init_exec(t_exec *exec, t_commands *commands);
-int			end_of_commands(t_exec *exec);
+int			end_of_commands(t_exec *exec, t_envp *envp_list);
 
 /*
 **	envp treatment prototypes
