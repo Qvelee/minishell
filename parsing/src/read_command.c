@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/20 09:10:40 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 18:31:34 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@
 #include "libft.h"
 #include <term.h>
 
-char	*read_line(struct termios term,t_envp *envp)
+char	*read_line(t_envp *envp)
 {
 	int ret;
 	char sym[10];
 	int i;
 	int len;
 	int j;
+	int *lens;
 	char *str;
 	ret = 1;
 	sym[0] = 0;
@@ -44,14 +45,15 @@ char	*read_line(struct termios term,t_envp *envp)
 			if (str[i])
 				{
 					len = ft_strlen(str);
-					while (--len > i - 1)
-						str[len + 1] = str[len];
+					while (--len > i - ret)
+						str[len + ret] = str[len];
 				}
 			while (j < ret)
 			{
 				str[i++] = sym[j++];
 			}
 			write(1, sym,ret);
+
 		}
 		if (*str == 4)
 		{
