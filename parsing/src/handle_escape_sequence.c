@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_escape_sequence.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:19:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/20 16:49:44 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/06 02:19:38 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "main.h"
 #include "libft.h"
 #include <curses.h>
+#include "parse.h"
 
 int	ft_putchar(int c)
 {
@@ -23,37 +24,74 @@ int	ft_putchar(int c)
 int	handle_escape_sequence(char *command, t_envp *envp, char *str, int *i)
 {
 	int len;
+	t_coor cursor;
+	t_coor term;
 
 	len = ft_strlen(str);
-	char *term_name;
+	cursor = get_cursor();
+	term = get_term_size();
 	if (command[0] && command[1] && (command[2] == 'A' || command[2] == 'B' || command[2] == 'C' || command[2] == 'D'))
 		command[1] = 'O';
-	
+
 	//tputs(tgetstr("ei",0),1,&ft_putchar);
 	if (*i > 0 && !ft_memcmp(tgetstr("kl", 0),command,ft_strlen(command) + 1))
 	{
-		tputs(tgetstr("le", 0),1,ft_putchar);
+		if (cursor.x == 1)
+		{
+
+			tputs(tgetstr("up", 0), 1, ft_putchar);
+			tputs(tgoto(tgetstr("ch", 0), 0, term.x),1,ft_putchar);
+		}
+		else
+			tputs(tgetstr("le", 0),1,ft_putchar);
+		if (str[*i - 1] < 0)
+			(*i)--;
 		(*i)--;
 	}
 	else if (*i < len && !ft_memcmp(tgetstr("kr", 0),command,ft_strlen(command)+ 1))
 	{
-		tputs(tgetstr("nd", 0),1,ft_putchar);
+		if (cursor.x == term.x)
+		{
+
+			tputs(cursor_down, 1, ft_putchar);
+			tputs(tgoto(tgetstr("LE", 0), 0, term.x),1,ft_putchar);
+		}
+		else
+			tputs(tgetstr("nd", 0),1,ft_putchar);
+		if (str[*i - 1] < 0)
+			(*i)++;
 		(*i)++;
 	}
 	else if (*i < len && !ft_memcmp(tgetstr("kD", 0),command,ft_strlen(command)+ 1))
 	{
-		ft_memmove(str + *i,str + *i + 1, len - *i);
+		if (str[*i] <  0)
+			ft_memmove(str + *i,str + *i + 2, len - *i);
+		else
+			ft_memmove(str + *i,str + *i + 1, len - *i);
 		str[len] = 0;
-		tputs(tgetstr("dc", 0),1,ft_putchar);
+		tputs(save_cursor, 0, ft_putchar);
+		tputs(tgoto(tgetstr("ce", 0),len - *i + 1,0),1,ft_putchar);
+		write(1, &str[*i], len - *i);
+		tputs(restore_cursor, 0, ft_putchar);
+		//tputs(delete_character, 1, ft_putchar);
 		//(*i)++;
 	}
 	else if (*i > 0 && !ft_memcmp(tgetstr("kb", 0),command,ft_strlen(command)+ 1))
 	{
 		tputs(tgetstr("le", 0),1,ft_putchar);
 		tputs(tgetstr("dc", 0),1,ft_putchar);
-		ft_memmove(str + *i - 1,str + *i, len - *i + 1);
-		str[len - 1] = 0;
-		(*i)--;
+		if (str[*i - 1] < 0)
+		{
+			ft_memmove(str + *i - 2,str + *i, len - *i + 2);
+			*i = *i - 2;
+			str[len - 2] = 0;
+		}
+		else
+		{
+			ft_memmove(str + *i - 1,str + *i, len - *i + 1);
+			(*i)--;
+			str[len - 1] = 0;
+		}
 	}
 	//tputs(tgetstr("im",0),1,&ft_putchar);
 	return(0);

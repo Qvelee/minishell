@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 19:58:08 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/07 18:34:40 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef struct	s_envp
 	struct s_envp	*next;
 }				t_envp;
 
-int		do_command(char **args, t_envp **envp_list, struct termios term);
+int		do_command(char **args, t_envp **envp_list);
 t_envp	*envp_create_list(char **_envp);
 void	envp_lst_clear(t_envp **envp_list, void (*delete)(void*));
-int		remove_terminal_mode(struct termios term);
+int		remove_terminal_mode(void);
 void	free_matrix(char **memory);
 void	exit_minishell(int code, char **args, t_envp **envp_list);
 char	*envp_get_var_value(t_envp *envp_list, char *variable);

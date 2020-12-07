@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/20 16:49:51 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 18:34:19 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void ft_nothing(int __attribute__ ((unused))sig)
 
 int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, char **envp)
 {
-	struct termios term;
 	char *str;
 	char **command;
 	char *temp;
@@ -45,19 +44,19 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 	my_exit[1] = 0;
 	_envp = envp_create_list(envp);
 	term_name = envp_get_var_value(_envp,"TERM");
-	set_terminal_mode(term,term_name);
+	set_terminal_mode(term_name);
 	str = "NE 4";
 	write(1, GREEN, 5);
 	write(1,"minishell: ", 12);
 	write(1, RESET, 5);
-	str = read_line(term,_envp);
+	str = read_line(_envp);
 	while (str && *str && *str != 4)
 	{
 		temp = str;
 		while (*str && *str != '\n')
 		{
 			command = parse_command(&str, _envp);
-			do_command(command, &_envp, term);
+			do_command(command, &_envp);
 			i = 0;
 			while (command[i])
 				free(command[i++]);
@@ -68,8 +67,8 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 		write(1, GREEN, 5);
 		write(1,"minishell: ", 12);
 		write(1, RESET, 5);
-		str = read_line(term,_envp);
+		str = read_line(_envp);
 	}
-	do_command((char*[2]){"exit", 0}, &_envp,term);
+	do_command((char*[2]){"exit", 0}, &_envp);
 	return (0);
 }

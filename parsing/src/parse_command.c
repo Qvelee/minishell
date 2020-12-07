@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/20 09:10:50 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/07 18:22:07 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char *parse_env(char **str, t_envp *envp)
 	add = 0;
 	i = 1;
 	while (ft_isalnum((*str)[i]))
+		i++;
+	if ((*str)[0] == '$' && (*str)[1] == '?')
 		i++;
 	var = ft_substr(*str,1,i - 1);
 	*str += i;

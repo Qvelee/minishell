@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/11/17 21:33:07 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/05 17:33:37 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ handle_escape_sequence.o\
 parse_command.o\
 read_command.o\
 remove_terminal_mode.o\
-set_terminal_mode.o
+set_terminal_mode.o\
+get_line.o\
+get_term_size.o
 UNAME = $(shell uname)
 REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
 BONUS_OBJ_FILES = $(addprefix $(OBJ),$(BONUS_FILES))
