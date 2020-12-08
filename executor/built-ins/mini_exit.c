@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 12:32:15 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 19:35:19 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/08 15:17:55 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int		error_too_many_args(int mode)
 {
-	if (!mode)
-		write(1, "exit\n", 5);
+	if (mode != 1)
+		write(2, "exit\n", 5);
 	write(2, "minishell: exit: too many arguments\n", 36);
 	return (1);
 }
@@ -23,8 +23,8 @@ static int		error_too_many_args(int mode)
 static int		error_numeric_argument(char *wrong_argument, char **args, \
 	t_envp **envp_list, int mode)
 {
-	if (!mode)
-		write(1, "exit\n", 5);
+	if (mode != 1)
+		write(2, "exit\n", 5);
 	write(2, "minishell: exit: ", 17);
 	write(2, wrong_argument, ft_strlen(wrong_argument));
 	write(2, ": numeric argument required\n", 28);
@@ -66,10 +66,11 @@ static long int	norm_exit(long int code, char **args, t_envp **envp_list, \
 {
 	if (args[1] && check_overflow(code, args[1]))
 		return (error_numeric_argument(args[1], args, envp_list, mode));
-	if (!mode)
-		write(1, "exit\n", 5);
-	if (!mode || mode == 2)
+	if (mode != 1)
+	{
+		write(2, "exit\n", 5);
 		remove_terminal_mode();
+	}
 	envp_lst_clear(envp_list, free);
 	free_matrix(args);
 	return (code);
