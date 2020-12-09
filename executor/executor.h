@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 20:18:14 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/09 15:22:28 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int			save_ret_value(int value, t_envp **envp_list);
 int			run_commands(t_commands *commands, t_envp **envp_list);
 int			redirect_output(char *path, int *fd_out, int mode);
 int			redirect_input(char *path, int *fd_in, int mode, t_envp *envp);
+int			get_input(char *stop_word, int *fd, t_envp *envp);
 int			init_exec(t_exec *exec, t_commands *commands);
 int			end_of_commands(t_exec *exec, t_envp *envp_list);
 

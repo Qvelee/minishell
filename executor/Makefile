@@ -6,7 +6,7 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/06 14:42:07 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/12/09 15:22:00 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ EXEC_SRC =			do_command.c \
 					errors_management.c \
 					errors_management_2.c \
 					redirects_treatment.c \
+					get_input.c \
 					exec_utils.c \
 					comm_utils.c \
 					parse_command.c
