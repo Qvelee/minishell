@@ -6,13 +6,11 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 19:55:57 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/09 19:52:22 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
-//not destroy terminal mode in exit if pipe
 
 static int	run_command(t_commands *commands, t_envp **envp_list, int count)
 {
@@ -22,7 +20,8 @@ static int	run_command(t_commands *commands, t_envp **envp_list, int count)
 	mode = 0;
 	if (count > 1)
 		mode = 1;
-	if (!mode && (!ft_strcmp(commands->command[0], "exit") && commands->fd_out))
+	if (!mode && (!ft_strcmp(commands->command[0], "exit") && \
+											commands->fd_out))
 		mode = 2;
 	if (commands->fd_in != -1 && commands->fd_out != -1)
 	{
@@ -53,13 +52,13 @@ static int	set_fd_out(int *current_fd_out, int *command_fd_out)
 	ret = 0;
 	if (*command_fd_out > 0)
 	{
-		if ((ret = try_close(*current_fd_out, -1, -1)))
+		if ((ret = try_close(current_fd_out, NULL)))
 			return (ret);
 		*current_fd_out = *command_fd_out;
 	}
 	if (dup2(*current_fd_out, 1) == -1)
-		return (error_fd(NULL, *current_fd_out, -1, -1));
-	if ((ret = try_close(*current_fd_out, -1, -1)))
+		return (error_fd(NULL, *current_fd_out, -1));
+	if ((ret = try_close(current_fd_out, NULL)))
 		return (ret);
 	return (ret);
 }
@@ -71,13 +70,13 @@ static int	set_fd_in(int *current_fd_in, int *command_fd_in)
 	ret = 0;
 	if (*command_fd_in > 0)
 	{
-		if ((ret = try_close(*current_fd_in, -1, -1)))
+		if ((ret = try_close(current_fd_in, NULL)))
 			return (ret);
 		*current_fd_in = *command_fd_in;
 	}
 	if (dup2(*current_fd_in, 0) == -1)
-		return (error_fd(NULL, *current_fd_in, -1, -1));
-	if ((ret = try_close(*current_fd_in, -1, -1)))
+		return (error_fd(NULL, *current_fd_in, -1));
+	if ((ret = try_close(current_fd_in, NULL)))
 		return (ret);
 	return (ret);
 }

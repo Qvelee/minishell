@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:18:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/09 16:15:23 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/09 19:36:38 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	error_read_line(char *memory, int *fd)
 	errno = 12;
 	error_print_return(NULL);
 	free(memory);
-	try_close(*fd, -1, -1);
+	try_close(fd, NULL);
 	return (12);
 }
 
@@ -82,14 +82,14 @@ int			get_input(char *stop_word, int *fd, t_envp *envp)
 	if (!(path = ft_strjoin("/tmp/", stop_word)))
 		return (error_print_return(NULL));
 	if ((*fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
-		return (error_return_int(error_fd(path, -1, -1, -1), path, \
+		return (error_return_int(error_fd(NULL, -1, -1), path, \
 															NULL, NULL));
 	if (read_input(fd, stop_word, envp))
 		return (error_read_line(path, fd));
-	if ((ret = try_close(*fd, -1, -1)))
+	if ((ret = try_close(fd, NULL)))
 		return (error_return_int(ret, path, NULL, NULL));
 	if ((*fd = open(path, O_RDONLY, 0444)) == -1)
-		return (error_return_int(error_fd(path, -1, -1, -1), path, \
+		return (error_return_int(error_fd(NULL, -1, -1), path, \
 															NULL, NULL));
 	free(path);
 	remove_terminal_mode();

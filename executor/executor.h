@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/09 15:22:28 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/09 19:21:42 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int		error_return_int(int return_value, char *memory_1, char *memory_2, \
 int		error_print_return(char *massage);
 int		error_command_not_found(char *command);
 int		error_syntax(char symbol);
-int		error_fd(char *path, int fd_1, int fd_2, int fd_3);
-int		try_close(int fd_1, int fd_2, int fd_3);
+int		error_fd(char *path, int fd_1, int fd_2);
+int		try_close(int *fd_1, int *fd_2);
 int		error_running(int return_value, t_commands *command, t_exec *exec, t_envp *envp_list);
 void	exit_fatal(int code, char **args, t_envp **envp_list);
 
