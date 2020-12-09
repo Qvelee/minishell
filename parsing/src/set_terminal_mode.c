@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 22:35:36 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/07 18:30:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/09 05:15:41 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	set_terminal_mode(char *term_name)
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return (-1);
 	tgetent(0,term_name);
-	tputs(enter_insert_mode,1,&ft_putchar);
+	//tputs(enter_insert_mode,1,&ft_putchar);
 	//tputs(tgetstr("ae",0),1,&ft_putchar);
-	a = tgetnum("in");
-	str = tgetstr("ic",0);
+	//a = tgetnum("in");
+	//str = tigetstr("ed");
 	//tputs(enter_blink_mode, 1, ft_putchar);
-	//tputs(enter_delete_mode, 1, ft_putchar);
+	//tputs(tigetstr("dm"), 1, ft_putchar);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:50:48 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/07 18:31:09 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/09 05:08:22 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	remove_terminal_mode(void)
 {
 	t_term term;
-	
+
 	if (tcgetattr(0, &term) == -1)
 		return (-1);
 	term.c_lflag |= (ICANON);
@@ -27,6 +27,6 @@ int	remove_terminal_mode(void)
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return (-1);
 	tputs(exit_insert_mode, 1, ft_putchar);
-	//tputs(exit_delete_mode, 1, ft_putchar);
+	tputs(tigetstr("ed"), 1, ft_putchar);
 	return (1);
 }

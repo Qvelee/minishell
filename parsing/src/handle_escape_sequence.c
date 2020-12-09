@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:19:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/06 02:19:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/09 05:16:41 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ int	handle_escape_sequence(char *command, t_envp *envp, char *str, int *i)
 		else
 			ft_memmove(str + *i,str + *i + 1, len - *i);
 		str[len] = 0;
-		tputs(save_cursor, 0, ft_putchar);
-		tputs(tgoto(tgetstr("ce", 0),len - *i + 1,0),1,ft_putchar);
-		write(1, &str[*i], len - *i);
-		tputs(restore_cursor, 0, ft_putchar);
+		//tputs(save_cursor, 0, ft_putchar);
+		tputs(tigetstr("ed"), 1, ft_putchar);
+		//tputs(tgoto(tgetstr("ce", 0),len - *i + 1,0),1,ft_putchar);
+		//write(1, &str[*i], len - *i);
+		//tputs(restore_cursor, 0, ft_putchar);
 		//tputs(delete_character, 1, ft_putchar);
 		//(*i)++;
 	}

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/07 18:31:34 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/09 15:42:03 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ char	*read_line(t_envp *envp)
 		}
 		if (*str == 4)
 		{
-			free(str);
-			str = 0;
+			//free(str);
+			//str = 0;
 			break;
 		}
 		ret = read(0, sym, 10);
