@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:41:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 14:32:26 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/09 13:06:14 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ int		error_fd(char *path, int fd_1, int fd_2, int fd_3)
 		return (tmp_err);
 	else
 		return (errno);
-}
-
-int		error_syntax(char symbol)
-{
-	write(2, "minishell: syntax error near unexpected token \'", 47);
-	if (symbol == '\n')
-		write(2, "newline", 7);
-	else
-		write(2, &symbol, 1);
-	write(2, "\'\n", 2);
-	return (2);
 }
 
 int		comm_return_int(int return_value, char **memory)

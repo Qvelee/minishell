@@ -6,13 +6,13 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 20:17:25 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/09 12:50:38 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int			init_sim_comm(int *index, int *fd, char ***simple_command, \
+static int	init_sim_comm(int *index, int *fd, char ***simple_command, \
 							int bytes)
 {
 	*index = 0;
@@ -23,22 +23,22 @@ int			init_sim_comm(int *index, int *fd, char ***simple_command, \
 	return (0);
 }
 
-int			redirection(char *argument, char *value, \
-								int *fd_out, int *fd_in, t_envp *envp)
+static int	redirection(char *argument, char *value, \
+								int *fd, t_envp *envp)
 {
 	if (!ft_strcmp(argument, ">"))
-		return (redirect_output(value, fd_out, 1));
+		return (redirect_output(value, &fd[0], 1));
 	if (!ft_strcmp(argument, ">>"))
-		return (redirect_output(value, fd_out, 2));
+		return (redirect_output(value, &fd[0], 2));
 	if (!ft_strcmp(argument, "<"))
-		return (redirect_input(value, fd_in, 1, envp));
+		return (redirect_input(value, &fd[1], 1, envp));
 	if (!ft_strcmp(argument, "<<"))
-		return (redirect_input(value, fd_in, 2, envp));
+		return (redirect_input(value, &fd[1], 2, envp));
 	return (-1);
 }
 
-int			create_simple_command(t_commands **commands, char **args, \
-									int start, int end, t_envp *envp)
+static int	create_simple_command(t_commands **commands, char **args, \
+									int *buff, t_envp *envp)
 {
 	t_commands	*command;
 	char		**simple_command;
@@ -46,17 +46,17 @@ int			create_simple_command(t_commands **commands, char **args, \
 	int			index;
 	int			ret;
 
-	if (init_sim_comm(&index, fd, &simple_command, end - start + 1))
+	if (init_sim_comm(&index, fd, &simple_command, buff[0] - buff[1] + 1))
 		return (error_print_return(NULL));
-	while (start < end)
+	while (buff[1] < buff[0])
 	{
-		if ((ret = redirection(args[start], args[start + 1], \
-								&fd[0], &fd[1], envp)) == -1)
-			simple_command[index++] = args[start++];
+		if ((ret = redirection(args[buff[1]], args[buff[1] + 1], \
+								fd, envp)) == -1)
+			simple_command[index++] = args[buff[1]++];
 		else if (ret == 0)
-			start += 2;
-		else if (ret < 0)
-			return (comm_return_int(ret * -1, simple_command));
+			buff[1] += 2;
+		else if (check_fatal_error(ret))
+			return (comm_return_int(ret, simple_command));
 		else
 			break ;
 	}
@@ -67,25 +67,29 @@ int			create_simple_command(t_commands **commands, char **args, \
 	return (0);
 }
 
-int			cut_to_simple_commands(char **args, t_commands **commands, t_envp *envp)
+static int	cut_to_simple_commands(char **args, t_commands **commands, t_envp *envp)
 {
 	t_commands	*command;
 	int			index;
 	int			start;
+	int			buff[2];
 	int			ret;
-	char		**simple_command;;
 
-	index = -1;
 	*commands = NULL;
 	start = 0;
+	index = -1;
 	while (args[++index])
 		if (!ft_strcmp(args[index], "|"))
 		{
-			if ((ret = create_simple_command(commands, args, start, index, envp)))
+			buff[0] = index;
+			buff[1] = start;
+			if ((ret = create_simple_command(commands, args, buff, envp)))
 				return (ret);
 			start = index + 1;
 		}
-	if ((ret = create_simple_command(commands, args, start, index, envp)))
+	buff[0] = index;
+	buff[1] = start;
+	if ((ret = create_simple_command(commands, args, buff, envp)))
 		return (ret);
 	return (0);
 }
