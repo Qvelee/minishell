@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:39:27 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/09 19:30:35 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:14:48 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int			redirect_input(char *path, int *fd_in, int mode, t_envp *envp)
 			return (error_fd(path, -1, -1));
 	}
 	else
+	{
 		if ((ret = get_input(path, fd_in, envp)))
 			return (ret);
+	}
 	return (0);
 }
 
@@ -40,12 +42,14 @@ int			redirect_output(char *path, int *fd_out, int mode)
 	if (mode == 1)
 	{
 		if ((*fd_out = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644)) \
-															== -1)
+			== -1)
 			return (error_fd(path, -1, -1));
 	}
 	else
+	{
 		if ((*fd_out = open(path, O_CREAT | O_WRONLY | O_APPEND, 0644)) \
-															== -1)
+			== -1)
 			return (error_fd(path, -1, -1));
+	}
 	return (0);
 }

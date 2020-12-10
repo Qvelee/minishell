@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 15:03:59 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 18:05:45 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:57:56 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_matrix(char **matrix)
 {
-	int 	index;
+	int		index;
 
 	index = -1;
 	if (matrix)

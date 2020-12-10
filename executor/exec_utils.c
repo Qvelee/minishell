@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/09 20:02:21 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:46:59 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static int	wait_all_processes(t_exec *exec, t_envp *envp_list)
 				error_print_return(NULL);
 			while (!WIFEXITED(exec->status) && !WIFSIGNALED(exec->status))
 				if ((waitpid(exec->pids[exec->index], &exec->status, \
-												WUNTRACED) == -1))
-				error_print_return(NULL);
+					WUNTRACED) == -1))
+					error_print_return(NULL);
 			if (check_fatal_error((exec->return_value = \
-							WEXITSTATUS(exec->status))))
+					WEXITSTATUS(exec->status))))
 				error = exec->return_value;
 		}
 		else
@@ -57,7 +57,7 @@ int			error_running(int return_value, t_commands *command, t_exec *exec, \
 
 int			end_of_commands(t_exec *exec, t_envp *envp_list)
 {
-	int 	ret;
+	int		ret;
 	int		tmp;
 
 	ret = wait_all_processes(exec, envp_list);

@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/09 19:52:22 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:43:41 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	run_command(t_commands *commands, t_envp **envp_list, int count)
 
 static int	do_pipe(int *fd_pipe, int *fd_in, int *fd_out)
 {
-	int 	ret;
+	int		ret;
 
 	if ((ret = pipe(fd_pipe)) == -1)
 		return (1);
@@ -91,13 +91,10 @@ int			run_commands(t_commands *commands, t_envp **envp)
 	{
 		if ((exec.return_value = set_fd_in(&exec.fd_in, &commands->fd_in)))
 			return (error_running(exec.return_value, commands, &exec, *envp));
-		if (commands->next)
-			if (do_pipe(exec.fd_pipe, &exec.fd_in, &exec.fd_out))
-				return (error_running(exec.return_value, commands, &exec, \
-																	*envp));
-		if (!commands->next)
-			if ((exec.fd_out = dup(exec.tmp_out)) == -1)
-				return (error_running(exec.fd_out, commands, &exec, *envp));
+		if (commands->next && do_pipe(exec.fd_pipe, &exec.fd_in, &exec.fd_out))
+			return (error_running(exec.return_value, commands, &exec, *envp));
+		if (!commands->next && (exec.fd_out = dup(exec.tmp_out)) == -1)
+			return (error_running(exec.fd_out, commands, &exec, *envp));
 		if ((exec.return_value = set_fd_out(&exec.fd_out, &commands->fd_out)))
 			return (error_running(exec.return_value, commands, &exec, *envp));
 		exec.return_value = run_command(commands, envp, exec.count);

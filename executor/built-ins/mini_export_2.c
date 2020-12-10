@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:58:23 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 15:33:06 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:52:14 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		error_arg_export(char *argument)
 	return (1);
 }
 
-void		print_line(char *line)
+void	print_line(char *line)
 {
 	int		index;
 
@@ -31,7 +31,7 @@ void		print_line(char *line)
 	if (ft_strchr(line, '='))
 	{
 		write(1, "=\"", 2);
-		index ++;
+		index++;
 	}
 	while (line[index] != '\0')
 		write(1, &line[index++], 1);

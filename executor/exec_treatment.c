@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 19:55:25 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:32:54 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,10 @@ int			command(char **args, t_envp **envp_list)
 		if (!(command = ft_strdup(args[0])))
 			return (error_print_return(NULL));
 	if (!(envp = envp_lst_to_matrix(*envp_list)))
-		return (error_return_int(error_print_return(NULL), command, \
-														NULL, NULL));
+	{
+		return (error_return_int(error_print_return(NULL), \
+			command, NULL, NULL));
+	}
 	return_value = run_exec(command, args, envp);
 	free(command);
 	free(envp);

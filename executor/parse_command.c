@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/09 14:27:48 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:15:39 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int	create_simple_command(t_commands **commands, char **args, \
 	return (0);
 }
 
-static int	cut_to_simple_commands(char **args, t_commands **commands, t_envp *envp)
+static int	cut_to_simple_commands(char **args, t_commands **commands, \
+												t_envp *envp)
 {
 	t_commands	*command;
 	int			index;
