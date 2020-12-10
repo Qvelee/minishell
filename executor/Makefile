@@ -6,7 +6,7 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/09 15:22:00 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/12/10 19:00:49 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,7 @@ NAME =				libexec.a
 
 COMP =				clang -g
 
-FLAGS =				#-Wall -Wextra -Werror
-
-MAIN_HEADER =		./executor_public.h
+FLAGS =				-Wall -Wextra -Werror
 
 EXEC_HEADER = 		./executor.h
 
@@ -29,18 +27,18 @@ ENVP_SRC_DIR =		./envp/
 
 #SRC
 
-MAIN_SRC =			exit_minishell.c
-
 EXEC_SRC =			do_command.c \
 					executor.c \
 					exec_treatment.c \
 					errors_management.c \
 					errors_management_2.c \
+					exec_utils.c \
+					exit_minishell.c
+
+MAIN_SRC =			parse_command.c \
 					redirects_treatment.c \
 					get_input.c \
-					exec_utils.c \
-					comm_utils.c \
-					parse_command.c
+					comm_utils.c
 
 BTIN_SRC =			built_in.c \
 					mini_echo.c \
