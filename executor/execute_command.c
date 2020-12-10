@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 14:32:54 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:48:10 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static int	exec_error(char **args)
 static int	run_exec(char *command, char **args, char **envp)
 {
 	pid_t	pid;
-	pid_t	wpid;
-	int		status;
 
 	pid = fork();
 	if (pid == 0)

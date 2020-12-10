@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 18:43:41 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:50:31 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,18 @@ int			run_commands(t_commands *commands, t_envp **envp)
 	while (commands)
 	{
 		if ((exec.return_value = set_fd_in(&exec.fd_in, &commands->fd_in)))
-			return (error_running(exec.return_value, commands, &exec, *envp));
+			return (error_running(exec.return_value, commands, &exec));
 		if (commands->next && do_pipe(exec.fd_pipe, &exec.fd_in, &exec.fd_out))
-			return (error_running(exec.return_value, commands, &exec, *envp));
+			return (error_running(exec.return_value, commands, &exec));
 		if (!commands->next && (exec.fd_out = dup(exec.tmp_out)) == -1)
-			return (error_running(exec.fd_out, commands, &exec, *envp));
+			return (error_running(exec.fd_out, commands, &exec));
 		if ((exec.return_value = set_fd_out(&exec.fd_out, &commands->fd_out)))
-			return (error_running(exec.return_value, commands, &exec, *envp));
+			return (error_running(exec.return_value, commands, &exec));
 		exec.return_value = run_command(commands, envp, exec.count);
 		if (check_fatal_error(exec.return_value))
-			return (error_running(exec.return_value, commands, &exec, *envp));
+			return (error_running(exec.return_value, commands, &exec));
 		exec.pids[exec.index++] = exec.return_value;
 		commands = commands->next;
 	}
-	return (end_of_commands(&exec, *envp));
+	return (end_of_commands(&exec));
 }

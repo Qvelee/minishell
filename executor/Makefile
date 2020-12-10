@@ -6,7 +6,7 @@
 #    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/10 19:00:49 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/12/10 19:17:33 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ EXEC_HEADER = 		./executor.h
 
 #SRC DIRS
 
-MAIN_SRC_DIR =		./
 EXEC_SRC_DIR =		./
+COMM_SRC_DIR =		./command_treatment/
 BTIN_SRC_DIR =		./built-ins/
 ENVP_SRC_DIR =		./envp/
 
@@ -29,13 +29,13 @@ ENVP_SRC_DIR =		./envp/
 
 EXEC_SRC =			do_command.c \
 					executor.c \
-					exec_treatment.c \
+					execute_command.c \
 					errors_management.c \
 					errors_management_2.c \
 					exec_utils.c \
 					exit_minishell.c
 
-MAIN_SRC =			parse_command.c \
+COMM_SRC =			parse_command.c \
 					redirects_treatment.c \
 					get_input.c \
 					comm_utils.c
@@ -57,37 +57,37 @@ ENVP_SRC =			envp_treatment_1.c \
 
 #OBJ DIRS
 
-MAIN_OBJ_DIR =		./temp/
-EXEC_OBJ_DIR =		./temp/executor/
-BTIN_OBJ_DIR =		./temp/executor/built-ins/
-ENVP_OBJ_DIR =		./temp/executor/envp/
+EXEC_OBJ_DIR =		./temp/
+COMM_OBJ_DIR =		./temp/command_treatment/
+BTIN_OBJ_DIR =		./temp/built-ins/
+ENVP_OBJ_DIR =		./temp/envp/
 
 #OBJ
 
-MAIN_OBJ =				$(addprefix $(MAIN_OBJ_DIR), $(MAIN_SRC:.c=.o))
-EXEC_OBJ =				$(addprefix $(EXEC_OBJ_DIR), $(EXEC_SRC:.c=.o))
-BTIN_OBJ =				$(addprefix $(BTIN_OBJ_DIR), $(BTIN_SRC:.c=.o))
-ENVP_OBJ =				$(addprefix $(ENVP_OBJ_DIR), $(ENVP_SRC:.c=.o))
+EXEC_OBJ =			$(addprefix $(EXEC_OBJ_DIR), $(EXEC_SRC:.c=.o))
+COMM_OBJ =			$(addprefix $(COMM_OBJ_DIR), $(COMM_SRC:.c=.o))
+BTIN_OBJ =			$(addprefix $(BTIN_OBJ_DIR), $(BTIN_SRC:.c=.o))
+ENVP_OBJ =			$(addprefix $(ENVP_OBJ_DIR), $(ENVP_SRC:.c=.o))
 
 
-D_FILES = $(patsubst %.o, %.d, $(MAIN_OBJ)) $(patsubst %.o, %.d, $(EXEC_OBJ)) $(patsubst %.o, %.d, $(BTIN_OBJ)) $(patsubst %.o, %.d, $(ENVP_OBJ))
+D_FILES = $(patsubst %.o, %.d, $(COMM_OBJ)) $(patsubst %.o, %.d, $(EXEC_OBJ)) $(patsubst %.o, %.d, $(BTIN_OBJ)) $(patsubst %.o, %.d, $(ENVP_OBJ))
 
 ###
 
-all: $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR) $(NAME)
+all: $(COMM_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR) $(NAME)
 
-$(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR):
-	mkdir -p $(MAIN_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
+$(COMM_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR):
+	mkdir -p $(COMM_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
 
-$(NAME): $(MAIN_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
+$(NAME): $(COMM_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
 	@ar rcs $(NAME) $^
 	@echo -e "\033[1m\033[32m$(NAME) created!\033[0m"
 
-$(addprefix $(MAIN_OBJ_DIR), %.o): $(addprefix $(MAIN_SRC_DIR), %.c)
+$(addprefix $(EXEC_OBJ_DIR), %.o): $(addprefix $(EXEC_SRC_DIR), %.c)
 	@echo -e "\033[36mCompiling $< ..."
 	@$(COMP) $(FLAGS) -I../libft/includes -I.. -I. -c $< -o $@ -MMD
 
-$(addprefix $(EXEC_OBJ_DIR), %.o): $(addprefix $(EXEC_SRC_DIR), %.c)
+$(addprefix $(COMM_OBJ_DIR), %.o): $(addprefix $(COMM_SRC_DIR), %.c)
 	@echo -e "\033[36mCompiling $< ..."
 	@$(COMP) $(FLAGS) -I../libft/includes -I.. -I. -c $< -o $@ -MMD
 
@@ -112,4 +112,4 @@ re: fclean all
 
 include $(wildcard $(D_FILES))
 
-.PHONY: all, re, clean, fclean, bonus, run_script, crtmpdirs, libutil
+.PHONY: all, re, clean, fclean

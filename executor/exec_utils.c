@@ -6,13 +6,13 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 14:46:59 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:49:56 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static int	wait_all_processes(t_exec *exec, t_envp *envp_list)
+static int	wait_all_processes(t_exec *exec)
 {
 	int		error;
 
@@ -40,10 +40,9 @@ static int	wait_all_processes(t_exec *exec, t_envp *envp_list)
 	return (exec->return_value);
 }
 
-int			error_running(int return_value, t_commands *command, t_exec *exec, \
-															t_envp *envp_list)
+int			error_running(int return_value, t_commands *command, t_exec *exec)
 {
-	wait_all_processes(exec, envp_list);
+	wait_all_processes(exec);
 	try_close(&command->fd_in, &command->fd_out);
 	try_close(&exec->fd_in, &exec->fd_out);
 	if ((dup2(exec->tmp_in, 0) == -1))
@@ -55,12 +54,12 @@ int			error_running(int return_value, t_commands *command, t_exec *exec, \
 	return (return_value);
 }
 
-int			end_of_commands(t_exec *exec, t_envp *envp_list)
+int			end_of_commands(t_exec *exec)
 {
 	int		ret;
 	int		tmp;
 
-	ret = wait_all_processes(exec, envp_list);
+	ret = wait_all_processes(exec);
 	if ((dup2(exec->tmp_in, 0) == -1))
 		ret = error_print_return("can't restore stdin");
 	if ((dup2(exec->tmp_out, 1) == -1))
