@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_terminal_mode.c                             :+:      :+:    :+:   */
+/*   free_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/12 17:50:48 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/13 00:20:28 by sgertrud         ###   ########.fr       */
+/*   Created: 2020/12/17 06:37:40 by sgertrud          #+#    #+#             */
+/*   Updated: 2020/12/20 04:27:14 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <termios.h>
 #include "parse.h"
-#include <term.h>
 
-int	remove_terminal_mode(void)
+void	free_history(t_history *history)
 {
-	t_term term;
-
-	if (tcgetattr(0, &term) == -1)
-		return (-1);
-	term.c_lflag |= (ICANON);
-	term.c_lflag |= (ECHO);
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, TCSANOW, &term) == -1)
-		return (-1);
-	//tputs(exit_insert_mode, 1, ft_putchar);
-	//tputs(tigetstr("ed"), 1, ft_putchar);
-	return (1);
+	while(history->next)
+	{
+		history = history->next;
+	}
+	while(history->prev)
+	{
+		free(history->str);
+		history = history->prev;
+		free(history->next);
+	}
+	free(history->str);
+	free(history);
 }

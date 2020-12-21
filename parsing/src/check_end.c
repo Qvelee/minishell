@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   check_end.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:56:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/01 13:22:51 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/11 17:58:53 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	check_end(char c)
+int	check_end_arg(char c)
+{
+	return (c == '\n' || c == ';' || c == '&' ||  c == '|' || c == '>' || c == '<' || c == 0);
+}
+int	check_end_command(char c)
 {
 	return (c == '\n' || c == ';' || c == '&' || c == 0);
 }

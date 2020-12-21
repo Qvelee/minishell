@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/05 17:33:37 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/21 06:42:45 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,17 @@ ft_realloc.o\
 ft_strjoin_gnl.o\
 handle_escape_sequence.o\
 parse_command.o\
-read_command.o\
+read_line.o\
 remove_terminal_mode.o\
 set_terminal_mode.o\
 get_line.o\
-get_term_size.o
+get_term_size.o\
+read_history.o\
+save_cursor.o\
+free_history.o\
+set_curpos.o\
+check_validity.o
+
 UNAME = $(shell uname)
 REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
 BONUS_OBJ_FILES = $(addprefix $(OBJ),$(BONUS_FILES))

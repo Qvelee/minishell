@@ -6,42 +6,42 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/12 22:46:28 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/10/23 23:26:58 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re main bonus
 CC = gcc
-NAME = minishell
-INCLUDES = . parsing executor libft/includes
-LIB_DIR = parsing executor get_next_line libft
-LIB_NAMES = exec parsing get_next_line ft termcap ncurses
-UNAME = $(shell uname)
-CFLAGS = -g -Wall -Wextra -Werror
+NAME = libget_next_line.a
+SRC = srcs/
+OBJ = obj/
+INCLUDES = includes
+OBJ_FILES = get_next_line.o get_next_line_utils.o
+D_FILES = $(OBJ_FILES:.o=.d)
+CFLAGS = -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory
-all: LIBS $(NAME)
 
-LIBS :
-	make -C get_next_line
-	make -C executor
-	make -C parsing
-	make -C libft
-$(NAME): main.c main.h executor/libexec.a parsing/libparsing.a libft/libft.a
-	$(CC) $(CFLAGS) -c $(addprefix -I,$(INCLUDES)) main.c
-	$(CC) $(CFLAGS) main.o $(addprefix -I,$(INCLUDES)) $(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
+all: $(OBJ) $(NAME)
+
+$(OBJ):
+	mkdir -p $(OBJ)
+
+$(NAME): $(addprefix $(OBJ),$(OBJ_FILES))
+	ar rcs $(NAME) $?
+
+$(OBJ)%.o: $(SRC)%.c #$(OBJ)
+	$(CC) -g -c $(CFLAGS) -I$(INCLUDES) -o $@ $< -MMD
 
 clean:
-	make -C executor clean
-	make -C libft clean
-	make -C parsing clean
+	rm -rf $(OBJ)
+	#rm -f $(addprefix $(OBJ),$(OBJ_FILES))
 
-fclean:
-	make -C executor fclean
-	make -C libft fclean
-	make -C parsing fclean
+fclean: clean
 	rm -f $(NAME)
+
 re:
 	make fclean
-	make WITH_BONUS=1 all
+	make all
 bonus:
 	make WITH_BONUS=1 all
+-include $(addprefix $(OBJ), $(D_FILES))
+.PHONY: all clean fclean re so

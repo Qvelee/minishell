@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 18:34:40 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/11 01:37:11 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ int		remove_terminal_mode(void);
 void	free_matrix(char **memory);
 void	exit_minishell(int code, char **args, t_envp **envp_list);
 char	*envp_get_var_value(t_envp *envp_list, char *variable);
-
+int		get_next_line(int fd, char **line);
 #endif

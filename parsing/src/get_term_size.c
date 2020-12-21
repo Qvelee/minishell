@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 17:28:30 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/05 18:10:11 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/12 23:24:49 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_coor get_cursor(void)
 	int i;
 
 	i = 0;
-	tputs("\E[6n", 1, ft_putchar);
+	tputs(tgetstr("u7", 0), 1, ft_putchar);
 	read(1, str, 20);
 	while(!ft_isdigit(str[i]))
 		i++;
