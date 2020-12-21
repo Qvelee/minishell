@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/21 07:49:18 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/21 08:21:00 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*read_line(t_envp *envp)
 	str = ft_calloc(1,BUFF_SIZE);
 	i = 0;
 		//refresh();
-	fd = open(get_envp_value("HISTFILE",envp),O_CREAT| O_RDWR | O_APPEND, 0666);
+	fd = open(envp_get_var_value(envp,"HISTFILE"),O_CREAT| O_RDWR | O_APPEND, 0666);
 //	char *debug = tgetstr("wi", 0);
 	//int debug2 = getcurx(curscr);
 	//printf("%d\n",debug2 );
@@ -49,6 +49,7 @@ char	*read_line(t_envp *envp)
 	*savecursor() = get_cursor();
 	//char *debug = cursor_address;
 	//tputs(save_cursor, 1, ft_putchar);
+		history = 0;
 	if (fd > 0)
 		history = read_history(fd);
 	*get_line() = (t_line){&str,&i,0};
@@ -109,7 +110,7 @@ char	*read_line(t_envp *envp)
 		len = ft_strlen(str);
 		str[len] = '\n';
 		str[len + 1] = 0;
-		if (*str && *str != '\n')
+		if (*str && *str != '\n' && fd > 0)
 		write(fd,str,ft_strlen(str));
 		//i = get_cursor().x;
 		write(1, &(char){10}, 1);
@@ -118,7 +119,8 @@ char	*read_line(t_envp *envp)
 		while (j++ < len && len)
 			write(1, &(char){10}, 1);
 	}
-	close(fd);
+	if (fd > 0)
+		close(fd);
 	free_history(history);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 01:29:38 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/20 04:29:09 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/21 08:18:19 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,22 @@ t_history *add_history(t_history *head, char *str)
 {
 	t_history *prev;
 
-	head->next = ft_calloc(sizeof(t_history),1);
-	prev = head;
-	head = head->next;
-	head->str = str;
-	head->prev = prev;
+	if (head)
+	{
+		head->next = ft_calloc(sizeof(t_history),1);
+		prev = head;
+		head = head->next;
+		head->str = str;
+		head->prev = prev;
+	}
+	else
+	{
+		head = malloc(sizeof(t_history));
+		head->prev = 0;
+		head->next = 0;
+		head->str = str;
+	}
+
 	return (head);
 }
 
