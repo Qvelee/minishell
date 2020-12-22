@@ -6,27 +6,29 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:41:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 14:32:26 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/09 19:32:07 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int		try_close(int fd_1, int fd_2, int fd_3)
+int		try_close(int *fd_1, int *fd_2)
 {
 	int ret;
 
 	ret = 0;
-	if (fd_1 > 0 && close(fd_1) == -1)
+	if (fd_1 && *fd_1 > 0 && close(*fd_1) == -1)
 		ret = error_print_return(NULL);
-	if (fd_2 > 0 && close(fd_2) == -1)
+	else if (fd_1 && *fd_1 > 0)
+		*fd_1 = 0;
+	if (fd_2 && *fd_2 > 0 && close(*fd_2) == -1)
 		ret = error_print_return(NULL);
-	if (fd_3 > 0 && close(fd_3) == -1)
-		ret = error_print_return(NULL);
+	else if (fd_2 && *fd_2 > 0)
+		*fd_2 = 0;
 	return (ret);
 }
 
-int		error_fd(char *path, int fd_1, int fd_2, int fd_3)
+int		error_fd(char *path, int fd_1, int fd_2)
 {
 	char	*error;
 	int		tmp_err;
@@ -41,22 +43,11 @@ int		error_fd(char *path, int fd_1, int fd_2, int fd_3)
 	write(1, error, ft_strlen(error));
 	write(1, "\n", 1);
 	tmp_err = errno;
-	try_close(fd_1, fd_2, fd_3);
+	try_close(&fd_1, &fd_2);
 	if (!errno)
 		return (tmp_err);
 	else
 		return (errno);
-}
-
-int		error_syntax(char symbol)
-{
-	write(2, "minishell: syntax error near unexpected token \'", 47);
-	if (symbol == '\n')
-		write(2, "newline", 7);
-	else
-		write(2, &symbol, 1);
-	write(2, "\'\n", 2);
-	return (2);
 }
 
 int		comm_return_int(int return_value, char **memory)

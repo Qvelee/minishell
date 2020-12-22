@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:25:40 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/25 13:45:21 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:53:04 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	check_flag(char *argument)
 	if (argument[++index] != '-')
 		return (0);
 	while (argument[++index])
-		if (argument[index] != 'n')	
+		if (argument[index] != 'n')
 			return (0);
 	if (argument[index - 1] == '-')
 		return (0);
@@ -32,7 +32,7 @@ int			mini_echo(char **args)
 	int		index;
 	int		temp;
 	int		flag;
-	
+
 	errno = 0;
 	index = 0;
 	flag = 0;

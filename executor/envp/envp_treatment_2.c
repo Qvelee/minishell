@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:46:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 18:42:22 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:57:14 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	envp_remove_from_list(t_envp **envp_list, char *variable)
 **	are possible and return will be NULL.
 */
 
-t_envp	*envp_create_list(char **_envp)
+t_envp	*envp_create_list(char **envp)
 {
 	t_envp	*envp_list;
 	t_envp	*envp_element;
@@ -86,9 +86,9 @@ t_envp	*envp_create_list(char **_envp)
 
 	index = -1;
 	envp_list = NULL;
-	while (_envp[++index])
+	while (envp[++index])
 	{
-		if (!(memory = ft_strdup(_envp[index])))
+		if (!(memory = ft_strdup(envp[index])))
 		{
 			envp_lst_clear(&envp_list, free);
 			return (NULL);

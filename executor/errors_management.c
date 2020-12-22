@@ -6,15 +6,15 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:39:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 19:19:49 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:06:20 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int 	check_fatal_error(int code)
+int		check_fatal_error(int code)
 {
-	const int	errors[10] = {5, 9, 11, 12, 14, 23, 24, 28, 77, 121};
+	const int	errors[11] = {5, 9, 11, 12, 14, 23, 24, 28, 40, 77, 121};
 	int			index;
 
 	index = -1;

@@ -6,14 +6,14 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:27:23 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 18:29:28 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:00:42 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
 
 /*
-**	envp_compare works like strcmp, but considers '=' symbol as 
+**	envp_compare works like strcmp, but considers '=' symbol as
 **	the end of the line.
 */
 

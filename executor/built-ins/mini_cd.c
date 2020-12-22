@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 14:39:06 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:24:41 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ static char	*get_oldpwd(t_envp *envp)
 			return (NULL);
 	}
 	else
+	{
 		if (!(old_pwd = envp_create_envp_str("OLDPWD", old_pwd)))
 			return (NULL);
+	}
 	return (old_pwd);
 }
 
@@ -60,7 +62,7 @@ static int	get_pwd(char **pwd)
 	if (!(*pwd = getcwd(*pwd, PATH_MAX)))
 	{
 		error = strerror(errno);
-		write(2, "minishell: cd: ", 15);		
+		write(2, "minishell: cd: ", 15);
 		write(2, error, ft_strlen(error));
 		write(2, "\n", 1);
 		return (errno);
@@ -70,7 +72,7 @@ static int	get_pwd(char **pwd)
 	{
 		*pwd = NULL;
 		free(temp);
-		return (error_print_return(NULL));
+		return (error_print_return("cd"));
 	}
 	free(temp);
 	return (0);
@@ -86,18 +88,18 @@ static int	cd_to_directory(t_envp **envp, char *directory)
 	if ((chdir(directory) != -1))
 	{
 		if (!(old_pwd = get_oldpwd(*envp)))
-			return (error_print_return(NULL));
+			return (error_print_return("cd"));
 		if (envp_replace_variable(envp, old_pwd, 0))
 		{
 			free(old_pwd);
-			return (error_print_return(NULL));
+			return (error_print_return("cd"));
 		}
 		if ((err = get_pwd(&pwd)))
 			return (err);
 		if (envp_replace_variable(envp, pwd, 0))
 		{
 			free(pwd);
-			return (error_print_return(NULL));
+			return (error_print_return("cd"));
 		}
 	}
 	else
