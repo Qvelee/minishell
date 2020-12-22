@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/21 08:06:34 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 15:40:18 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 
 void ft_sigint(int __attribute__ ((unused))sig)
 {
-	write (1,&(char){10},1);
+	write (1,"\n",1);
 	write(1, GREEN, 5);
 	write(1,"minishell: ", 12);
 	write(1, RESET, 5);
 
+	save_ret_value(130, get_envp());
 	*(*get_line()->str) = 0;
 	*get_line()->i = 0;
 	get_line()->sig = 1;
@@ -53,6 +54,7 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 	signal(SIGINT,ft_sigint);
 	signal(SIGQUIT, ft_nothing);
 
+
 	my_exit = malloc(2*sizeof(char*));
 	my_exit[0] = ft_strdup("exit");
 	my_exit[1] = 0;
@@ -66,11 +68,13 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 	write(1, RESET, 5);
 	//printf("%s\n",envp_get_var_value(_envp,"_"));
 
+
+	(*get_envp()) = _envp;
 	histfile = ft_strjoin_gnl(ft_substr(envp_get_var_value(_envp,"_"),0,ft_strlen(envp_get_var_value(_envp,"_")) - 9),".minishell_history");
 
 	envp_add_to_lst_back(envp_lst_new(envp_create_envp_str("HISTFILE",histfile),0), &_envp);
 	str = read_line(_envp);
-	while (str && *str && *str != 4)
+	while (str && *str != 4)
 	{
 		get_line()->sig = 0;
 		temp = str;
@@ -94,7 +98,8 @@ int	main(int __attribute__ ((unused))argc, char __attribute__ ((unused))**argv, 
 			while (command[i])
 				free(command[i++]);
 			free(command);
-			str++;
+			if (*str)
+				str++;
 		}
 		if (!get_line()->sig)
 		{

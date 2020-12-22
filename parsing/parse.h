@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:05:06 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/21 07:20:14 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 15:37:22 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ t_history	*read_history(int fd);
 t_history	*add_history(t_history *head, char *str);
 t_coor			*savecursor();
 void		free_history(t_history *history);
-void		set_curpos(char *start, char *end);
+void		set_curpos_home(char *start, char *end);
+void		set_curpos_end(char *start, char *end);
 char		check_validity(char *str);
+t_envp		**get_envp(void);
 
 #endif

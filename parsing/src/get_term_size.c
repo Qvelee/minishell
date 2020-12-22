@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 17:28:30 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/12 23:24:49 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 06:40:37 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@
 t_coor get_term_size(void)
 {
 	t_coor coor;
-	coor.x = tgetnum("co");
-	coor.y = tgetnum("li");
-	//ioctl(1,TIOCGWINSZ, &coor);
+	struct winsize win;
+
+	//coor.x = tgetnum("co");
+	//coor.y = tgetnum("li");
+	ioctl(1,TIOCGWINSZ, &win);
+	coor.x = win.ws_col;
+	coor.y = win.ws_row;
 	return(coor);
 }
 

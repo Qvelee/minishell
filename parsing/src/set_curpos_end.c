@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_curpos.c                                       :+:      :+:    :+:   */
+/*   set_curpos_end.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 19:01:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/20 02:54:12 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 03:41:51 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 #include "parse.h"
 #include "termcap.h"
 
-void	set_curpos(char *start, char *end)
+void	set_curpos_end(char *start, char *end)
 {
 	int len;
 	int res;
+	int len1;
+	int term;
 
-	len = ft_substrlen(start, end);
+	term = get_term_size().x;
+	len1 = ft_strlen_term(start) + MSH;
+	len = ft_substrlen(end,&start[ft_strlen(start)]);
 	if (len > 0)
 	{
-		if ((res = len % get_term_size().x) >= get_term_size().x - MSH)
-			tputs(tgoto(tgetstr("RI", NULL), 1 , get_term_size().x - res), 0, ft_putchar);
-		else if (res > 0)
-			tputs(tgoto(tgetstr("LE", NULL), 1 , res), 0, ft_putchar);
+		res = len1 % get_term_size().x;
+		tputs(tgoto(tgetstr("ch", NULL), 1 , res + 1), 0, ft_putchar);
+	/*	else if (res > 0)
+			tputs(tgoto(tgetstr("LE", NULL), 1 , res), 0, ft_putchar);*/
 		if ((res = (len + MSH) / get_term_size().x) != 0)
-			tputs(tgoto(tgetstr("UP", NULL), 0 , res), 0, ft_putchar);
+			tputs(tgoto(tgetstr("DO", NULL), 0 , res), 0, ft_putchar);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/21 08:21:00 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 15:28:32 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,14 @@ char	*read_line(t_envp *envp)
 	int i;
 	int len;
 	int j;
+	int k;
 	int last_cursor;
 	int *lens;
 	char *str;
+	char buff[BUFF_SIZE] = {0};
+	t_coor cursor;
 	ret = 1;
+	k = 1;
 	sym[0] = 0;
 	str = ft_calloc(1,BUFF_SIZE);
 	i = 0;
@@ -57,6 +61,11 @@ char	*read_line(t_envp *envp)
 	ret = read(0, sym, 2048);
 	while (sym[0] != 10 && sym[0] != 13)
 	{
+		if ((int)ft_strlen(str) + ret >= BUFF_SIZE * k)
+		{
+			str = ft_strjoin_gnl(str,buff);
+			k++;
+		}
 		sym[ret] = 0;
 		if (((sym[0] > 0 && sym[0] <= 31) || sym[0] == 127) && sym[0] != 4)
 		{
@@ -66,22 +75,30 @@ char	*read_line(t_envp *envp)
 		{
 
 			j = 0;
+			last_cursor = get_cursor().x;
 			write(1, sym, ret);
-			if (get_cursor().x > get_term_size().x)
+			cursor = get_cursor();
+			if (get_cursor().x > get_term_size().x || last_cursor == get_cursor().x)
 			{
 				tputs(tgoto(tigetstr("ind"), 0, get_cursor().y), 1, ft_putchar);
 				//tputs(tgetstr("ho", 0), 1, ft_putchar);
 			}
 			if (str[i])
 				{
+					tputs(cursor_invisible, 1, ft_putchar);
 					len = ft_strlen(str);
 					tputs(save_cursor, 1, ft_putchar);
 					//tputs(tgoto(tgetstr("ce", 0),len - *i + 1,0),1,ft_putchar);
 					write(1, &str[i],len - i);
+					/*if (get_cursor().x > get_term_size().x)
+					{
+						tputs(tgoto(tigetstr("ind"), 0, get_cursor().y), 1, ft_putchar);
+					}*/
 					tputs(tigetstr("ed"), 1, ft_putchar);
 					tputs(restore_cursor, 1, ft_putchar);
-						while (--len >= i - ret)
-						str[len + ret + 1] = str[len + 1];
+					while (--len >= i - ret)
+					str[len + ret + 1] = str[len + 1];
+					tputs(cursor_visible, 1, ft_putchar);
 
 				}
 			else
@@ -111,13 +128,16 @@ char	*read_line(t_envp *envp)
 		str[len] = '\n';
 		str[len + 1] = 0;
 		if (*str && *str != '\n' && fd > 0)
-		write(fd,str,ft_strlen(str));
+		{
+			write(fd,str,ft_strlen(str));
+			//write(fd, "\n", 1);
+		}
 		//i = get_cursor().x;
-		write(1, &(char){10}, 1);
+		write(1,"\n", 1);
 		j = (ft_substrlen(str,&str[i]) + MSH) / get_term_size().x;
 		len = (ft_substrlen(str,&str[len - 1]) + MSH)  / get_term_size().x;
 		while (j++ < len && len)
-			write(1, &(char){10}, 1);
+			write(1, "\n", 1);
 	}
 	if (fd > 0)
 		close(fd);

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 12:21:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/10/24 06:07:52 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 00:30:23 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int			get_next_line(int fd, char **line)
 	}
 	if (!reminder || fd >= (long)reminder[0])
 	{
-		if (!(reminder = ft_realloc(reminder, reminder ? (long)reminder[0] + 1 :
+		if (!(reminder = ft_realloc_2(reminder, reminder ? (long)reminder[0] + 1 :
 		FD + 1, fd + 10)))
 			return (-1);
 		reminder[0] = (char*)((long)fd + 9);

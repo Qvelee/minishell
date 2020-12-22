@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/07 20:00:01 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/22 16:03:41 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static int	wait_all_processes(t_exec *exec, t_envp *envp_list)
 			exec->pids[exec->index] *= -1;
 			if ((waitpid(exec->pids[exec->index], &exec->status, \
 												WUNTRACED) == -1))
+
 				error_print_return(NULL);
+			//	printf("%d %d %d\n",WIFEXITED(exec->status), WIFSIGNALED(exec->status),WTERMSIG(exec->status));
 			while (!WIFEXITED(exec->status) && !WIFSIGNALED(exec->status))
 				if ((waitpid(exec->pids[exec->index], &exec->status, \
 												WUNTRACED) == -1))

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 01:29:38 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/21 08:18:19 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/21 22:35:17 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_history *add_history(t_history *head, char *str)
 		head = head->next;
 		head->str = str;
 		head->prev = prev;
+		head->next = 0;
 	}
 	else
 	{

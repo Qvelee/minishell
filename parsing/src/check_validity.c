@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 15:31:43 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/21 03:48:22 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 15:25:16 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,37 @@ typedef struct s_flags
 char check_validity(char *str)
 {
 	t_flags flags;
-	char prev;
 	char quote;
-
+	char dcommand[2] = {0,0};
 	//flags = (t_flags){{'"',1},{'\'',1},{'<',1},{'>',1},{'&',1},{'|',1},{';',1},{'"',1},1};
-	prev = 0;
 	quote = 0;
 	while (*str)
 	{
 		while (*str == ' ')
 			str++;
+
 		if ((*str == '"' || *str == '\'') && !quote)
 			quote = *str++;
 		if ((*str == '"' || *str == '\'') && quote == *str)
 			quote = 0;
 		if (!quote)
-			if (((*str == '|' || *str == ';') && (prev == 0 || prev == ';' || prev == '<' )) || ((*str == '\n') && (prev == '|' || prev == '>' || prev == '<')) || (*str == ';' && prev == '|'))
-				return (*str);
-		prev = *str;
-		str++;
+		{
+			//if (!dcommand[1])
+				if (((*str == '|' || *str == ';') && (dcommand[1] || dcommand[0] == 0 || dcommand[0] == ';' || dcommand[0] == '<' || dcommand[0] == '>')) || ((*str == '\n') && (dcommand[0] == '|' || dcommand[0] == '>' || dcommand[0] == '<' || dcommand[1])) || (*str == ';' && (dcommand[0] == '|' || dcommand[1])) || ((*str == '|' || *str == '&' || *str == '>' || *str == '<' || *str == '&') && dcommand[1]) || (*str == '<' && dcommand[0] == '>') || (*str == '\n' && (dcommand[0] == '<' || dcommand[0] == '>')))
+					return (*str);
+		}
+		if ((*str == '>' && *(str + 1) == '>') || (*str == '<' && *(str + 1) == '<') || (*str == '|' && *(str + 1) == '|') || (*str == '&' && *(str + 1) == '&'))
+		{
+			dcommand[0] = *str;
+			dcommand[1] = *(str + 1);
+			str += 2;
+		}
+		else
+		{
+			dcommand[0] = *str;
+			dcommand[1] = 0;
+			str +=1;
+		}
 	}
 	return (0);
 }

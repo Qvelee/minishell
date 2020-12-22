@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/21 07:25:57 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 16:19:12 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char *parse_env(char **str, t_envp *envp)
 
 	add = 0;
 	i = 1;
-	while (ft_isalnum((*str)[i]))
+	while (ft_isalnum((*str)[i]) || (*str)[i] == '_')
 		i++;
 	if ((*str)[0] == '$' && (*str)[1] == '?')
 		i++;
@@ -100,14 +100,14 @@ char *parse_arg(char** str,t_envp *envp)
 	else if (**str == '>')
 	{
 		if (*(*str + 1) == '>')
-			return(ft_substr((*str) += 2,0,2));
+			return(ft_substr((*str += 2) - 2,0,2));
 		else
 			return(ft_substr((*str)++,0,1));
 	}
 	else if (**str == '<')
 	{
 		if (*(*str + 1) == '<')
-			return(ft_substr((*str) += 2,0,2));
+			return(ft_substr((*str += 2) - 2,0,2));
 		else
 			return(ft_substr((*str)++,0,1));
 	}
@@ -139,7 +139,7 @@ char *parse_arg(char** str,t_envp *envp)
 			free(add);
 			add = 0;
 		}
-		else if (**str == '$')
+		else if (**str == '$' && !check_end_arg((*(*str + 1))))
 			{
 				add = parse_env(str, envp);
 				arg = ft_strjoin_gnl(arg,add);

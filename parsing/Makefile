@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/21 06:42:45 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/22 15:37:28 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,10 @@ get_term_size.o\
 read_history.o\
 save_cursor.o\
 free_history.o\
-set_curpos.o\
-check_validity.o
+set_curpos_home.o\
+set_curpos_end.o\
+check_validity.o\
+get_envp.o
 
 UNAME = $(shell uname)
 REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
