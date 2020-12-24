@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/22 15:37:28 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/23 22:45:13 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,10 @@ free_history.o\
 set_curpos_home.o\
 set_curpos_end.o\
 check_validity.o\
-get_envp.o
+get_envp.o\
+get_cursor_start.o\
+cursor_inc.o\
+cursor_dec.o
 
 UNAME = $(shell uname)
 REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))

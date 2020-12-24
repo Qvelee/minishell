@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/22 16:19:12 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/24 20:28:40 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ char *parse_arg(char** str,t_envp *envp)
 	char *add;
 	int i;
 
-	arg = ft_calloc(BUFF_SIZE, 1);
+	//arg = ft_calloc(BUFF_SIZE, 1);
+	arg = 0;
 	add = 0;
 	if (**str == '|')
 		return (ft_substr((*str)++,0,1));
@@ -139,7 +140,7 @@ char *parse_arg(char** str,t_envp *envp)
 			free(add);
 			add = 0;
 		}
-		else if (**str == '$' && !check_end_arg((*(*str + 1))))
+		else if (**str == '$' && !check_end_arg((*(*str + 1))) && (ft_isalpha(*(*str + 1)) || (*(*str + 1)) == '_' || (*(*str + 1)) == '?'))
 			{
 				add = parse_env(str, envp);
 				arg = ft_strjoin_gnl(arg,add);

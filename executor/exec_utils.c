@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/22 16:26:28 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/25 00:12:10 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	wait_all_processes(t_exec *exec)
 												WUNTRACED) == -1))
 
 				error_print_return(NULL);
-			//	printf("%d %d %d\n",WIFEXITED(exec->status), WIFSIGNALED(exec->status),WTERMSIG(exec->status));
 			while (!WIFEXITED(exec->status) && !WIFSIGNALED(exec->status))
 				if ((waitpid(exec->pids[exec->index], &exec->status, \
 					WUNTRACED) == -1))

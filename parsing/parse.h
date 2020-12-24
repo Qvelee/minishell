@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:05:06 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/22 15:37:22 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/24 04:15:41 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <termios.h>
 # include <stddef.h>
 # include "main.h"
-# define MSH 10
+# define MSH 11
 typedef struct	s_coor
 {
 	int x;
@@ -34,6 +34,7 @@ typedef struct	s_line
 	char **str;
 	int *i;
 	char sig;
+	int size;
 }				t_line;
 
 int			set_terminal_mode(char *term_name);
@@ -41,7 +42,7 @@ int			remove_terminal_mode(void);
 char		*read_line(t_envp *envp);
 int			check_end_arg(char c);
 int			check_end_command(char c);
-int			handle_escape_sequence(char *command, t_envp *envp, char *str, int *i, t_history **history);
+int			handle_escape_sequence(char *command, t_envp *envp, char **str, int *i, t_history **history);
 char		**parse_command(char **str, t_envp *envp);
 char		*parse_d_quote(char **str, t_envp *envp);
 char		*parse_quote(char **str);
@@ -52,7 +53,7 @@ char		*parse_env(char **str, t_envp *envp);
 int			ft_putchar(int c);
 t_line		*get_line(void);
 t_coor		get_term_size(void);
-t_coor		get_cursor(void);
+t_coor		*get_cursor(void);
 t_history	*read_history(int fd);
 t_history	*add_history(t_history *head, char *str);
 t_coor			*savecursor();
@@ -61,5 +62,8 @@ void		set_curpos_home(char *start, char *end);
 void		set_curpos_end(char *start, char *end);
 char		check_validity(char *str);
 t_envp		**get_envp(void);
-
+t_coor		get_cursor_start(void);
+void		cursor_inc(t_coor *cursor, int len);
+char		*ft_realloc_str(char *data, size_t len, size_t newlen);
+void	cursor_dec(char *start, char *end);
 #endif
