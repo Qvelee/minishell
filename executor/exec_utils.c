@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/25 21:16:46 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/25 21:27:20 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ static int	wait_process(t_exec *exec)
 
 	error = 0;
 	if ((waitpid(exec->pids[exec->index], &exec->status, \
-												WUNTRACED) == -1))
-		error_print_return(NULL);
-	while (!WIFEXITED(exec->status) && !WIFSIGNALED(exec->status))
-		if ((waitpid(exec->pids[exec->index], &exec->status, \
 									WUNTRACED) == -1))
 		error_print_return(NULL);
+	while (!WIFEXITED(exec->status) && !WIFSIGNALED(exec->status))
+		if ((waitpid(exec->pids[exec->index], &exec->status, WUNTRACED) == -1))
+			error_print_return(NULL);
 	if (WIFSIGNALED(exec->status))
 	{
 		if (WTERMSIG(exec->status) == 2)
@@ -32,8 +31,8 @@ static int	wait_process(t_exec *exec)
 			exec->return_value = 131;
 	}
 	else if (check_fatal_error((exec->return_value = \
-					WEXITSTATUS(exec->status))))
-			error = exec->return_value;
+						WEXITSTATUS(exec->status))))
+		error = exec->return_value;
 	return (error);
 }
 
