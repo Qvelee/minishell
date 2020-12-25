@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 18:50:31 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/25 20:56:45 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ static int	run_command(t_commands *commands, t_envp **envp_list, int count)
 	mode = 0;
 	if (count > 1)
 		mode = 1;
-	if (!mode && (!ft_strcmp(commands->command[0], "exit") && \
-											commands->fd_out))
+	if (!mode && commands->command[0] && \
+		(!ft_strcmp(commands->command[0], "exit") && commands->fd_out))
 		mode = 2;
 	if (commands->fd_in != -1 && commands->fd_out != -1)
 	{
+		if (!commands->command[0] || (!ft_strcmp(commands->command[0], "") && \
+										!commands->command[1]))
+			return (0);
 		if ((return_value = \
 				built_in(commands->command, envp_list, mode)) == 127)
 			return_value = command(commands->command, envp_list);
