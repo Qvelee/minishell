@@ -6,13 +6,13 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 20:32:53 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/18 11:44:31 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/17 06:22:46 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-size_t		ft_strlen_gnl(const char *s)
+size_t		ft_strlen_2(const char *s)
 {
 	size_t len;
 
@@ -30,7 +30,7 @@ char		*ft_strjoin_gnl(char const *s1, char const *s2)
 	char *copy1;
 
 	copy1 = (char*)s1;
-	if (!(out = (char*)malloc(ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1)))
+	if (!(out = (char*)malloc(ft_strlen_2(s1) + ft_strlen_2(s2) + 1)))
 	{
 		free(copy1);
 		return (0);

@@ -6,67 +6,42 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/23 22:45:13 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/10/23 23:26:58 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re main bonus
 CC = gcc
-NAME = libparsing.a
-SRC = src/
+NAME = libget_next_line.a
+SRC = srcs/
 OBJ = obj/
 INCLUDES = includes
-OBJ_FILES = check_end.o\
-ft_realloc.o\
-ft_strjoin_gnl.o\
-handle_escape_sequence.o\
-parse_command.o\
-read_line.o\
-remove_terminal_mode.o\
-set_terminal_mode.o\
-get_line.o\
-get_term_size.o\
-read_history.o\
-save_cursor.o\
-free_history.o\
-set_curpos_home.o\
-set_curpos_end.o\
-check_validity.o\
-get_envp.o\
-get_cursor_start.o\
-cursor_inc.o\
-cursor_dec.o
-
-UNAME = $(shell uname)
-REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
-BONUS_OBJ_FILES = $(addprefix $(OBJ),$(BONUS_FILES))
-CFLAGS = -g -Wall -Wextra -Werror -Wno-unused
+OBJ_FILES = get_next_line.o get_next_line_utils.o
+D_FILES = $(OBJ_FILES:.o=.d)
+CFLAGS = -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory
-ifdef WITH_BONUS
-OBJ_OBJ_FILES = $(REG_OBJ_FILES) $(BONUS_OBJ_FILES)
-else
-OBJ_OBJ_FILES = $(REG_OBJ_FILES)
-endif
 
 all: $(OBJ) $(NAME)
 
 $(OBJ):
 	mkdir -p $(OBJ)
 
-$(NAME): $(OBJ_OBJ_FILES)
-	ar rcs $@ $?
+$(NAME): $(addprefix $(OBJ),$(OBJ_FILES))
+	ar rcs $(NAME) $?
 
-$(OBJ)%.o: $(SRC)%.c
-	$(CC) $(CFLAGS) -g -c -I.. -Iincludes -I. -I../libft/includes -I../source $< -o $@
+$(OBJ)%.o: $(SRC)%.c #$(OBJ)
+	$(CC) -g -c $(CFLAGS) -I$(INCLUDES) -o $@ $< -MMD
 
 clean:
 	rm -rf $(OBJ)
+	#rm -f $(addprefix $(OBJ),$(OBJ_FILES))
+
 fclean: clean
-	rm -f write.txt
 	rm -f $(NAME)
-	rm -f ./a.out
+
 re:
 	make fclean
-	make WITH_BONUS=1 all
+	make all
 bonus:
 	make WITH_BONUS=1 all
+-include $(addprefix $(OBJ), $(D_FILES))
+.PHONY: all clean fclean re so

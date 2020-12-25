@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 18:43:03 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/21 19:42:31 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/20 01:15:02 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,7 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 void			ft_lstconcat(t_list **lst1, t_list **lst2);
 void			ft_lstsort(t_list **lst, int (*f)(void *content1,
 			void *content2));
+size_t			ft_strlen_term(const char *s);
+int				ft_substrlen(char *start, char *end);
 
 #endif

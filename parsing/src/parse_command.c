@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/07 18:22:07 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/24 20:28:40 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char *parse_env(char **str, t_envp *envp)
 
 	add = 0;
 	i = 1;
-	while (ft_isalnum((*str)[i]))
+	while (ft_isalnum((*str)[i]) || (*str)[i] == '_')
 		i++;
 	if ((*str)[0] == '$' && (*str)[1] == '?')
 		i++;
@@ -93,9 +93,27 @@ char *parse_arg(char** str,t_envp *envp)
 	char *add;
 	int i;
 
-	arg = ft_calloc(BUFF_SIZE, 1);
+	//arg = ft_calloc(BUFF_SIZE, 1);
+	arg = 0;
 	add = 0;
-	while (**str != '\n' && **str != ' ' && !check_end(**str))
+	if (**str == '|')
+		return (ft_substr((*str)++,0,1));
+	else if (**str == '>')
+	{
+		if (*(*str + 1) == '>')
+			return(ft_substr((*str += 2) - 2,0,2));
+		else
+			return(ft_substr((*str)++,0,1));
+	}
+	else if (**str == '<')
+	{
+		if (*(*str + 1) == '<')
+			return(ft_substr((*str += 2) - 2,0,2));
+		else
+			return(ft_substr((*str)++,0,1));
+	}
+
+	while (**str != '\n' && **str != ' ' && !check_end_arg(**str))
 	{
 		if (**str == '\\')
 		{
@@ -111,14 +129,18 @@ char *parse_arg(char** str,t_envp *envp)
 			(*str)++;
 			add = parse_d_quote(str,envp);
 			arg = ft_strjoin_gnl(arg,add);
+			free(add);
+			add = 0;
 		}
 		else if (**str == 39)
 		{
 			(*str)++;
 			add = parse_quote(str);
 			arg = ft_strjoin_gnl(arg,add);
+			free(add);
+			add = 0;
 		}
-		else if (**str == '$')
+		else if (**str == '$' && !check_end_arg((*(*str + 1))) && (ft_isalpha(*(*str + 1)) || (*(*str + 1)) == '_' || (*(*str + 1)) == '?'))
 			{
 				add = parse_env(str, envp);
 				arg = ft_strjoin_gnl(arg,add);
@@ -154,11 +176,11 @@ char **parse_command(char** str,t_envp *envp)
 	size = BUFF_SIZE;
 	while (**str == ' ')
 			(*str)++;
-	while (**str != '\n' && **str != 0 && !check_end(**str))
+	while (**str != '\n' && **str != 0 && !check_end_command(**str))
 	{
 		if (i > size)
 		{
-			args = ft_realloc(args,size,size * 2 );
+			args = ft_realloc(args,size,size * 2);
 			size *= 2;
 		}
 		args[i] = parse_arg(str,envp);

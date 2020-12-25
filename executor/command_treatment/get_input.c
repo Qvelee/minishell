@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:18:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 18:36:27 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/23 00:03:08 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	handle_input(char *line, char *stop_word, int *fd)
 			line[index] = '\0';
 	if (!ft_strcmp(line, stop_word))
 		return (1);
-	write(1, "> ", 2);
+	write(1, "msheredoc> ", 11);
 	write(*fd, line, ft_strlen(line));
 	write(*fd, "\n", 1);
 	return (0);
@@ -52,7 +52,7 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 	static int	count;
 	char		*line;
 
-	write(1, "> ", 2);
+	write(1, "msheredoc> ", 11);
 	while ((line = read_line(envp)))
 	{
 		count++;

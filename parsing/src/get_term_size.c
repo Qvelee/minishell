@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 17:28:30 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/05 18:10:11 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/22 20:33:45 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,18 @@
 t_coor get_term_size(void)
 {
 	t_coor coor;
-	coor.x = tgetnum("co");
-	coor.y = tgetnum("li");
-	//ioctl(1,TIOCGWINSZ, &coor);
+	struct winsize win;
+
+	//coor.x = tgetnum("co");
+	//coor.y = tgetnum("li");
+	ioctl(1,TIOCGWINSZ, &win);
+	coor.x = win.ws_col;
+	coor.y = win.ws_row;
 	return(coor);
 }
 
-t_coor get_cursor(void)
+t_coor *get_cursor(void)
 {
-	t_coor coor;
-	char str[20];
-	int i;
-
-	i = 0;
-	tputs("\E[6n", 1, ft_putchar);
-	read(1, str, 20);
-	while(!ft_isdigit(str[i]))
-		i++;
-	coor.y = ft_atoi(&str[i]);
-	while(ft_isdigit(str[i]))
-		i++;
-	while(!ft_isdigit(str[i]))
-		i++;
-	coor.x = ft_atoi(&str[i]);
-	return (coor);
+	static t_coor cursor;
+	return (&cursor);
 }

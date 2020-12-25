@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
+#    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/11/20 09:30:44 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/12/12 22:46:28 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,19 +14,21 @@
 CC = gcc
 NAME = minishell
 INCLUDES = . parsing executor libft/includes
-LIB_DIR = parsing executor libft
-LIB_NAMES = exec parsing ft tinfo
+LIB_DIR = parsing executor get_next_line libft
+LIB_NAMES = exec parsing get_next_line ft termcap ncurses
 UNAME = $(shell uname)
 CFLAGS = -g -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory
 all: LIBS $(NAME)
 
 LIBS :
+	make -C get_next_line
 	make -C executor
 	make -C parsing
 	make -C libft
 $(NAME): main.c main.h executor/libexec.a parsing/libparsing.a libft/libft.a
-	$(CC) $(CFLAGS) main.c $(addprefix -I,$(INCLUDES)) $(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
+	$(CC) $(CFLAGS) -c $(addprefix -I,$(INCLUDES)) main.c
+	$(CC) $(CFLAGS) main.o $(addprefix -I,$(INCLUDES)) $(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
 
 clean:
 	make -C executor clean

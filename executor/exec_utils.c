@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/06 14:42:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 18:49:56 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/25 00:12:10 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "executor.h"
 
@@ -24,6 +25,7 @@ static int	wait_all_processes(t_exec *exec)
 			exec->pids[exec->index] *= -1;
 			if ((waitpid(exec->pids[exec->index], &exec->status, \
 												WUNTRACED) == -1))
+
 				error_print_return(NULL);
 			while (!WIFEXITED(exec->status) && !WIFSIGNALED(exec->status))
 				if ((waitpid(exec->pids[exec->index], &exec->status, \
