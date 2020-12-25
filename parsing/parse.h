@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:05:06 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/24 04:15:41 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/25 04:58:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int			remove_terminal_mode(void);
 char		*read_line(t_envp *envp);
 int			check_end_arg(char c);
 int			check_end_command(char c);
+int			check_and_or(char c, char h);
 int			handle_escape_sequence(char *command, t_envp *envp, char **str, int *i, t_history **history);
 char		**parse_command(char **str, t_envp *envp);
 char		*parse_d_quote(char **str, t_envp *envp);
@@ -65,5 +66,6 @@ t_envp		**get_envp(void);
 t_coor		get_cursor_start(void);
 void		cursor_inc(t_coor *cursor, int len);
 char		*ft_realloc_str(char *data, size_t len, size_t newlen);
-void	cursor_dec(char *start, char *end);
+void					cursor_dec(char *start, char *end);
+int			check_wild(char *str);
 #endif

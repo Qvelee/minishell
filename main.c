@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/24 23:39:33 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/25 02:46:12 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int main(int __attribute__((unused)) argc, char __attribute__((unused)) * *argv,
 			while (command[i])
 				free(command[i++]);
 			free(command);
+			//if (check_and_or(**str,*(*str + 1)))
 			if (*str)
 				str++;
 		}

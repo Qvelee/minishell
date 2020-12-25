@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 12:27:18 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/22 00:30:39 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/25 06:40:37 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 128
+#  define BUFFER_SIZE 1024
 # endif
 # define FD 4
 

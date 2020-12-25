@@ -4,3 +4,5 @@
 *.d
 minishell
 *test*
+a.out
+*.old
