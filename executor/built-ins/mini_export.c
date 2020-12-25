@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 22:49:09 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 14:23:57 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/25 20:25:22 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			mini_export(char **args, t_envp **envp)
 		index = 0;
 		while (args[++index])
 		{
-			if (!ft_isalpha(args[index][0]))
+			if (!ft_isalpha(args[index][0]) && args[index][0] != '_')
 				return (error_arg_export(args[index]));
 			sindex = 0;
 			while (args[index][++sindex] != '=' && args[index][sindex])
