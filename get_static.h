@@ -1,0 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_static.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 10:35:00 by sgertrud          #+#    #+#             */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef GET_STATIC_H
+# define GET_STATIC_H
+# include "structs.h"
+
+t_envp	**get_envp(void);
+t_line	*g_line(void);
+t_coor	get_term_size(void);
+t_coor	*get_cursor(void);
+t_coor	*savecursor(void);
+t_coor	get_cursor_start(void);
+#endif

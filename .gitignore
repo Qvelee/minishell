@@ -3,3 +3,7 @@
 *.a
 *.d
 minishell
+*test*
+a.out
+*.old
+.minishell_history

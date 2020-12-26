@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 22:49:09 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 14:57:52 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:19:30 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
+#include <errno.h>
+#include <string.h>
 
 static char	*find_maximum(t_envp *envp_list)
 {
 	char	*maximum;
-	int		index;
 
-	index = -1;
 	maximum = envp_list->variable;
 	while (envp_list)
 	{
@@ -28,7 +28,6 @@ static char	*find_maximum(t_envp *envp_list)
 	}
 	return (maximum);
 }
-
 
 static char	*find_minimum(t_envp *envp_list, char *last_minimum, char *maximum)
 {
@@ -43,8 +42,10 @@ static char	*find_minimum(t_envp *envp_list, char *last_minimum, char *maximum)
 				if (!last_minimum)
 					minimum = envp_list->variable;
 				else
+				{
 					if (envp_compare(envp_list->variable, last_minimum) > 0)
 						minimum = envp_list->variable;
+				}
 			}
 		envp_list = envp_list->next;
 	}
@@ -78,15 +79,17 @@ static int	handle_argument(char *argument, t_envp **envp)
 	if (envp_find_variable(*envp, variable) && type == 2)
 		envp_change_type(*envp, variable, 1);
 	else
+	{
 		if (envp_replace_variable(envp, variable, type))
 		{
-			free (variable);
+			free(variable);
 			return (12);
 		}
+	}
 	return (0);
 }
 
-int			mini_export(char **args,  t_envp **envp)
+int			mini_export(char **args, t_envp **envp)
 {
 	int		index;
 	int		sindex;
@@ -99,7 +102,7 @@ int			mini_export(char **args,  t_envp **envp)
 		index = 0;
 		while (args[++index])
 		{
-			if (!ft_isalpha(args[index][0]))
+			if (!ft_isalpha(args[index][0]) && args[index][0] != '_')
 				return (error_arg_export(args[index]));
 			sindex = 0;
 			while (args[index][++sindex] != '=' && args[index][sindex])
@@ -110,7 +113,7 @@ int			mini_export(char **args,  t_envp **envp)
 		index = 0;
 		while (args[++index])
 			if (handle_argument(args[index], envp))
-				return (12);
+				return (error_print_return("export"));
 	}
 	return (0);
 }

@@ -6,15 +6,17 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 15:03:59 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 18:05:45 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:07:28 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "stdlib.h"
+#include "structs.h"
+#include "executor.h"
 
 void	free_matrix(char **matrix)
 {
-	int 	index;
+	int		index;
 
 	index = -1;
 	if (matrix)

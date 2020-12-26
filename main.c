@@ -6,45 +6,46 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/17 20:08:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
+#include "get_static.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <termios.h>
-#include "parse.h"
 #include "main.h"
+#include "libft.h"
+#include <signal.h>
+#include "executor.h"
 
-int	main(int argc, char **argv, char **envp)
+int		main(int __attribute__((unused)) argc,
+	char __attribute__((unused)) **argv, char **envp)
 {
-	argc = argc;
-	argv = argv;
-	struct termios term;
-	char *str;
-	char **command;
-	char *temp;
-	t_envp *_envp;
+	char	*str;
+	char	*temp;
+	t_envp	*envp_;
 
-	_envp = envp_create_list(envp);
-	set_terminal_mode(term);
-	while (1)
+	signal(SIGINT, ft_sigint);
+	signal(SIGQUIT, ft_nothing);
+	envp_ = envp_create_list(envp);
+	add_histfile(envp_);
+	if (set_terminal_mode(envp_get_var_value(envp_, "TERM")) == -1)
+		do_command((char *[3]){ft_strdup("exit"), ft_strdup("1"), 0}, &envp_);
+	invite("minishell: ");
+	(*get_envp()) = envp_;
+	str = read_line(envp_);
+	while (str && *str != 4)
 	{
-		write(1, GREEN, 5);
-		write(1,"minishell: ", 12);
-		write(1, RESET, 5);
-		str = read_line(term,_envp);
+		g_line()->sig = 0;
 		temp = str;
-		while (*str && *str != '\n')
-		{
-			command = parse_command(&str, _envp);
-			do_command(command, &_envp, term);
-			str++;
-		}
+		one_command(&str, &envp_);
+		invite("minishell: ");
 		free(temp);
+		str = read_line(envp_);
 	}
-
+	do_command((char *[2]){ft_strdup("exit"), 0}, &envp_);
 	return (0);
 }

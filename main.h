@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 19:58:08 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:13:21 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,22 @@
 # define YELLOW	"\x1b[33m"
 # define GREEN	"\x1b[32m"
 # define RESET	"\x1b[0m"
+# include "structs.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
-# include <errno.h>
-# include <termios.h>
-// delete this!
-#include <stdio.h>
-
-/*
-**	Utils headers.
-*/
-
-typedef struct termios t_term;
-
-typedef struct	s_envp
-{
-	char			*variable;
-	int				type;
-	struct s_envp	*next;
-}				t_envp;
-
-int		do_command(char **args, t_envp **envp_list, struct termios term);
-t_envp	*envp_create_list(char **_envp);
-void	envp_lst_clear(t_envp **envp_list, void (*delete)(void*));
-int		remove_terminal_mode(struct termios term);
-void	free_matrix(char **memory);
-void	exit_minishell(int code, char **args, t_envp **envp_list);
-char	*envp_get_var_value(t_envp *envp_list, char *variable);
-
+int						save_ret_value(int value, t_envp **envp_list);
+int						do_command(char **args, t_envp **envp_list);
+char					**parse_command(char **str, t_envp *envp);
+char					check_validity(char *str);
+t_envp					*envp_create_list(char **envp);
+void					envp_lst_clear(t_envp **envp, void (*delete)(void*));
+int						remove_terminal_mode(void);
+void					free_matrix(char **memory);
+void					exit_minishell(int code, char **args, t_envp **envp);
+int						get_next_line(int fd, char **line);
+void					ft_sigint(int __attribute__((unused)) sig);
+void					ft_nothing(int __attribute__((unused)) sig);
+void					add_histfile(t_envp *envp);
+void					invite(char *str);
+int						syntax_error(char c);
+void					one_command(char **str, t_envp **envp);
 #endif

@@ -3,52 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   do_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 19:57:46 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/10 14:15:00 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include <termios.h>
 
-static int		run_built_in(int index, char **args, t_envp **envp_list,\
-				t_term term)
+int		save_ret_value(int value, t_envp **envp_list)
 {
-	int		return_value;
+	char	*value_to_save;
+	char	*temp;
 
-	return_value = 0;
-	if (index == 0)
-		mini_echo(args);
-	if (index == 1)
-		return_value = mini_pwd();
-	if (index == 2)
-		return_value = mini_cd(args, envp_list);
-	if (index == 3)
-		return_value = mini_export(args, envp_list);
-	if (index == 4)
-		return_value = mini_unset(args, envp_list);
-	if (index == 5)
-		mini_env(*envp_list);
-	if (index == 6)
+	if (!(temp = ft_itoa(value)))
+		return (error_print_return(NULL));
+	if (!(value_to_save = envp_create_envp_str("?", temp)))
 	{
-		remove_terminal_mode(term);
-		envp_lst_clear(envp_list, free);
-		mini_exit(args);
+		free(temp);
+		return (error_print_return(NULL));
 	}
-	return (return_value);
+	free(temp);
+	if (envp_replace_variable(envp_list, value_to_save, 0))
+	{
+		free(value_to_save);
+		return (error_print_return(NULL));
+	}
+	return (0);
 }
 
-int				do_command(char **args, t_envp **envp_list, t_term term)
+int		do_command(char **args, t_envp **envp_list)
 {
-	char	*commands[8] =	{"echo", "pwd", "cd", "export", \
-							"unset", "env", "exit", NULL};
-	int		index;
+	int			return_value;
+	t_commands	*commands;
 
-	index = -1;
-	while (commands[++index] && args[0])
-		if (!ft_strncmp(commands[index], args[0], 7))
-			return (run_built_in(index, args, envp_list, term));
-	return (0);
+	if (!(return_value = parse_command_ex(args, &commands, *envp_list)))
+	{
+		if ((return_value = run_commands(commands, envp_list)))
+		{
+			comm_lst_clr(&commands);
+			if (check_fatal_error(return_value))
+				exit_fatal(return_value, args, envp_list);
+		}
+	}
+	else
+	{
+		if (check_fatal_error(return_value))
+			exit_fatal(return_value, args, envp_list);
+	}
+	comm_lst_clr(&commands);
+	if (save_ret_value(return_value, envp_list))
+		exit_fatal(12, args, envp_list);
+	return (return_value);
 }

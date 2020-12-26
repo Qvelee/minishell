@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 18:43:03 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/16 17:04:37 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 06:02:22 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+int				ft_putchar(int c);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memset(void *ptr, int value, size_t num);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
@@ -28,7 +29,7 @@ void			*ft_memccpy(void *dest, const void *src, int c, size_t n);
 void			*ft_memmove(void *dest, const void *src, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
-size_t				ft_strlen(const char *s);
+size_t			ft_strlen(const char *s);
 size_t			ft_strlcpy(char *dest, const char *src, size_t n);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			*ft_strchr(const char *s, int c);
@@ -37,6 +38,7 @@ char			*ft_strnstr(const char *str, const char *to_find, size_t len);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_atoi(const char *str);
+long int		ft_atol(const char *str);
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
 int				ft_isalnum(int c);
@@ -69,5 +71,9 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 void			ft_lstconcat(t_list **lst1, t_list **lst2);
 void			ft_lstsort(t_list **lst, int (*f)(void *content1,
 			void *content2));
-
+size_t			ft_strlen_term(const char *s);
+int				ft_substrlen(char *start, char *end);
+char			*ft_strjoin_gnl(const char *s1, const char *s2);
+char			**ft_realloc(char **data, size_t len, size_t newlen);
+char			*ft_realloc_str(char *data, size_t len, size_t newlen);
 #endif

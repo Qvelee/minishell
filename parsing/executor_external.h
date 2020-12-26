@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   executor_external.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:05:06 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/17 20:09:47 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:30:52 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
-# define BUFF_SIZE 1024
+#ifndef EXECUTOR_EXTERNAL_H
+# define EXECUTOR_EXTERNAL_H
+
 # include <termios.h>
 # include <stddef.h>
 # include "main.h"
+# include "parse_internal.h"
 
-int		set_terminal_mode(struct termios term);
-int		remove_terminal_mode(struct termios term);
-char	*read_line(struct termios term, t_envp *envp);
-int		check_end(char c);
-int		handle_escape_sequance(char *command, t_envp *envp);
-char	**parse_command(char **str, t_envp *envp);
-char	*parse_d_quote(char **str, t_envp *envp);
-char	*parse_quote(char **str);
-char	*ft_strjoin_gnl(char const *s1, char const *s2);
-char	*get_envp_value(char *var, t_envp *envp);
-char	**ft_realloc(char **data, size_t len, size_t newlen);
-char	*parse_env(char **str, t_envp *envp);
+# include "structs.h"
+
+int			do_command(char **args, t_envp **envp_list);
+char		*envp_get_var_value(t_envp *envp, char *variable);
+
+/*
+** int			set_terminal_mode(char *term_name);
+** int			remove_terminal_mode(void);
+** char		*read_line(t_envp *envp);
+** t_coor		get_cursor_start(void);
+** void		cursor_inc(t_coor *cursor, int len);
+** char		*ft_realloc_str(char *data, size_t len, size_t newlen);
+*/
+
 #endif

@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/13 20:20:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/11/13 20:31:18 by sgertrud         ###   ########.fr       */
+/*   Created: 2020/12/26 06:02:24 by sgertrud          #+#    #+#             */
+/*   Updated: 2020/12/26 06:03:59 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#include "unistd.h"
 
-static void	ft_bzero(void *s, size_t n)
+int	ft_putchar(int c)
 {
-	while (n--)
-		*(unsigned char*)s++ = 0;
-}
-
-char		**ft_realloc(char **data, size_t len, size_t newlen)
-{
-	char **out;
-
-	if (!(out = (char**)malloc(newlen * sizeof(char*))))
-		return (0);
-	ft_bzero(out, newlen * sizeof(char*));
-	while (data && len--)
-		out[len] = data[len];
-	free(data);
-	return (out);
+	return (write(1, &c, 1));
 }

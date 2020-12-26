@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 15:02:03 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:11:18 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
+#include <errno.h>
+#include <string.h>
 
 static int	error_cd(int mode, char *set)
 {
@@ -18,27 +20,22 @@ static int	error_cd(int mode, char *set)
 
 	if (mode == 1)
 	{
-		write(2, "cd: ", 4);
+		error = strerror(errno);
+		write(2, "minishell: cd: ", 15);
 		write(2, set, ft_strlen(set));
 		write(2, ": ", 2);
-		error = strerror(errno);
 		write(2, error, ft_strlen(error));
-		free(error);
 		write(2, "\n", 1);
 	}
 	if (mode == 2)
-	{
-		write(2, "cd: too many arguments\n", 23);
-		return (1);
-	}
+		write(2, "minishell: cd: too many arguments\n", 35);
 	if (mode == 3)
 	{
-		write(2, "cd: ", 4);
+		write(2, "minishell: cd: ", 15);
 		write(2, set, ft_strlen(set));
 		write(2, " not set\n", 9);
-		return (1);
 	}
-	return (errno);
+	return (1);
 }
 
 static char	*get_oldpwd(t_envp *envp)
@@ -51,49 +48,60 @@ static char	*get_oldpwd(t_envp *envp)
 			return (NULL);
 	}
 	else
+	{
 		if (!(old_pwd = envp_create_envp_str("OLDPWD", old_pwd)))
 			return (NULL);
+	}
 	return (old_pwd);
 }
 
-static char	*get_pwd(void)
+static int	get_pwd(char **pwd)
 {
 	char	*error;
-	char	*pwd;
+	char	*temp;
 
-	pwd = NULL;
-	if (!(pwd = getcwd(pwd, PATH_MAX)))
+	*pwd = NULL;
+	if (!(*pwd = getcwd(*pwd, PATH_MAX)))
 	{
 		error = strerror(errno);
+		write(2, "minishell: cd: ", 15);
 		write(2, error, ft_strlen(error));
-		return (NULL);
+		write(2, "\n", 1);
+		return (errno);
 	}
-	if (!(pwd = envp_create_envp_str("PWD", pwd)))
-		return (NULL);
-	return (pwd);
+	temp = *pwd;
+	if (!(*pwd = envp_create_envp_str("PWD", *pwd)))
+	{
+		*pwd = NULL;
+		free(temp);
+		return (error_print_return("cd"));
+	}
+	free(temp);
+	return (0);
 }
 
 static int	cd_to_directory(t_envp **envp, char *directory)
 {
 	char	*old_pwd;
 	char	*pwd;
+	int		err;
 
 	errno = 0;
 	if ((chdir(directory) != -1))
 	{
 		if (!(old_pwd = get_oldpwd(*envp)))
-			return (12);
+			return (error_print_return("cd"));
 		if (envp_replace_variable(envp, old_pwd, 0))
 		{
 			free(old_pwd);
-			return (12);
+			return (error_print_return("cd"));
 		}
-		if (!(pwd = get_pwd()))
-			return (12);
+		if ((err = get_pwd(&pwd)))
+			return (err);
 		if (envp_replace_variable(envp, pwd, 0))
 		{
 			free(pwd);
-			return (12);
+			return (error_print_return("cd"));
 		}
 	}
 	else

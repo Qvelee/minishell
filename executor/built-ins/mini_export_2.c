@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:58:23 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/16 14:02:48 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/10 13:52:14 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int		error_arg_export(char *argument)
 {
-	write(2, "export: \'", 9);
+	write(2, "minishell: export: `", 20);
 	write(2, argument, ft_strlen(argument));
 	write(2, "\': not a valid identifier\n", 26);
 	return (1);
 }
 
-void		print_line(char *line)
+void	print_line(char *line)
 {
 	int		index;
 
@@ -31,7 +31,7 @@ void		print_line(char *line)
 	if (ft_strchr(line, '='))
 	{
 		write(1, "=\"", 2);
-		index ++;
+		index++;
 	}
 	while (line[index] != '\0')
 		write(1, &line[index++], 1);
