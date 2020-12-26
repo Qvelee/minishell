@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:19:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:10:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 14:32:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,24 @@ int		handle_escape_sequence(char *c, char *(*str), int *i, t_history **his)
 {
 	int		len;
 	t_coor	term;
-	int		len_c;
+	int		lc;
 
-	len_c = ft_strlen(c);
+	lc = ft_strlen(c);
 	len = ft_strlen((*str));
 	term = get_term_size();
 	tputs(cursor_invisible, 1, ft_putchar);
 	check_arrows(c, str, i, his);
-	check_ctrl(c, str, i, len_c);
-	if (!ft_memcmp("\v", c, len_c + 1))
+	check_ctrl(c, str, i, lc);
+	if (!ft_memcmp("\v", c, lc + 1))
 	{
 		tputs(tigetstr("ed"), 1, ft_putchar);
 		(*str)[*i] = 0;
 	}
-	else if (*i < len && !ft_memcmp(tgetstr("kD", 0), c, len_c + 1))
+	else if (*i < len && !ft_memcmp(tgetstr("kD", 0), c, lc + 1))
 	{
 		delete(str, i, len);
 	}
-	else if (*i > 0 && !ft_memcmp(tgetstr("kb", 0), c, len_c + 1))
+	else if (*i > 0 && (!ft_memcmp(key_backspace, c, lc + 1) || *c == '\177'))
 	{
 		backspace(str, i, len, term);
 	}
