@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:18:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 12:56:23 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include <errno.h>
+#include "get_static.h"
 
 static int	error_read_line(char *memory, int *fd)
 {
@@ -53,7 +55,8 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 	char		*line;
 
 	write(1, "msheredoc> ", 11);
-	while ((line = read_line(envp)))
+	g_line()->sig = 22;
+	while ((line = read_line(envp)) && (g_line()->sig == 20))
 	{
 		count++;
 		if (line[0] == 4)
@@ -70,6 +73,8 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 	if (errno == 12)
 		return (12);
 	free(line);
+	if (g_line()->sig == 20)
+		return (130);
 	return (0);
 }
 

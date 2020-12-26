@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:42:28 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 14:24:41 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:11:18 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
+#include <errno.h>
+#include <string.h>
 
 static int	error_cd(int mode, char *set)
 {

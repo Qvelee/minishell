@@ -6,11 +6,11 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/25 23:34:40 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/26 13:18:29 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = clang
+CC = gcc
 NAME = libget_next_line.a
 SRC = srcs/
 OBJ = obj/

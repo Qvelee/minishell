@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:12:07 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 11:15:28 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	history_down(t_history **history, char **str, int *i)
 			write(1, " ", 1);
 			tputs(cursor_left, 1, ft_putchar);
 		}
-		while ((int)ft_strlen((*history)->str) + 1 >= get_line()->size)
+		while ((int)ft_strlen((*history)->str) + 1 >= g_line()->size)
 		{
-			*str = ft_realloc_str(*str, get_line()->size, get_line()->size * 2);
-			get_line()->size *= 2;
+			*str = ft_realloc_str(*str, g_line()->size, g_line()->size * 2);
+			g_line()->size *= 2;
 		}
 		ft_strlcpy(*str, (*history)->str, ft_strlen((*history)->str) + 1);
 		cursor_inc(get_cursor(), ft_strlen_term((*str)));
@@ -59,10 +59,10 @@ void	history_up(t_history **history, char **str, int *i)
 			write(1, " ", 1);
 			tputs(cursor_left, 1, ft_putchar);
 		}
-		while ((int)ft_strlen((*history)->str) + 1 >= get_line()->size)
+		while ((int)ft_strlen((*history)->str) + 1 >= g_line()->size)
 		{
-			*str = ft_realloc_str(*str, get_line()->size, get_line()->size * 2);
-			get_line()->size *= 2;
+			*str = ft_realloc_str(*str, g_line()->size, g_line()->size * 2);
+			g_line()->size *= 2;
 		}
 		ft_strlcpy(*str, (*history)->str, ft_strlen((*history)->str) + 1);
 		cursor_inc(get_cursor(), ft_strlen_term((*str)));

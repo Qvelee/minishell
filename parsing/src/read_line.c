@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:21:02 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ char	*read_line(t_envp *envp)
 	history = 0;
 	if (fd > 0)
 		history = read_history(fd);
-	*get_line() = (t_line){ft_calloc(1, BUFF_SIZE), &i, 10, BUFF_SIZE};
-	get_line()->str[0] = 0;
+	*g_line() = (t_line){ft_calloc(1, BUFF_SIZE), &i, 10, BUFF_SIZE};
+	g_line()->str[0] = 0;
 	*(get_cursor()) = get_cursor_start();
-	history = add_history(history, ft_strdup(get_line()->str));
+	history = add_history(history, ft_strdup(g_line()->str));
 	handle_one_sym(ret, history, &i, envp);
-	if (get_line()->str && *get_line()->str != 4)
-		move_to_out(get_line()->str, fd, i);
+	if (g_line()->str && *g_line()->str != 4)
+		move_to_out(g_line()->str, fd, i);
 	if (fd > 0)
 		close(fd);
 	free_history(history);
-	return (get_line()->str);
+	return (g_line()->str);
 }

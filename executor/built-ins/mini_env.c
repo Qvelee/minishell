@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 22:39:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/18 15:01:19 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:11:43 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
+#include <errno.h>
+#include <string.h>
 
 int		mini_env(t_envp *envp)
 {

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:06:27 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ void	ft_sigint(int __attribute__((unused)) sig)
 	int		i;
 	int		len;
 
-	if (get_line()->sig == 10)
+	if (g_line()->sig == 22)
+		g_line()->sig = 20;
+	if (g_line()->sig == 10)
 	{
-		i = *(get_line()->i);
-		str = (get_line()->str);
+		i = *(g_line()->i);
+		str = (g_line()->str);
 		len = ft_strlen(str);
 		write(1, "\n", 1);
 		j = (ft_substrlen(str, &str[i]) + MSH) / get_term_size().x;
@@ -33,11 +35,11 @@ void	ft_sigint(int __attribute__((unused)) sig)
 		while (j++ < len && len)
 			write(1, "\n", 1);
 		invite("minishell: ");
-		if (get_line()->str && *(get_line()->str))
-			*(get_line()->str) = 0;
+		if (g_line()->str && *(g_line()->str))
+			*(g_line()->str) = 0;
 		get_cursor()->x = MSH + 1;
 		get_cursor()->y += 1;
-		*(get_line()->i) = 0;
+		*(g_line()->i) = 0;
 	}
 	save_ret_value(130, get_envp());
 }

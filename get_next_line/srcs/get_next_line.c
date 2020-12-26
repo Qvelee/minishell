@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 12:21:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/25 06:48:37 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	check(int fd, char **line)
 	return (0);
 }
 
-static int	get_line(int fd, char **reminder, char **line)
+static int	g_line(int fd, char **reminder, char **line)
 {
 	char		*buf;
 
@@ -99,7 +99,7 @@ int			get_next_line(int fd, char **line)
 		reminder[0] = (char*)((long)fd + 9);
 		reminder[fd + 1] = 0;
 	}
-	out = get_line(fd, reminder, line);
+	out = g_line(fd, reminder, line);
 	remfree(&reminder);
 	return (out);
 }

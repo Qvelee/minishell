@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:03:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	one_command(char **str, t_envp **envp)
 			break ;
 		command = parse_command(str, *envp);
 		remove_terminal_mode();
-		get_line()->str = (*str);
-		get_line()->sig = 9;
+		g_line()->str = (*str);
+		g_line()->sig = 9;
 		if (command && *command)
 			do_command(command, envp);
 		set_terminal_mode(envp_get_var_value(*envp, "TERM"));

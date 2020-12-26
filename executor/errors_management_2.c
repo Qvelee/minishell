@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   errors_management_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:41:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/09 19:32:07 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:05:30 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include <errno.h>
+#include <string.h>
 
 int		try_close(int *fd_1, int *fd_2)
 {

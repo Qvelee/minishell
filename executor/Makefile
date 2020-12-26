@@ -6,13 +6,13 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/22 16:28:58 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/26 13:18:34 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =				libexec.a
 
-COMP =				clang -g
+COMP =				gcc -g
 
 FLAGS =				-Wall -Wextra -Werror
 

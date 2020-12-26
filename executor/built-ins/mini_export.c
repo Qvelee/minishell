@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 22:49:09 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/25 20:25:22 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:19:30 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
+#include <errno.h>
+#include <string.h>
 
 static char	*find_maximum(t_envp *envp_list)
 {
 	char	*maximum;
-	int		index;
 
-	index = -1;
 	maximum = envp_list->variable;
 	while (envp_list)
 	{

@@ -6,11 +6,11 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/26 06:03:41 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/26 13:18:22 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = clang
 NAME=libft.a
 SRC = src/
 OBJ = obj/

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 12:07:13 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:13:21 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@
 # define GREEN	"\x1b[32m"
 # define RESET	"\x1b[0m"
 # include "structs.h"
-# include "errno.h" //delete
-# include "string.h" //delete
-# include "stdlib.h" //delete
-//# include "executor.h"
-/*
-**	Utils headers.
-*/
+
 int						save_ret_value(int value, t_envp **envp_list);
 int						do_command(char **args, t_envp **envp_list);
 char					**parse_command(char **str, t_envp *envp);

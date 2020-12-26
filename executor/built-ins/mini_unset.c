@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mini_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 19:43:31 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/11/22 14:38:14 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 13:11:32 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../executor.h"
+#include <errno.h>
+#include <string.h>
 
 static int	error_arg(char *argument)
 {
