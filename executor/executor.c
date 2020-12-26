@@ -6,23 +6,23 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/25 20:56:45 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 09:37:01 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static int	run_command(t_commands *commands, t_envp **envp_list, int count)
+static int	run_command(t_commands *commands, t_envp **envp_list, t_exec *exec)
 {
 	int		return_value;
 	int		mode;
 
 	mode = 0;
-	if (count > 1)
+	if (exec->count > 1)
 		mode = 1;
 	if (!mode && commands->command[0] && \
-		(!ft_strcmp(commands->command[0], "exit") && commands->fd_out))
-		mode = 2;
+		(!ft_strcmp(commands->command[0], "exit")))
+		try_close(&exec->tmp_in, &exec->tmp_out);
 	if (commands->fd_in != -1 && commands->fd_out != -1)
 	{
 		if (!commands->command[0] || (!ft_strcmp(commands->command[0], "") && \
@@ -100,7 +100,7 @@ int			run_commands(t_commands *commands, t_envp **envp)
 			return (error_running(exec.fd_out, commands, &exec));
 		if ((exec.return_value = set_fd_out(&exec.fd_out, &commands->fd_out)))
 			return (error_running(exec.return_value, commands, &exec));
-		exec.return_value = run_command(commands, envp, exec.count);
+		exec.return_value = run_command(commands, envp, &exec);
 		if (check_fatal_error(exec.return_value))
 			return (error_running(exec.return_value, commands, &exec));
 		exec.pids[exec.index++] = exec.return_value;
