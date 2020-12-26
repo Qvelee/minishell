@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_envp.c                                         :+:      :+:    :+:   */
+/*   get_static.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/22 15:34:42 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/25 19:22:31 by sgertrud         ###   ########.fr       */
+/*   Created: 2020/12/26 10:35:00 by sgertrud          #+#    #+#             */
+/*   Updated: 2020/12/26 12:05:57 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#ifndef GET_STATIC_H
+# define GET_STATIC_H
+# include "structs.h"
 
-t_envp	**get_envp(void)
-{
-	static t_envp	*envp;
-
-	return (&envp);
-}
+t_envp	**get_envp(void);
+t_line	*get_line(void);
+t_coor	get_term_size(void);
+t_coor	*get_cursor(void);
+t_coor	*savecursor(void);
+t_coor	get_cursor_start(void);
+#endif

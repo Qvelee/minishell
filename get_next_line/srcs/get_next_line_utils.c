@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 22:17:24 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/17 06:20:43 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:09:17 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		*ft_memchr_gnl(const void *s, int c, size_t n)
 	return (0);
 }
 
-static void	ft_bzero_gnl(void *s, size_t n)
+void		ft_bzero_gnl(void *s, size_t n)
 {
 	while (n--)
 		*(unsigned char*)s++ = 0;

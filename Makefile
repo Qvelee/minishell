@@ -6,12 +6,13 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/12 22:46:28 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/26 12:05:22 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re main bonus
 CC = gcc
+OBJ = main.o main_utils.o sygnals.o
 NAME = minishell
 INCLUDES = . parsing executor libft/includes
 LIB_DIR = parsing executor get_next_line libft
@@ -26,19 +27,23 @@ LIBS :
 	make -C executor
 	make -C parsing
 	make -C libft
-$(NAME): main.c main.h executor/libexec.a parsing/libparsing.a libft/libft.a
-	$(CC) $(CFLAGS) -c $(addprefix -I,$(INCLUDES)) main.c
-	$(CC) $(CFLAGS) main.o $(addprefix -I,$(INCLUDES)) $(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
-
+$(NAME): $(OBJ) main.h executor/libexec.a parsing/libparsing.a libft/libft.a
+	$(CC) $(CFLAGS) $(OBJ) $(addprefix -I,$(INCLUDES)) $(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
+%.o : %.c
+	$(CC) $(CFLAGS) -c $(addprefix -I,$(INCLUDES)) $< -o $@
 clean:
+	make -C get_next_line clean
 	make -C executor clean
 	make -C libft clean
 	make -C parsing clean
+	rm -f *.o
 
 fclean:
+	make -C get_next_line fclean
 	make -C executor fclean
 	make -C libft fclean
 	make -C parsing fclean
+	rm -f *.o
 	rm -f $(NAME)
 re:
 	make fclean

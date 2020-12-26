@@ -6,20 +6,21 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 01:29:38 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/22 20:04:59 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:23:16 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "structs.h"
 #include "libft.h"
+#include "main.h"
 
-t_history *add_history(t_history *head, char *str)
+t_history	*add_history(t_history *head, char *str)
 {
 	t_history *prev;
 
 	if (head)
 	{
-		head->next = ft_calloc(sizeof(t_history),1);
+		head->next = ft_calloc(sizeof(t_history), 1);
 		prev = head;
 		head = head->next;
 		head->str = str;
@@ -33,35 +34,37 @@ t_history *add_history(t_history *head, char *str)
 		head->next = 0;
 		head->str = str;
 	}
-
 	return (head);
 }
 
-t_history *read_history(int fd)
+void		add_one_line(char *str, t_history **head)
 {
-	t_history *head;
-	int ret;
-	t_history *prev;
-	t_history *next;
-	char *str;
-	head = ft_calloc(sizeof(t_history),1);
+	t_history	*prev;
+
+	(*head)->str = str;
+	(*head)->next = ft_calloc(sizeof(t_history), 1);
+	prev = (*head);
+	(*head) = (*head)->next;
+	(*head)->prev = prev;
+}
+
+t_history	*read_history(int fd)
+{
+	t_history	*head;
+	int			ret;
+	char		*str;
+
+	head = ft_calloc(sizeof(t_history), 1);
 	head->prev = NULL;
-	prev = head;
 	str = 0;
 	while ((ret = get_next_line(fd, &str)) >= 0)
 	{
 		if (!*str)
 			free(str);
 		else
-		{
-			head->str = str;
-			head->next = ft_calloc(sizeof(t_history),1);
-			prev = head;
-			head = head->next;
-			head->prev = prev;
-		}
+			add_one_line(str, &head);
 		if (ret == 0)
-			break;
+			break ;
 	}
 	if (head->prev)
 	{
@@ -69,5 +72,5 @@ t_history *read_history(int fd)
 		free(head->next);
 		head->next = 0;
 	}
-	return(head);
+	return (head);
 }

@@ -6,14 +6,15 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 20:27:50 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/20 04:15:13 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:23:29 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "structs.h"
 
-t_coor *savecursor(void)
+t_coor	*savecursor(void)
 {
-	static t_coor cursor;
+	static t_coor	cursor;
+
 	return (&cursor);
 }

@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_envp.c                                         :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/22 15:34:42 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/25 19:22:31 by sgertrud         ###   ########.fr       */
+/*   Created: 2020/12/26 06:02:24 by sgertrud          #+#    #+#             */
+/*   Updated: 2020/12/26 06:03:59 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "unistd.h"
 
-t_envp	**get_envp(void)
+int	ft_putchar(int c)
 {
-	static t_envp	*envp;
-
-	return (&envp);
+	return (write(1, &c, 1));
 }

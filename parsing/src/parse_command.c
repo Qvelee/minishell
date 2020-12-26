@@ -6,165 +6,79 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/25 05:30:31 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:20:06 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
 #include "libft.h"
 #include "main.h"
 #include "glob.h"
+#include "parse_internal.h"
 
-char *parse_d_quote(char **str, t_envp *envp)
+void	parse_one_step(char **str, char **arg, t_envp *envp)
 {
-	int i;
-	char *var;
-	char *add;
-	char *arg;
+	char	*add;
 
-	arg = 0;
-	add = 0;
-	while (**str != '\"' && **str)
+	if (**str == '\\')
 	{
-		if (**str == '\\' && ((*((*str) + 1) == '$' || (*((*str) + 1) == '"')) ||  (*((*str) + 1) == '\\')))
-		{
-			(*str)++;
-			add = ft_substr(*str,0,1);
-			(*str)++;
-			arg = ft_strjoin_gnl(arg,add);
-			free(add);
-		}
-		else if (**str == '$')
-		{
-			add = parse_env(str, envp);
-			arg = ft_strjoin_gnl(arg,add);
-		}
-		else
-		{
-			add = ft_substr(*str,0,1);
-			(*str)++;
-			arg = ft_strjoin_gnl(arg,add);
-			free(add);
-		}
+		(*arg) = ft_strjoin_gnl((*arg), (char[2]){*(*str + 1), 0});
+		*str += 2;
 	}
-	(*str)++;
-	return (arg);
+	else if (**str == '\"' && (*str)++)
+	{
+		add = parse_d_quote(str, envp);
+		(*arg) = ft_strjoin_gnl((*arg), add);
+		free(add);
+	}
+	else if (**str == 39 && (*str)++)
+	{
+		add = parse_quote(str);
+		(*arg) = ft_strjoin_gnl((*arg), add);
+		free(add);
+	}
+	else if (**str == '$' && !check_end_arg((*(*str + 1))) &&
+	(ft_isalpha(*(*str + 1)) || (*(*str + 1)) == '_' ||
+	(*(*str + 1)) == '?') && (add = parse_env(str, envp)))
+		(*arg) = ft_strjoin_gnl((*arg), add);
+	else
+		(*arg) = ft_strjoin_gnl((*arg), (char[2]){(*(*str)++), 0});
 }
 
-char *parse_quote(char **str)
+char	*parse_arg(char **str, t_envp *envp)
 {
-	int i;
-	char *add;
+	char	*arg;
 
-	i = 0;
-	while ((*str)[i] != 39 && (*str)[i])
-		i++;
-	add = ft_substr(*str,0,i);
-	*str += i + 1;
-	return (add);
-}
-
-char *parse_env(char **str, t_envp *envp)
-{
-	int i;
-	char *var;
-	char *add;
-	char *arg;
-
-	add = 0;
-	i = 1;
-	while (ft_isalnum((*str)[i]) || (*str)[i] == '_')
-		i++;
-	if ((*str)[0] == '$' && (*str)[1] == '?')
-		i++;
-	var = ft_substr(*str,1,i - 1);
-	*str += i;
-	if (*var != 0)
-		add = envp_get_var_value(envp,var);
-	free(var);
-	return (add);
-}
-
-char *parse_arg(char** str,t_envp *envp)
-{
-	char *var;
-	char *value;
-	char *arg;
-	char *add;
-	int i;
-
-	//arg = ft_calloc(BUFF_SIZE, 1);
 	arg = 0;
-	add = 0;
 	if (**str == '|')
-		return (ft_substr((*str)++,0,1));
+		return (ft_substr((*str)++, 0, 1));
 	else if (**str == '>')
 	{
 		if (*(*str + 1) == '>')
-			return(ft_substr((*str += 2) - 2,0,2));
+			return (ft_substr((*str += 2) - 2, 0, 2));
 		else
-			return(ft_substr((*str)++,0,1));
+			return (ft_substr((*str)++, 0, 1));
 	}
 	else if (**str == '<')
 	{
 		if (*(*str + 1) == '<')
-			return(ft_substr((*str += 2) - 2,0,2));
+			return (ft_substr((*str += 2) - 2, 0, 2));
 		else
-			return(ft_substr((*str)++,0,1));
+			return (ft_substr((*str)++, 0, 1));
 	}
-
 	while (**str != '\n' && **str != ' ' && !check_end_arg(**str))
 	{
-		if (**str == '\\')
-		{
-			(*str)++;
-			add = ft_substr(*str,0,1);
-			(*str)++;
-			arg = ft_strjoin_gnl(arg,add);
-			free(add);
-			add = 0;
-		}
-		else if (**str == '\"')
-		{
-			(*str)++;
-			add = parse_d_quote(str,envp);
-			arg = ft_strjoin_gnl(arg,add);
-			free(add);
-			add = 0;
-		}
-		else if (**str == 39)
-		{
-			(*str)++;
-			add = parse_quote(str);
-			arg = ft_strjoin_gnl(arg,add);
-			free(add);
-			add = 0;
-		}
-		else if (**str == '$' && !check_end_arg((*(*str + 1))) && (ft_isalpha(*(*str + 1)) || (*(*str + 1)) == '_' || (*(*str + 1)) == '?'))
-			{
-				add = parse_env(str, envp);
-				arg = ft_strjoin_gnl(arg,add);
-			}
-		else
-		{
-			add = ft_substr(*str,0,1);
-			(*str)++;
-			arg = ft_strjoin_gnl(arg,add);
-			free(add);
-			add = 0;
-		}
+		parse_one_step(str, &arg, envp);
 	}
 	return (arg);
 }
 
-int remake_args(char **args, int i)
+int		remake_args(char **args, int i)
 {
-	glob_t buff;
-	int ret;
-	int j;
+	glob_t	buff;
+	int		j;
 
 	j = 0;
-	ret = glob(args[i], GLOB_NOCHECK, NULL, &buff);
+	glob(args[i], GLOB_NOCHECK, NULL, &buff);
 	free(args[i]);
 	while (buff.gl_pathv[j])
 	{
@@ -173,37 +87,26 @@ int remake_args(char **args, int i)
 		i++;
 	}
 	globfree(&buff);
-	//free(buff.gl_pathv);
-	return(i);
+	return (i);
 }
 
-char **parse_command(char** str,t_envp *envp)
+char	**parse_command(char **str, t_envp *envp)
 {
-	int i;
-	int d_quotes;
-	int quotes;
+	int		i;
+	char	**args;
+	int		size;
 
-	char **args;
-	char *arg;
-	int size;
-
-
-	args = malloc(BUFF_SIZE * sizeof(char*));
-
-	quotes = 0;
+	args = (char**)malloc((int)BUFF_SIZE * sizeof(char*));
 	i = 0;
-	d_quotes = 0;
 	size = BUFF_SIZE;
 	while (**str == ' ')
-			(*str)++;
-	while (**str != '\n' && **str != 0 && !check_end_command(**str) && !(check_and_or(**str, *(*str + 1))))
+		(*str)++;
+	while (**str != '\n' && **str != 0 && !check_end_command(**str) &&
+	!(check_and_or(**str, *(*str + 1))))
 	{
-		if (i > size)
-		{
-			args = ft_realloc(args,size,size * 2);
+		if (i > size && (args = ft_realloc(args, size, size * 2)))
 			size *= 2;
-		}
-		args[i] = parse_arg(str,envp);
+		args[i] = parse_arg(str, envp);
 		if (check_wild(args[i]))
 			i = remake_args(args, i);
 		else

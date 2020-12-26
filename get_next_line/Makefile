@@ -6,11 +6,11 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/10/23 23:26:58 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/25 23:34:40 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = clang
 NAME = libget_next_line.a
 SRC = srcs/
 OBJ = obj/
@@ -29,7 +29,7 @@ $(NAME): $(addprefix $(OBJ),$(OBJ_FILES))
 	ar rcs $(NAME) $?
 
 $(OBJ)%.o: $(SRC)%.c #$(OBJ)
-	$(CC) -g -c $(CFLAGS) -I$(INCLUDES) -o $@ $< -MMD
+	$(CC) -g -fPIE -c $(CFLAGS) -I$(INCLUDES) -o $@ $< -MMD
 
 clean:
 	rm -rf $(OBJ)

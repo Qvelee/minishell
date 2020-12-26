@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 02:41:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/20 04:45:13 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/25 06:48:49 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ size_t	ft_strlen_term(const char *s)
 	return (len);
 }
 
-int	ft_substrlen(char *start, char *end)
+int		ft_substrlen(char *start, char *end)
 {
 	int len;
 
@@ -44,9 +44,9 @@ int	ft_substrlen(char *start, char *end)
 	while (start < end)
 	{
 		if (*start < 0)
-				start++;
+			start++;
 		len++;
 		start++;
 	}
-	return(len);
+	return (len);
 }

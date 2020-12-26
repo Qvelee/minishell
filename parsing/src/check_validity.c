@@ -6,61 +6,52 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 15:31:43 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/22 15:25:16 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/25 07:35:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct s_flag
+int		check_val(char c, char dcommand[2])
 {
-	char ch;
-	int val;
-}		t_flag;
-typedef struct s_flags
-{
-	t_flag quote;
-	t_flag d_quote;
-	t_flag r_left;
-	t_flag r_right;
-	t_flag and;
-	t_flag or;
-	t_flag semicolon;
-	t_flag brackets;
-}				t_flags;
+	return (((c == '|' || c == ';') && (dcommand[1] || dcommand[0] == 0 ||
+	dcommand[0] == ';' || dcommand[0] == '<' || dcommand[0] == '>')) ||
+	((c == '\n') && (dcommand[0] == '|' || dcommand[0] == '>' ||
+	dcommand[0] == '<' || dcommand[1])) || (c == ';' && (dcommand[0] == '|'
+	|| dcommand[1])) || ((c == '|' || c == '&' || c == '>' ||
+	c == '<' || c == '&') && dcommand[1]) || (c == '<' &&
+	dcommand[0] == '>') || (c == '\n' && (dcommand[0] == '<' ||
+	dcommand[0] == '>')));
+}
 
-char check_validity(char *str)
+int		check_red(char c, char b)
 {
-	t_flags flags;
+	return ((c == '>' && b == '>') || (c == '<' &&
+		b == '<') || (c == '|' && b == '|') ||
+		(c == '&' && b == '&'));
+}
+
+char	check_validity(char *str)
+{
 	char quote;
-	char dcommand[2] = {0,0};
-	//flags = (t_flags){{'"',1},{'\'',1},{'<',1},{'>',1},{'&',1},{'|',1},{';',1},{'"',1},1};
+	char dcommand[2];
+
+	dcommand[0] = 0;
+	dcommand[1] = 0;
 	quote = 0;
 	while (*str)
 	{
 		while (*str == ' ')
 			str++;
-
 		if ((*str == '"' || *str == '\'') && !quote)
 			quote = *str++;
 		if ((*str == '"' || *str == '\'') && quote == *str)
 			quote = 0;
-		if (!quote)
-		{
-			//if (!dcommand[1])
-				if (((*str == '|' || *str == ';') && (dcommand[1] || dcommand[0] == 0 || dcommand[0] == ';' || dcommand[0] == '<' || dcommand[0] == '>')) || ((*str == '\n') && (dcommand[0] == '|' || dcommand[0] == '>' || dcommand[0] == '<' || dcommand[1])) || (*str == ';' && (dcommand[0] == '|' || dcommand[1])) || ((*str == '|' || *str == '&' || *str == '>' || *str == '<' || *str == '&') && dcommand[1]) || (*str == '<' && dcommand[0] == '>') || (*str == '\n' && (dcommand[0] == '<' || dcommand[0] == '>')))
-					return (*str);
-		}
-		if ((*str == '>' && *(str + 1) == '>') || (*str == '<' && *(str + 1) == '<') || (*str == '|' && *(str + 1) == '|') || (*str == '&' && *(str + 1) == '&'))
-		{
-			dcommand[0] = *str;
-			dcommand[1] = *(str + 1);
-			str += 2;
-		}
-		else
-		{
-			dcommand[0] = *str;
+		if (!quote && check_val(*str, dcommand))
+			return (*str);
+		dcommand[0] = *str;
+		if (!check_red(*str, *(str + 1)) && str++)
 			dcommand[1] = 0;
-			str +=1;
-		}
+		else
+			dcommand[1] = *((str += 2) - 1);
 	}
 	return (0);
 }

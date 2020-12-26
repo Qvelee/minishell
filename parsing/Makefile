@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/23 22:45:13 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/26 12:11:26 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,8 @@ NAME = libparsing.a
 SRC = src/
 OBJ = obj/
 INCLUDES = includes
-OBJ_FILES = check_end.o\
-ft_realloc.o\
-ft_strjoin_gnl.o\
+OBJ_FILES = \
+check_end.o\
 handle_escape_sequence.o\
 parse_command.o\
 read_line.o\
@@ -35,12 +34,15 @@ check_validity.o\
 get_envp.o\
 get_cursor_start.o\
 cursor_inc.o\
-cursor_dec.o
-
+cursor_dec.o\
+parse_utils.o\
+read_line_utils.o\
+escape_seqs_utils.o\
+history.o
 UNAME = $(shell uname)
 REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
 BONUS_OBJ_FILES = $(addprefix $(OBJ),$(BONUS_FILES))
-CFLAGS = -g -Wall -Wextra -Werror -Wno-unused
+CFLAGS = -g -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory
 ifdef WITH_BONUS
 OBJ_OBJ_FILES = $(REG_OBJ_FILES) $(BONUS_OBJ_FILES)
@@ -57,7 +59,7 @@ $(NAME): $(OBJ_OBJ_FILES)
 	ar rcs $@ $?
 
 $(OBJ)%.o: $(SRC)%.c
-	$(CC) $(CFLAGS) -g -c -I.. -Iincludes -I. -I../libft/includes -I../source $< -o $@
+	$(CC) $(CFLAGS) -g -fPIE -c -I.. -Iincludes -I. -I../libft/includes -I../source $< -o $@
 
 clean:
 	rm -rf $(OBJ)
