@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 18:49:48 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 12:52:38 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ typedef struct	s_exec
 	int		status;
 }				t_exec;
 
-int				set_terminal_mode(char *term_name);
-char			*read_line(t_envp *envp);
-int				check_fatal_error(int code);
-int				parse_command_ex(char **args, t_commands **commands, \
-	t_envp *envp);
+/*
+**	built-ins
+*/
+
 int				built_in(char **args, t_envp **envp_list, int mode);
 int				mini_echo(char **args);
 int				mini_pwd(void);
@@ -59,24 +58,44 @@ void			print_line(char *line);
 int				mini_unset(char **args, t_envp **envp);
 int				mini_env(t_envp *envp);
 int				mini_exit(char **args, t_envp **envp_list, int mode);
+
+/*
+**	command treatment (parsing)
+*/
+
+int				parse_command_ex(char **args, t_commands **commands, \
+	t_envp *envp);
+int				redirect_output(char *path, int *fd_out, int mode);
+int				redirect_input(char *path, int *fd_in, int mode, t_envp *envp);
+int				get_input(char *stop_word, int *fd, t_envp *envp);
+char			*read_line(t_envp *envp);
+int				set_terminal_mode(char *term_name);
+int				remove_terminal_mode(void);
+
+/*
+**	executor
+*/
+
+int				init_exec(t_exec *exec, t_commands *commands);
+int				run_commands(t_commands *commands, t_envp **envp_list);
+int				end_of_commands(t_exec *exec);
+int				error_running(int return_value, t_commands *command, \
+	t_exec *exec);
+int				error_fd(char *path, int fd_1, int fd_2);
+int				try_close(int *fd_1, int *fd_2);
 int				command(char **args, t_envp **envp_list);
+int				save_ret_value(int value, t_envp **envp_list);
+
+/*
+**	errors treament
+*/
+
+int				check_fatal_error(int code);
 int				error_return_int(int return_value, char *memory_1, \
 	char *memory_2, char **matrix);
 int				error_print_return(char *massage);
 int				error_command_not_found(char *command);
-int				error_syntax(char symbol);
-int				error_fd(char *path, int fd_1, int fd_2);
-int				try_close(int *fd_1, int *fd_2);
-int				error_running(int return_value, t_commands *command, \
-	t_exec *exec);
 void			exit_fatal(int code, char **args, t_envp **envp_list);
-int				save_ret_value(int value, t_envp **envp_list);
-int				run_commands(t_commands *commands, t_envp **envp_list);
-int				redirect_output(char *path, int *fd_out, int mode);
-int				redirect_input(char *path, int *fd_in, int mode, t_envp *envp);
-int				get_input(char *stop_word, int *fd, t_envp *envp);
-int				init_exec(t_exec *exec, t_commands *commands);
-int				end_of_commands(t_exec *exec);
 
 /*
 **	envp treatment prototypes
@@ -98,6 +117,11 @@ int				envp_replace_variable(t_envp **envp_list, char *variable, \
 	int type);
 char			**envp_lst_to_matrix(t_envp *envp_list);
 void			envp_lst_clear(t_envp **envp_list, void (*delete)(void*));
+
+/*
+**	command treatment prototypes
+*/
+
 t_commands		*comm_lst_new(char **args, int fd_in, int fd_out);
 t_commands		*comm_last_element(t_commands *commands);
 void			comm_add_back(t_commands *command, t_commands **commands);
