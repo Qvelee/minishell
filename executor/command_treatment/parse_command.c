@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 18:51:07 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 22:23:00 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ static int	redirection(char *argument, char *value, \
 		return (redirect_input(value, &fd[1], 1, envp));
 	if (!ft_strcmp(argument, "<<"))
 		return (redirect_input(value, &fd[1], 2, envp));
+	if (!ft_strcmp(argument, "> "))
+		argument[1] = '\0';
+	if (!ft_strcmp(argument, ">> "))
+		argument[2] = '\0';
+	if (!ft_strcmp(argument, "< "))
+		argument[1] = '\0';
+	if (!ft_strcmp(argument, "<< "))
+		argument[2] = '\0';
 	return (-1);
 }
 
@@ -87,6 +95,8 @@ static int	cut_to_simple_commands(char **args, t_commands **commands, \
 				return (ret);
 			start = index + 1;
 		}
+		else if (!ft_strcmp(args[index], "| "))
+			args[index][1] = '\0';
 	buff[0] = index;
 	buff[1] = start;
 	if ((ret = create_simple_command(commands, args, buff, envp)))
