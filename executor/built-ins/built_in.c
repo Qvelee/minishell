@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:52:23 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 14:04:55 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/26 09:29:19 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			built_in(char **args, t_envp **envp_list, int mode)
 	while (commands[++index] && args[0])
 		if (!ft_strncmp(commands[index], args[0], 7))
 		{
-			if (!mode || mode == 2)
+			if (!mode)
 				return (run_built_in(index, args, envp_list, mode));
 			else
 			{
