@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:18:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 22:45:39 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 12:13:18 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 
 	write(1, "msheredoc> ", 11);
 	g_line()->sig = 22;
-	while ((line = read_line(envp)) && (g_line()->sig == 20))
+	while ((line = read_line(envp)))// && (g_line()->sig == 20))
 	{
 		count++;
 		if (line[0] == 4)
