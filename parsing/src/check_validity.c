@@ -6,19 +6,25 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 15:31:43 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 05:56:54 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 17:03:24 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		check_val(char c, char dcommand[2])
+#include "parse_internal.h"
+
+int		check_val(char c, char dc[2])
 {
-	return (((c == '|' || c == ';') && dcommand[0] != 92 &&
-	(dcommand[1] || dcommand[0] == 0 || dcommand[0] == ';' || dcommand[0] == '<'
-	|| dcommand[0] == '>')) || (c == ';' && (dcommand[0] == '|' || dcommand[1]))
-	|| ((c == '|' || c == '&' || c == '>' || c == '<' || c == '&') &&
-	dcommand[1] && dcommand[0] != 92) ||
-	(c == '<' && dcommand[0] == '>') ||
-	(c == '\n' && (dcommand[0] == '<' || dcommand[0] == '>')));
+	return (((c == '|' || c == ';') && dc[0] != 92 &&
+	(dc[1] || dc[0] == 0 || dc[0] == ';' || dc[0] == '<' || dc[0] == '>'))
+	|| (c == ';' && (dc[0] == '|' || dc[1]))
+	|| ((c == '|' || c == '&' || c == '>' || c == '<' || c == '&')
+	&& dc[1] && dc[0] != 92)
+	|| (c == '<' && dc[0] == '>')
+	|| (c == '\n' && (dc[0] == '<' || dc[0] == '>'))
+	|| ((c == '&' || c == '|') && dc[0] == '(')
+	|| (c == ')' && (dc[0] == '&' || dc[0] == '|'))
+	|| (c == '(' && !(check_end_command(c) || c == '|'))
+	|| (dc[0] == ')' && !(check_end_command(c) || c == '|')));
 }
 
 int		check_red(char c, char b)
@@ -32,13 +38,21 @@ char	check_validity(char *str)
 {
 	char quote;
 	char *dcommand;
+	char par;
 
+	par = 0;
 	dcommand = (char[2]){0, 0};
 	quote = 0;
 	while (*str)
 	{
 		while (*str == ' ')
 			str++;
+		if (*str == '(' && !quote)
+			par++;
+		if (*str == ')' && !quote)
+			par--;
+		if (par < 0)
+			return (')');
 		if ((*str == '"' || *str == '\'') && !quote)
 			quote = *str++;
 		if (*str == '\\' && !quote)
