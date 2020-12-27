@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 05:54:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 08:40:34 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,11 @@ char	*parse_arg(char **str, t_envp *envp)
 	arg = 0;
 	if (**str == '|')
 		return (ft_substr((*str)++, 0, 1));
-	else if (**str == '>')
-	{
-		if (*(*str + 1) == '>')
-			return (ft_substr((*str += 2) - 2, 0, 2));
-		else
-			return (ft_substr((*str)++, 0, 1));
-	}
-	else if (**str == '<')
-	{
-		if (*(*str + 1) == '<')
-			return (ft_substr((*str += 2) - 2, 0, 2));
-		else
-			return (ft_substr((*str)++, 0, 1));
-	}
+	else if ((**str == '>' && *(*str + 1) == '>')
+					|| (**str == '<' && (*(*str + 1) == '<')))
+		return (ft_substr((*str += 2) - 2, 0, 2));
+	else if (**str == '>' || (**str == '<') || **str == '(' || **str == ')')
+		return (ft_substr((*str)++, 0, 1));
 	while (**str != '\n' && **str != ' ' && !check_end_arg(**str))
 		parse_one_step(str, &arg, envp);
 	return (arg);
@@ -105,10 +96,7 @@ char	**parse_command(char **str, t_envp *envp)
 		if (i > size && (args = ft_realloc(args, size, size * 2)))
 			size *= 2;
 		args[i] = parse_arg(str, envp);
-		//if (check_wild(args[i]))
-			i = remake_args(args, i);
-	//	else
-	//		i++;
+		i = remake_args(args, i);
 		while (**str == ' ')
 			(*str)++;
 	}
