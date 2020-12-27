@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 07:40:39 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 08:08:29 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*read_one_sym(int *ret)
 	return (sym);
 }
 
-void	realloc_str(ret)
+void	realloc_str(int ret)
 {
 	while ((int)ft_strlen(g_line()->str) + 1 + ret >= g_line()->size)
 	{
