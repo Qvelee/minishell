@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:20:06 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 05:54:25 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	parse_one_step(char **str, char **arg, t_envp *envp)
 	char	*add;
 
 	if (**str == '\\')
-	{
-		(*arg) = ft_strjoin_gnl((*arg), (char[2]){*(*str + 1), 0});
-		*str += 2;
-	}
+		if (*(*str + 1) == '*' || *(*str + 1) == '?' || check_sc(*(*str + 1)))
+			(*arg) = ft_strjoin_gnl((*arg), (char[3]){92, *(*str += 2 - 1), 0});
+		else
+			(*arg) = ft_strjoin_gnl((*arg), (char[2]){*(*str += 2 - 1), 0});
 	else if (**str == '\"' && (*str)++)
 	{
 		add = parse_d_quote(str, envp);
@@ -66,9 +66,7 @@ char	*parse_arg(char **str, t_envp *envp)
 			return (ft_substr((*str)++, 0, 1));
 	}
 	while (**str != '\n' && **str != ' ' && !check_end_arg(**str))
-	{
 		parse_one_step(str, &arg, envp);
-	}
 	return (arg);
 }
 
@@ -96,7 +94,7 @@ char	**parse_command(char **str, t_envp *envp)
 	char	**args;
 	int		size;
 
-	args = (char**)malloc((int)BUFF_SIZE * sizeof(char*));
+	args = (char**)malloc(sizeof(char*) * BUFF_SIZE);
 	i = 0;
 	size = BUFF_SIZE;
 	while (**str == ' ')
@@ -107,10 +105,10 @@ char	**parse_command(char **str, t_envp *envp)
 		if (i > size && (args = ft_realloc(args, size, size * 2)))
 			size *= 2;
 		args[i] = parse_arg(str, envp);
-		if (check_wild(args[i]))
+		//if (check_wild(args[i]))
 			i = remake_args(args, i);
-		else
-			i++;
+	//	else
+	//		i++;
 		while (**str == ' ')
 			(*str)++;
 	}

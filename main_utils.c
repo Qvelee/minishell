@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 05:09:23 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,26 @@ void	invite(char *str)
 
 int		syntax_error(char c)
 {
-	write(1, "minishell: syntax error near unexpected token '", 47);
-	if (c == '\n')
-		write(1, "\\n", 2);
-	else
-		write(1, &c, 1);
-	write(1, "'\n", 2);
-	return (1);
+	if (c)
+	{
+		write(1, "minishell: syntax error near unexpected token '", 47);
+		if (c == '\n')
+			write(1, "\\n", 2);
+		else
+			write(1, &c, 1);
+		write(1, "'\n", 2);
+		save_ret_value(1, get_envp());
+	}
+	return (c);
 }
 
 void	one_command(char **str, t_envp **envp)
 {
-	char	c;
 	char	**command;
 	int		i;
 
 	while (*(*str) && *(*str) != '\n')
 	{
-		if ((c = check_validity((*str))) && syntax_error(c))
-			break ;
 		command = parse_command(str, *envp);
 		remove_terminal_mode();
 		g_line()->str = (*str);

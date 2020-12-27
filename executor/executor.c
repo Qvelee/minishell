@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 09:37:01 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 05:40:41 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int			run_commands(t_commands *commands, t_envp **envp)
 		return (exec.return_value);
 	while (commands)
 	{
+		remove_slashes(commands);
 		if ((exec.return_value = set_fd_in(&exec.fd_in, &commands->fd_in)))
 			return (error_running(exec.return_value, commands, &exec));
 		if (commands->next && do_pipe(exec.fd_pipe, &exec.fd_in, &exec.fd_out))

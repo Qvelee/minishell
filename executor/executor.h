@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 12:52:38 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 05:56:08 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int				error_fd(char *path, int fd_1, int fd_2);
 int				try_close(int *fd_1, int *fd_2);
 int				command(char **args, t_envp **envp_list);
 int				save_ret_value(int value, t_envp **envp_list);
+void			remove_slashes(t_commands *commands);
 
 /*
 **	errors treament
