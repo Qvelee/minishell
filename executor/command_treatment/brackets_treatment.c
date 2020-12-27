@@ -6,57 +6,45 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:04:25 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 18:27:54 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 19:13:41 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int		do_fork(pid_t *pid)
+int		do_fork(void)
 {
+	pid_t	pid;
 	int		ret;
 	int		status;
 
-	*pid = fork();
-	if (*pid > 0)
-	{
-		if ((waitpid(*pid, &status, WUNTRACED) == -1))
-			error_print_return(NULL);
-		while (!WIFEXITED(status) && !WIFSIGNALED(status))
-			if ((waitpid(*pid, &status, WUNTRACED) == -1))
-				error_print_return(NULL);
-		if (WIFSIGNALED(status))
-		{
-			if (WTERMSIG(status) == 2)
-				ret = 130;
-			if (WTERMSIG(status) == 3)
-				ret = 131;
-		}
-		else
-			ret = WEXITSTATUS(status);
-	}
+	pid = fork();
+	if (pid > 0)
+		return (-(int)pid);
 	return (0);
 }
 
-int		do_forks(int forks, int *flag, pid_t *pid)
+int		do_forks(int forks, int *flag)
 {
 	if (forks > 0)
 	{
 		*flag = 0;
 		while (forks--)
-			return (do_fork(pid));
+			return (do_fork());
 	}
 	else if (forks < 0)
+	{
 		*flag = 1;
+		return (0);
+	}
 	else
 	{
 		*flag = 1;
-		return (do_fork(pid));
+		return (do_fork());
 	}
-	return (0);
 }
 
-int		find_brackets(char ***args, int *forks, int *flag)
+int		find_brackets(char ***args, int *forks, int *brackets)
 {
 	int		index;
 	int		commands;
@@ -64,28 +52,28 @@ int		find_brackets(char ***args, int *forks, int *flag)
 	index = -1;
 	commands = 0;
 	*forks = 0;
-	*flag = 0;
+	*brackets = 0;
 	while ((*args)[++index])
 		if (!ft_strcmp((*args)[index], "("))
 		{
 			(*forks)++;
-			*flag = 1;
+			*brackets = 1;
 		}
 		else if (!ft_strcmp((*args)[index], ")"))
 		{
 			(*forks)--;
-			*flag = 1;
+			*brackets = 1;
 		}
 		else
 			commands++;
-	if (flag)
+	if ((*brackets) == 0)
 		return (0);
 	if (!(*args = (char**)malloc(sizeof(char*) * (commands + 1))))
 		return (12);
 	return (0);
 }
 
-int		brackets_treatment(char ***args, int *flag, pid_t *pid)
+int		brackets_treatment(char ***args, int *flag)
 {
 	char	**link;
 	int		forks;
@@ -97,16 +85,12 @@ int		brackets_treatment(char ***args, int *flag, pid_t *pid)
 	if (find_brackets(args, &forks, &brackets))
 		return (12);
 	if (!brackets)
-	{
-		*pid = 0;
-		*flag = 0;
 		return (0);
-	}
 	index = -1;
 	sindex = -1;
 	while (link[++index])
 		if (ft_strcmp(link[index], "(") && ft_strcmp(link[index], ")"))
 			(*args)[++sindex] = link[index];
 	(*args)[++sindex] = NULL;
-	return (do_forks(forks, flag, pid));
+	return (do_forks(forks, flag));
 }

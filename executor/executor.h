@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 18:07:03 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 19:11:02 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int				mini_exit(char **args, t_envp **envp_list, int mode);
 **	command treatment (parsing)
 */
 
-int				brackets_treatment(char ***args, int *flag, pid_t *pid);
+int				brackets_treatment(char ***args, int *flag);
 int				parse_command_ex(char **args, t_commands **commands, \
 	t_envp *envp);
 int				redirect_output(char *path, int *fd_out, int mode);

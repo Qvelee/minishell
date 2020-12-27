@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 15:49:35 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 19:42:02 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	one_command(char **str, t_envp **envp)
 	while (*(*str) && *(*str) != '\n')
 	{
 		command = parse_command(str, *envp);
+		printf("ya tut %s\n", *str);
 		remove_terminal_mode();
 		g_line()->str = (*str);
 		g_line()->sig = 9;
