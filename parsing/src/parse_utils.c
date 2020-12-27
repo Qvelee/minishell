@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:32:03 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:26:18 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 05:55:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,12 @@ char	*parse_d_quote(char **str, t_envp *envp)
 	arg = 0;
 	add = 0;
 	while (**str != '\"' && **str)
-	{
 		if (**str == '\\' && ((*((*str) + 1) == '$' || (*((*str) + 1) == '"'))
-		|| (*((*str) + 1) == '\\')))
+			|| (*((*str) + 1) == '\\')))
 			handle_back_slash(str, &arg);
-		else if (**str == '$')
+		else if (check_sc(**str))
+			arg = ft_strjoin_gnl(arg, (char[3]){'\\', *(*str)++, 0});
+		else if (**str == '$' && (ft_isalpha(*(*str + 1)) || *(*str + 1) == 95))
 		{
 			add = parse_env(str, envp);
 			arg = ft_strjoin_gnl(arg, add);
@@ -63,7 +64,6 @@ char	*parse_d_quote(char **str, t_envp *envp)
 			arg = ft_strjoin_gnl(arg, add);
 			free(add);
 		}
-	}
 	(*str)++;
 	return (arg);
 }

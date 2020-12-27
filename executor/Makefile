@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/26 13:18:34 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/27 05:41:49 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ EXEC_SRC =			do_command.c \
 					errors_management.c \
 					errors_management_2.c \
 					exec_utils.c \
-					exit_minishell.c
-
+					exit_minishell.c\
+					remove_slashes.c
 COMM_SRC =			parse_command.c \
 					redirects_treatment.c \
 					get_input.c \

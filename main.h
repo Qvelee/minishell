@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 13:13:21 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 05:54:18 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void					add_histfile(t_envp *envp);
 void					invite(char *str);
 int						syntax_error(char c);
 void					one_command(char **str, t_envp **envp);
+int						check_sc(char c);
 #endif

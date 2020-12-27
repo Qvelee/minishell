@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:36:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:20:33 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 07:05:15 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char		*parse_env(char **str, t_envp *envp);
 int			check_end_arg(char c);
 int			check_end_command(char c);
 int			check_and_or(char c, char h);
+int			check_sc(char c);
 int			set_curpos_home(char *start, char *end);
 int			set_curpos_end(char *start, char *end);
 void		move_rest(char *str, int i, int ret);
@@ -42,4 +43,6 @@ void		history_down(t_history **history, char **str, int *i);
 void		history_up(t_history **history, char **str, int *i);
 void		cursor_dec(char *start, char *end);
 int			check_wild(char *str);
+char		**c_str(void);
+void		realloc_str(int ret);
 #endif

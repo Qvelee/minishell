@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 09:44:31 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,38 +49,53 @@ void	invite(char *str)
 
 int		syntax_error(char c)
 {
-	write(1, "minishell: syntax error near unexpected token '", 47);
-	if (c == '\n')
-		write(1, "\\n", 2);
-	else
-		write(1, &c, 1);
-	write(1, "'\n", 2);
-	return (1);
+	if (c)
+	{
+		write(1, "minishell: syntax error near unexpected token '", 47);
+		if (c == '\n')
+			write(1, "\\n", 2);
+		else
+			write(1, &c, 1);
+		write(1, "'\n", 2);
+		save_ret_value(1, get_envp());
+	}
+	return (c);
+}
+
+void	free_commands(char **command)
+{
+	int		i;
+
+	i = 0;
+	while (command[i])
+		free(command[i++]);
+	free(command);
 }
 
 void	one_command(char **str, t_envp **envp)
 {
-	char	c;
 	char	**command;
-	int		i;
+	int		ret;
+	int		and_or;
 
+	ret = -1;
+	and_or = -1;
 	while (*(*str) && *(*str) != '\n')
 	{
-		if ((c = check_validity((*str))) && syntax_error(c))
-			break ;
 		command = parse_command(str, *envp);
 		remove_terminal_mode();
 		g_line()->str = (*str);
 		g_line()->sig = 9;
-		if (command && *command)
-			do_command(command, envp);
+		if (command && *command && (and_or == -1 || (!and_or && !ret) ||
+		(and_or && ret)))
+			ret = do_command(command, envp);
+		if (**str == '&' && *(*str + 1) == '&' && (*str += 2))
+			and_or = 0;
+		if (**str == '|' && *(*str + 1) == '|' && (*str += 2))
+			and_or = 1;
 		set_terminal_mode(envp_get_var_value(*envp, "TERM"));
-		i = 0;
-		while (command[i])
-			free(command[i++]);
-		free(command);
-		//if (check_and_or(**str,*(*str + 1)))
-		if (*(*str))
+		free_commands(command);
+		if (*(*str) == ';')
 			(*str)++;
 	}
 }

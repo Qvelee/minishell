@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 13:56:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 08:08:29 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ void	move_rest(char *str, int i, int ret)
 
 	tputs(cursor_invisible, 1, ft_putchar);
 	len = ft_strlen(str);
-	write(1, &str[i], len - i);
-	tputs(tgoto(tgetstr("ch", 0), 0, get_cursor()->x - 1), 1, ft_putchar);
-	cursor_dec(&str[i], &str[len - 1]);
-	ft_memmove(&str[i + ret], &str[i], len - i);
-	str[len + ret] = 0;
+	if (len > i)
+	{
+		write(1, &str[i], len - i);
+		tputs(tgoto(tgetstr("ch", 0), 0, get_cursor()->x - 1), 1, ft_putchar);
+		cursor_dec(&str[i], &str[len - 1]);
+		ft_memmove(&str[i + ret], &str[i], len - i);
+		str[len + ret] = 0;
+	}
 	tputs(cursor_visible, 1, ft_putchar);
 }
 
@@ -97,31 +100,12 @@ char	*read_one_sym(int *ret)
 	return (sym);
 }
 
-void	handle_one_sym(int ret, t_history *history, int *i, t_envp *envp)
+void	realloc_str(int ret)
 {
-	char *sym;
-
-	sym = read_one_sym(&ret);
-	while (sym[0] != 10 && sym[0] != 13 && sym[0] != 3 && !(sym[ret] = 0) &&
-	(g_line()->sig != 20))
+	while ((int)ft_strlen(g_line()->str) + 1 + ret >= g_line()->size)
 	{
-		if (!g_line()->str[0] && sym[0] == 4)
-			do_command((char *[2]){ft_strdup("exit"), 0}, &envp);
-		if (sym[0] != 4 && (g_line()->sig = 10))
-		{
-			while ((int)ft_strlen(g_line()->str) + 1 + ret >= g_line()->size)
-			{
-				g_line()->str = ft_realloc_str(g_line()->str,
-				g_line()->size, g_line()->size * 2);
-				g_line()->size *= 2;
-			}
-			if (((sym[0] > 0 && sym[0] <= 31) || sym[0] == 127) && sym[0] != 4)
-				handle_escape_sequence(sym, &g_line()->str, i, &history);
-			else
-				handle_chars(g_line()->str, sym, i, ret);
-			free(sym);
-		}
-		sym = read_one_sym(&ret);
+		g_line()->str = ft_realloc_str(g_line()->str,
+		g_line()->size, g_line()->size * 2 + 1);
+		g_line()->size *= 2;
 	}
-	free(sym);
 }

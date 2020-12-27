@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:06:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:10:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 07:55:47 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,22 +103,22 @@ void	check_ctrl(char *c, char **str, int *i, int len_c)
 	t_coor	term;
 	int		j;
 
-	j = 0;
 	term = get_term_size();
-	if (!ft_memcmp(tigetstr("kUP5"), c, len_c + 1))
+	if (!(j = 0) && !ft_memcmp(tigetstr("kUP5"), c, len_c + 1))
 		while (j++ < term.x)
 			go_left((*str), i);
 	if (!ft_memcmp(tigetstr("kDN5"), c, len_c + 1))
 		while (j++ < term.x)
 			go_right((*str), i);
-	if (!ft_memcmp(tigetstr("kLFT5"), c, len_c + 1))
+	if (!ft_memcmp(tigetstr("kLFT5"), c, len_c + 1) && *i > 0)
 	{
-		while ((*str)[*i - 1] == ' ' && *i > 0)
+		while (*i > 0 && (*str)[*i - 1] == ' ')
 			go_left((*str), i);
-		while ((*str)[*i - 1] != ' ' && *i > 0)
+		while (*i > 0 && (*str)[*i - 1] != ' ')
 			go_left((*str), i);
 	}
-	if (!ft_memcmp(tigetstr("kRIT5"), c, len_c + 1))
+	if (!ft_memcmp(tigetstr("kRIT5"), c, len_c + 1) &&
+	*i < (int)ft_strlen((*str)))
 	{
 		while ((*str)[*i] == ' ' && *i < (int)ft_strlen((*str)))
 			go_right((*str), i);

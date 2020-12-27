@@ -1,44 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_end.c                                        :+:      :+:    :+:   */
+/*   remove_slashes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/13 13:56:00 by sgertrud          #+#    #+#             */
+/*   Created: 2020/12/27 05:41:03 by sgertrud          #+#    #+#             */
 /*   Updated: 2020/12/27 05:54:18 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	check_end_arg(char c)
-{
-	return (c == '\n' || c == ';' || c == '&' || c == '|' || c == '>' ||
-	c == '<' || c == ' ' || c == 0);
-}
+#include "executor.h"
 
-int	check_end_command(char c)
+void	remove_slashes(t_commands *commands)
 {
-	return (c == '\n' || c == ';' || c == '&' || c == 0);
-}
+	int i;
+	int j;
+	int len;
 
-int	check_sc(char c)
-{
-	return (c == '|' || c == '>' || c == '<' || c == ';' || c == '&' || c == '('
-	|| c == ')');
-}
-
-int	check_and_or(char c, char h)
-{
-	return (c == h && (h == '|' || h == '&'));
-}
-
-int	check_wild(char *str)
-{
-	while (*str)
+	i = -1;
+	j = 1;
+	while (commands->command[++i])
 	{
-		if (*str == '*')
-			return (1);
-		str++;
+		j = 1;
+		len = ft_strlen(commands->command[i]);
+		while (commands->command[i][j - 1] && commands->command[i][j])
+		{
+			if (check_sc(commands->command[i][j]) &&
+			commands->command[i][j - 1] == '\\')
+				ft_memmove(&commands->command[i][j - 1],
+				&commands->command[i][j], len - j + 1);
+			j++;
+		}
 	}
-	return (0);
 }
