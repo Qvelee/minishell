@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 08:40:34 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:45:28 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	parse_one_step(char **str, char **arg, t_envp *envp)
 	char	*add;
 
 	if (**str == '\\')
-		if (*(*str + 1) == '*' || *(*str + 1) == '?' || check_sc(*(*str + 1)))
-			(*arg) = ft_strjoin_gnl((*arg), (char[3]){92, *(*str += 2 - 1), 0});
+		if (check_sc(*(*str + 1)))
+			(*arg) = ft_strjoin_gnl((*arg), (char[3]){92, *((*str += 2) - 1), 0});
 		else
 			(*arg) = ft_strjoin_gnl((*arg), (char[2]){*(*str += 2 - 1), 0});
 	else if (**str == '\"' && (*str)++)
