@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 09:53:51 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 17:31:28 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int			parse_command_ex(char **args, t_commands **commands, t_envp *envp)
 		comm_lst_clr(commands);
 		return (ret);
 	}
+	free(args);
 	return (0);
 }

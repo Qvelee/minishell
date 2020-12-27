@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 10:05:38 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 15:49:35 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	one_command(char **str, t_envp **envp)
 		remove_terminal_mode();
 		g_line()->str = (*str);
 		g_line()->sig = 9;
-		if (command && *command && (and_or == -1 || (!and_or && !ret) ||
-		(and_or && ret)))
+		if (command && *command && (and_or == -1 || (!and_or && !ret) || \
+			(and_or && ret)))
 			ret = do_command(command, envp);
 		if (**str == '&' && *(*str + 1) == '&' && (*str += 2))
 			and_or = 0;

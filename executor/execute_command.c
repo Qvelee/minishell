@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 13:05:07 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 17:42:00 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ static int	exec_error(char **args)
 	return (error_print_return(args[0]));
 }
 
-static int	run_exec(char *command, char **args, char **envp)
+static int	run_exec(char *command, char **args, char **envp, int flag)
 {
 	pid_t	pid;
 
+	if (flag)
+		execve(command, args, envp);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -89,7 +91,7 @@ static int	find_executable_in_path(char **final_command, char *command, \
 	return (0);
 }
 
-int			command(char **args, t_envp **envp_list)
+int			command(char **args, t_envp **envp_list, int flag)
 {
 	char	**envp;
 	char	*command;
@@ -108,7 +110,7 @@ int			command(char **args, t_envp **envp_list)
 		return (error_return_int(error_print_return(NULL), \
 			command, NULL, NULL));
 	}
-	return_value = run_exec(command, args, envp);
+	return_value = run_exec(command, args, envp, flag);
 	free(command);
 	free(envp);
 	return (return_value);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
+#    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/27 05:41:49 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/27 17:42:32 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME =				libexec.a
 
 COMP =				gcc -g
 
-FLAGS =				-Wall -Wextra -Werror
+FLAGS =				#-Wall -Wextra -Werror
 
 EXEC_HEADER = 		./executor.h
 
@@ -35,7 +35,9 @@ EXEC_SRC =			do_command.c \
 					exec_utils.c \
 					exit_minishell.c\
 					remove_slashes.c
-COMM_SRC =			parse_command.c \
+					
+COMM_SRC =			brackets_treatment.c \
+					parse_command.c \
 					redirects_treatment.c \
 					get_input.c \
 					comm_utils.c

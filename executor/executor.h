@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 05:56:08 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 17:59:46 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				mini_exit(char **args, t_envp **envp_list, int mode);
 **	command treatment (parsing)
 */
 
+int				brackets_treatment(char ***args, int *flag, pid_t *pid);
 int				parse_command_ex(char **args, t_commands **commands, \
 	t_envp *envp);
 int				redirect_output(char *path, int *fd_out, int mode);
@@ -77,13 +78,13 @@ int				remove_terminal_mode(void);
 */
 
 int				init_exec(t_exec *exec, t_commands *commands);
-int				run_commands(t_commands *commands, t_envp **envp_list);
+int				run_commands(t_commands *commands, t_envp **envp_list, int flag);
 int				end_of_commands(t_exec *exec);
 int				error_running(int return_value, t_commands *command, \
 	t_exec *exec);
 int				error_fd(char *path, int fd_1, int fd_2);
 int				try_close(int *fd_1, int *fd_2);
-int				command(char **args, t_envp **envp_list);
+int				command(char **args, t_envp **envp_list, int flag);
 int				save_ret_value(int value, t_envp **envp_list);
 void			remove_slashes(t_commands *commands);
 
