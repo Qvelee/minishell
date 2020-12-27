@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:19:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 14:32:05 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 08:02:18 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,20 @@ void	delete(char **str, int *i, int len)
 	tputs(restore_cursor, 1, ft_putchar);
 }
 
+void	copy_paste(char *c, char **str)
+{
+	if (*c == 21)
+	{
+		free(*c_str());
+		*c_str() = ft_strdup(*str);
+	}
+	else if (*c == 25 && *c_str())
+	{
+		realloc_str(ft_strlen(*c_str()));
+		handle_chars(g_line()->str, *c_str(), g_line()->i, ft_strlen(*c_str()));
+	}
+}
+
 int		handle_escape_sequence(char *c, char *(*str), int *i, t_history **his)
 {
 	int		len;
@@ -73,13 +87,10 @@ int		handle_escape_sequence(char *c, char *(*str), int *i, t_history **his)
 		(*str)[*i] = 0;
 	}
 	else if (*i < len && !ft_memcmp(tgetstr("kD", 0), c, lc + 1))
-	{
 		delete(str, i, len);
-	}
 	else if (*i > 0 && (!ft_memcmp(key_backspace, c, lc + 1) || *c == '\177'))
-	{
 		backspace(str, i, len, term);
-	}
+	copy_paste(c, str);
 	tputs(cursor_visible, 1, ft_putchar);
 	return (0);
 }

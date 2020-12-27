@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 07:04:22 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,30 @@
 #include "unistd.h"
 #include "libft.h"
 #include "executor_external.h"
+
+void	handle_one_sym(int ret, t_history *history, int *i, t_envp *envp)
+{
+	char *sym;
+
+	sym = read_one_sym(&ret);
+	while (sym[0] != 10 && sym[0] != 13 && sym[0] != 3 && !(sym[ret] = 0) &&
+	(g_line()->sig != 20))
+	{
+		if (!g_line()->str[0] && sym[0] == 4)
+			do_command((char *[2]){ft_strdup("exit"), 0}, &envp);
+		if (sym[0] != 4 && (g_line()->sig = 10))
+		{
+			realloc_str(ret);
+			if (((sym[0] > 0 && sym[0] <= 31) || sym[0] == 127) && sym[0] != 4)
+				handle_escape_sequence(sym, &g_line()->str, i, &history);
+			else
+				handle_chars(g_line()->str, sym, i, ret);
+			free(sym);
+		}
+		sym = read_one_sym(&ret);
+	}
+	free(sym);
+}
 
 char	*read_line(t_envp *envp)
 {

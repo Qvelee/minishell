@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/26 13:18:16 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/27 06:55:57 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ cursor_dec.o\
 parse_utils.o\
 read_line_utils.o\
 escape_seqs_utils.o\
-history.o
+history.o\
+copy_paste.o
 UNAME = $(shell uname)
 REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
 BONUS_OBJ_FILES = $(addprefix $(OBJ),$(BONUS_FILES))
