@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 12:21:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	g_line(int fd, char **reminder, char **line)
 	{
 		while (!reminder[fd + 1] && !(buf[read(fd, buf, BUFFER_SIZE)] = 0))
 		{
-			*line = ft_strjoin_gnl(*line, buf);
+			*line = join_free(*line, buf);
 			if (!ft_strlen_gnl(buf))
 			{
 				free(buf);
@@ -47,7 +47,7 @@ static int	g_line(int fd, char **reminder, char **line)
 		free(buf);
 	}
 	*(reminder[fd + 1]) = 0;
-	return ((reminder[fd + 1] = ft_strjoin_gnl(0, reminder[fd + 1] + 1)) != 0);
+	return ((reminder[fd + 1] = join_free(0, reminder[fd + 1] + 1)) != 0);
 }
 
 int			remfree(char ***reminder)

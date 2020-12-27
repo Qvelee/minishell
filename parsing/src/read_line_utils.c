@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 08:08:29 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ char	*read_one_sym(int *ret)
 	out = read(0, buff, BUFF_SIZE - 1);
 	*ret += out;
 	buff[out] = 0;
-	sym = ft_strjoin_gnl(sym, buff);
+	sym = join_free(sym, buff);
 	while (ioctl(0, FIONREAD, &n) == 0 && n > 0)
 	{
 		out = read(0, buff, BUFF_SIZE - 1);
 		*ret += out;
 		buff[out] = 0;
-		sym = ft_strjoin_gnl(sym, buff);
+		sym = join_free(sym, buff);
 	}
 	*ret = ft_strlen(sym);
 	return (sym);

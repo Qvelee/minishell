@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 20:32:53 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/17 06:22:46 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ size_t		ft_strlen_2(const char *s)
 	return (len);
 }
 
-char		*ft_strjoin_gnl(char const *s1, char const *s2)
+char		*join_free(char const *s1, char const *s2)
 {
 	char *out;
 	char *head;

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 10:45:28 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@ void	parse_one_step(char **str, char **arg, t_envp *envp)
 
 	if (**str == '\\')
 		if (check_sc(*(*str + 1)))
-			(*arg) = ft_strjoin_gnl((*arg), (char[3]){92, *((*str += 2) - 1), 0});
+			(*arg) = join_free((*arg), (char[3]){92, *((*str += 2) - 1), 0});
 		else
-			(*arg) = ft_strjoin_gnl((*arg), (char[2]){*(*str += 2 - 1), 0});
+			(*arg) = join_free((*arg), (char[2]){*((*str += 2) - 1), 0});
 	else if (**str == '\"' && (*str)++)
 	{
 		add = parse_d_quote(str, envp);
-		(*arg) = ft_strjoin_gnl((*arg), add);
+		(*arg) = join_free((*arg), add);
 		free(add);
 	}
 	else if (**str == 39 && (*str)++)
 	{
 		add = parse_quote(str);
-		(*arg) = ft_strjoin_gnl((*arg), add);
+		(*arg) = join_free((*arg), add);
 		free(add);
 	}
 	else if (**str == '$' && !check_end_arg((*(*str + 1))) &&
 	(ft_isalpha(*(*str + 1)) || (*(*str + 1)) == '_' ||
 	(*(*str + 1)) == '?') && (add = parse_env(str, envp)))
-		(*arg) = ft_strjoin_gnl((*arg), add);
+		(*arg) = join_free((*arg), add);
 	else
-		(*arg) = ft_strjoin_gnl((*arg), (char[2]){(*(*str)++), 0});
+		(*arg) = join_free((*arg), (char[2]){(*(*str)++), 0});
 }
 
 char	*parse_arg(char **str, t_envp *envp)

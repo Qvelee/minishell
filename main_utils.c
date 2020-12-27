@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 10:05:38 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:50:38 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	add_histfile(t_envp *envp)
 	{
 		len = ft_strlen(temp) - 9;
 		if (!ft_strncmp(&temp[len], "minishell", 9))
-			hf = ft_strjoin_gnl(ft_substr(temp, 0, len), ".minishell_history");
+			hf = join_free(ft_substr(temp, 0, len), ".minishell_history");
 	}
 	if (hf)
 		envp_add_to_lst_back(envp_lst_new(envp_create_envp_str("HISTFILE",
@@ -95,10 +95,7 @@ void	one_command(char **str, t_envp **envp)
 			and_or = 1;
 		set_terminal_mode(envp_get_var_value(*envp, "TERM"));
 		free_commands(command);
-		if (*(*str) == ';')
-		{
-			and_or = -1;
+		if (*(*str) == ';' && (and_or = -1))
 			(*str)++;
-		}
 	}
 }

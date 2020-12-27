@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 18:43:03 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 06:02:22 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void			ft_lstsort(t_list **lst, int (*f)(void *content1,
 			void *content2));
 size_t			ft_strlen_term(const char *s);
 int				ft_substrlen(char *start, char *end);
-char			*ft_strjoin_gnl(const char *s1, const char *s2);
+char			*join_free(const char *s1, const char *s2);
 char			**ft_realloc(char **data, size_t len, size_t newlen);
 char			*ft_realloc_str(char *data, size_t len, size_t newlen);
 #endif

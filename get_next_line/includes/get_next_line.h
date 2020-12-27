@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 12:27:18 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/25 06:47:32 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define FD 4
 
 int		get_next_line(int fd, char **line);
-char	*ft_strjoin_gnl(char const *s1, char const *s2);
+char	*join_free(char const *s1, char const *s2);
 void	*ft_memchr_gnl(const void *s, int c, size_t n);
 size_t	ft_strlen_gnl(const char *s);
 void	ft_bzero_gnl(void *s, size_t n);

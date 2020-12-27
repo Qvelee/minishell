@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 13:56:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 10:45:10 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:50:56 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_end_command(char c)
 int	check_sc(char c)
 {
 	return (c == '|' || c == '>' || c == '<' || c == ';' || c == '&' || c == '('
-	|| c == ')' || c == '*' || c == '?' );
+	|| c == ')' || c == '*' || c == '?');
 }
 
 int	check_and_or(char c, char h)
