@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:18:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 13:55:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/26 22:45:39 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include <errno.h>
 #include "get_static.h"
 
-static int	error_read_line(char *memory, int *fd)
+static int	error_read_line(char *memory, int *fd, int ret)
 {
 	errno = 12;
 	error_print_return(NULL);
 	free(memory);
 	try_close(fd, NULL);
-	return (12);
+	return (ret);
 }
 
 static int	warning(int count, char *stop_word)
@@ -88,8 +88,8 @@ int			get_input(char *stop_word, int *fd, t_envp *envp)
 		return (error_print_return(NULL));
 	if ((*fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)
 		return (error_return_int(error_fd(NULL, -1, -1), path, NULL, NULL));
-	if (read_input(fd, stop_word, envp))
-		return (error_read_line(path, fd));
+	if ((ret = read_input(fd, stop_word, envp)))
+		return (error_read_line(path, fd, ret));
 	if ((ret = try_close(fd, NULL)))
 		return (error_return_int(ret, path, NULL, NULL));
 	if ((*fd = open(path, O_RDONLY, 0444)) == -1)
