@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 18:02:23 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 18:19:46 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ int		do_command(char **args, t_envp **envp_list)
 	if ((return_value = brackets_treatment(&args, &flag, &pid)))
 		return (return_value);
 	if (pid > 0)
+	{
+		printf("%d\n", pid);
 		return(0);
+	}
 	if (!(return_value = parse_command_ex(args, &commands, *envp_list)))
 	{
 		if ((return_value = run_commands(commands, envp_list, flag)))

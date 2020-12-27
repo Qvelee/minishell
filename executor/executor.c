@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 17:39:27 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 18:13:55 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int	run_command(t_commands *commands, t_envp **envp_list, t_exec *exec, i
 	}
 	else
 		return_value = 1;
+	if (flag)
+		exit(return_value);
 	return (return_value);
 }
 

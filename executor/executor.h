@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 17:59:46 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 18:07:03 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <dirent.h>
 # include "main.h"
 # include "libft.h"
+
+#include <stdio.h>
 
 typedef struct	s_commands
 {

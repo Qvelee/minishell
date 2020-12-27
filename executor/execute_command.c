@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:54:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 17:42:00 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 18:30:58 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static int	run_exec(char *command, char **args, char **envp, int flag)
 	pid_t	pid;
 
 	if (flag)
+	{
+		printf("kek\n");
 		execve(command, args, envp);
+	}
 	pid = fork();
 	if (pid == 0)
 	{

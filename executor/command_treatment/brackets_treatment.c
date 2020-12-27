@@ -6,32 +6,11 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 16:04:25 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 18:00:31 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/27 18:27:54 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-#include <stdio.h>
-
-int		find_brackets(char ***args, int *forks)
-{
-	int		index;
-	int		commands;
-
-	index = -1;
-	commands = 0;
-	*forks = 0;
-	while ((*args)[++index])
-		if (!ft_strcmp((*args)[index], "("))
-			(*forks)++;
-		else if (!ft_strcmp((*args)[index], ")"))
-			(*forks)--;
-		else
-			commands++;
-	if (!(*args = (char**)malloc(sizeof(char*) * (commands + 1))))
-		return (12);
-	return (0);
-}
 
 int		do_fork(pid_t *pid)
 {
@@ -72,8 +51,37 @@ int		do_forks(int forks, int *flag, pid_t *pid)
 	else
 	{
 		*flag = 1;
-			return (do_fork(pid));
+		return (do_fork(pid));
 	}
+	return (0);
+}
+
+int		find_brackets(char ***args, int *forks, int *flag)
+{
+	int		index;
+	int		commands;
+
+	index = -1;
+	commands = 0;
+	*forks = 0;
+	*flag = 0;
+	while ((*args)[++index])
+		if (!ft_strcmp((*args)[index], "("))
+		{
+			(*forks)++;
+			*flag = 1;
+		}
+		else if (!ft_strcmp((*args)[index], ")"))
+		{
+			(*forks)--;
+			*flag = 1;
+		}
+		else
+			commands++;
+	if (flag)
+		return (0);
+	if (!(*args = (char**)malloc(sizeof(char*) * (commands + 1))))
+		return (12);
 	return (0);
 }
 
@@ -83,10 +91,17 @@ int		brackets_treatment(char ***args, int *flag, pid_t *pid)
 	int		forks;
 	int		sindex;
 	int		index;
+	int		brackets;
 	
 	link = *args;
-	if (find_brackets(args, &forks))
+	if (find_brackets(args, &forks, &brackets))
 		return (12);
+	if (!brackets)
+	{
+		*pid = 0;
+		*flag = 0;
+		return (0);
+	}
 	index = -1;
 	sindex = -1;
 	while (link[++index])
