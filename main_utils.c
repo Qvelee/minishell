@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 09:44:31 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/27 10:05:38 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ void	one_command(char **str, t_envp **envp)
 		set_terminal_mode(envp_get_var_value(*envp, "TERM"));
 		free_commands(command);
 		if (*(*str) == ';')
+		{
+			and_or = -1;
 			(*str)++;
+		}
 	}
 }
