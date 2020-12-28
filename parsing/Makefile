@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/28 10:33:57 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/28 19:25:24 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,21 +20,14 @@ OBJ_FILES = \
 check_end.o\
 parse_command.o\
 check_validity.o\
-parse_utils.o
-MANDATORY_FILES = set_terminal_mode_mandatory.o
-BONUS_FILES =\
-remove_terminal_mode.o\
+parse_utils.o \
 set_terminal_mode.o
 UNAME = $(shell uname)
-REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
-BONUS_OBJ_FILES = $(addprefix $(OBJ),$(BONUS_FILES))
-MAN_OBJ_FILES = $(addprefix $(OBJ),$(MANDATORY_FILES))
+OBJ_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
 CFLAGS = -g -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory
 ifdef WITH_BONUS
-OBJ_OBJ_FILES = $(REG_OBJ_FILES) $(BONUS_OBJ_FILES)
-else
-OBJ_OBJ_FILES = $(REG_OBJ_FILES) $(MAN_OBJ_FILES)
+CFLAGS += -D BONUS=1
 endif
 
 all: $(OBJ) $(NAME)
