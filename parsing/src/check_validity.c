@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 15:31:43 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 16:46:18 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 16:58:01 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int		check_val(char c, char dc[2])
 	|| (c == '\n' && (dc[0] == '<' || dc[0] == '>'))
 	|| ((c == '&' || c == '|') && dc[0] == '(')
 	|| (c == ')' && (dc[0] == '&' || dc[0] == '|'))
-	|| (c == '(' && !(check_end_command(dc[0]) || dc[0] == '|'))
-	|| (dc[0] == ')' && !(check_end_command(c) || c == '|')));
+	|| (c == '(' && !(check_end_command(dc[0]) || dc[0] == '|' || dc[0] == '('))
+	|| (dc[0] == ')' && !(check_end_command(c) || c == '|' || c == ')')));
 }
 
 int		check_red(char c, char b)
