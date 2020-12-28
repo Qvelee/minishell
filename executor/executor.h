@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 07:30:48 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:46:52 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int				error_return_int(int return_value, char *memory_1, \
 int				error_print_return(char *massage);
 int				error_command_not_found(char *command);
 void			exit_fatal(int code, char **args, t_envp **envp_list);
+int				error_return_print(int ret, char *message);
 
 /*
 **	envp treatment prototypes

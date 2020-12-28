@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:39:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 10:57:47 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 13:55:15 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		check_fatal_error(int code)
 	while (++index < 10)
 		if (code == errors[index])
 			break ;
-	if (index == 10) // нужно чтобы возвращал 130 когда << завершилась , или меняй там
+	if (index == 10)
 		return (0);
 	return (code);
 }
