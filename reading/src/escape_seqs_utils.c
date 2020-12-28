@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:06:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 07:55:47 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 09:56:03 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "get_static.h"
 #include "term.h"
 #include "libft.h"
-#include "parse_internal.h"
+#include "ft_readline.h"
 
 void	go_right(char *str, int *i)
 {

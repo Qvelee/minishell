@@ -6,17 +6,17 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 09:55:38 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "term.h"
 #include "structs.h"
-#include "parse_internal.h"
 #include "get_static.h"
 #include "sys/ioctl.h"
 #include "executor_external.h"
+#include "ft_readline.h"
 
 void	move_rest(char *str, int i, int ret)
 {

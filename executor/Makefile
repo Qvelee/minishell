@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/27 05:41:49 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/28 09:28:29 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,6 +109,8 @@ fclean: clean
 	@echo -e "\033[31m\033[1m$(NAME), etc. files deleted!\033[0m"
 
 re: fclean all
+
+bonus: all
 
 include $(wildcard $(D_FILES))
 

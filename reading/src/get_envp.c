@@ -6,11 +6,11 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 15:34:42 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/25 19:22:31 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 09:56:20 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "structs.h"
 
 t_envp	**get_envp(void)
 {

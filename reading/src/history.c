@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:12:07 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 07:25:23 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 09:57:02 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "get_static.h"
 #include "term.h"
-#include "parse_internal.h"
+#include "ft_readline.h"
 
 void	history_down(t_history **history, char **str, int *i)
 {

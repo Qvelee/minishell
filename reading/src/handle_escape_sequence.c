@@ -6,15 +6,15 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:19:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 08:02:18 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 09:48:23 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "parse_internal.h"
 #include "term.h"
 #include "structs.h"
 #include "get_static.h"
+#include "ft_readline.h"
 
 void	backspace(char **str, int *i, int len, t_coor term)
 {

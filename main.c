@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 07:44:03 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 11:01:32 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 #include <signal.h>
 #include "executor.h"
 
+void	signals(void)
+{
+	signal(SIGINT, ft_sigint);
+	signal(SIGQUIT, ft_nothing);
+	signal(SIGSEGV, ft_sigint);
+}
+
 int		main(int __attribute__((unused)) argc,
 	char __attribute__((unused)) **argv, char **envp)
 {
@@ -28,9 +35,7 @@ int		main(int __attribute__((unused)) argc,
 	char	*temp;
 	t_envp	*envp_;
 
-	signal(SIGINT, ft_sigint);
-	signal(SIGQUIT, ft_nothing);
-	signal(SIGSEGV, ft_sigint);
+	signals();
 	envp_ = envp_create_list(envp);
 	add_histfile(envp_);
 	if (set_terminal_mode(envp_get_var_value(envp_, "TERM")) == -1)
@@ -38,7 +43,7 @@ int		main(int __attribute__((unused)) argc,
 	invite("minishell: ");
 	(*get_envp()) = envp_;
 	str = read_line(envp_);
-	while (str && *str != 4)
+	while (str && *str != 4 && *str)
 	{
 		g_line()->sig = 0;
 		temp = str;

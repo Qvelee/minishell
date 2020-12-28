@@ -6,13 +6,14 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:32:03 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 10:49:26 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 09:58:27 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "libft.h"
 #include "executor_external.h"
+#include "parse_internal.h"
 
 void	handle_back_slash(char **str, char **arg)
 {
