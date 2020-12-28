@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 11:22:42 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 16:32:11 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	handle_one_sym(int ret, t_history *history, int *i)
 	char *sym;
 
 	sym = read_one_sym(&ret);
-	while (sym[0] != 10 && sym[0] != 13 && !(sym[ret] = 0) &&
-	(g_line()->sig != 20))
+	while (sym[0] != 10 && sym[0] != 13 && !(sym[ret] = 0))
 	{
 		if ((!g_line()->str[0] && sym[0] == 4) || sym[0] == 3)
 		{
