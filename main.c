@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 11:01:32 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 15:30:17 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,26 @@ int		main(int __attribute__((unused)) argc,
 {
 	char	*str;
 	char	*temp;
-	t_envp	*envp_;
 
+	if (set_terminal_mode(envp_get_var_value((*get_envp()), "TERM")) == -1)
+		do_command((char *[3]){ft_strdup("exit"),
+		ft_strdup("1"), 0}, get_envp());
 	signals();
-	envp_ = envp_create_list(envp);
-	add_histfile(envp_);
-	if (set_terminal_mode(envp_get_var_value(envp_, "TERM")) == -1)
-		do_command((char *[3]){ft_strdup("exit"), ft_strdup("1"), 0}, &envp_);
+	(*get_envp()) = envp_create_list(envp);
+	add_histfile((*get_envp()));
 	invite("minishell: ");
-	(*get_envp()) = envp_;
-	str = read_line(envp_);
+	save_ret_value(0, get_envp());
+	str = read_line((*get_envp()));
 	while (str && *str != 4 && *str)
 	{
 		g_line()->sig = 0;
 		temp = str;
 		if (!syntax_error(check_validity(str)))
-			one_command(&str, &envp_);
+			one_command(&str, (get_envp()));
 		invite("minishell: ");
 		free(temp);
-		str = read_line(envp_);
+		str = read_line((*get_envp()));
 	}
-	do_command((char *[2]){ft_strdup("exit"), 0}, &envp_);
+	do_command((char *[2]){ft_strdup("exit"), 0}, get_envp());
 	return (0);
 }
