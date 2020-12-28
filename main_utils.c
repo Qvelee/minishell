@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 17:57:18 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 22:27:54 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,28 @@ void	one_command(char **str, t_envp **envp)
 	char	**command;
 	int		ret;
 	int		and_or;
+	t_shell	shell;
+
 
 	ret = -1;
 	and_or = -1;
+	shell.flag = 0;
+	shell.lvl = 0;
 	while (*(*str) && *(*str) != '\n' && ret != 130)
 	{
 		command = parse_command(str, *envp);
+		shell.command = command;
 		remove_terminal_mode();
 		g_line()->str = (*str);
 		g_line()->sig = 9;
-		if (command && *command && (and_or == -1 || (!and_or && !ret) ||
-			(and_or && ret)))
-			ret = do_command(command, envp, 0);
+		if (!brackets_treatment(&shell, &ret))
+		{
+			if (shell.command && *shell.command && (and_or == -1 || (!and_or && !ret) ||
+				(and_or && ret)))
+				ret = do_command(shell.command, envp, shell.mode);
+			if (shell.mode)
+				exit_minishell(ret, command, envp);
+		}
 		if (**str == '&' && *(*str + 1) == '&' && (*str += 2))
 			and_or = 0;
 		if (**str == '|' && *(*str + 1) == '|' && (*str += 2))

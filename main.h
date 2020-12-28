@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 17:54:42 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 22:16:34 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "structs.h"
 
 int						save_ret_value(int value, t_envp **envp_list);
+int						brackets_treatment(t_shell *shell, int *ret);
 int						do_command(char **args, t_envp **envp_list, \
 	int exec_mode);
 char					**parse_command(char **str, t_envp *envp);

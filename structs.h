@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:46:49 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 11:49:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 22:13:39 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define STRUCTS_H
 # define MSH 11
 # define BUFF_SIZE 1024
+
+typedef struct			s_shell
+{
+	char	**command;
+	int		mode;
+	int		flag;
+	int		lvl;
+}						t_shell;
 
 typedef struct			s_coor
 {

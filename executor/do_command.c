@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 16:16:04 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 18:56:53 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ int		do_command(char **args, t_envp **envp_list, int exec_mode)
 	comm_lst_clr(&commands);
 	if (save_ret_value(return_value, envp_list))
 		exit_fatal(12, args, envp_list);
+	if (exec_mode)
+		exit(return_value);
 	return (return_value);
 }
