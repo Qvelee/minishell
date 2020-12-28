@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 16:15:41 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 17:56:59 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <dirent.h>
-# include "main.h"
 # include "libft.h"
+# include "structs.h"
 
 typedef struct	s_commands
 {
@@ -78,6 +78,7 @@ int				remove_terminal_mode(void);
 */
 
 int				init_exec(t_exec *exec, t_commands *commands);
+int				check_sc(char c);
 int				run_commands(t_commands *commands, t_envp **envp_list, \
 	int exec_mode);
 int				end_of_commands(t_exec *exec);
@@ -88,6 +89,8 @@ int				try_close(int *fd_1, int *fd_2);
 int				command(char **args, t_envp **envp_list, int exec_mode);
 int				save_ret_value(int value, t_envp **envp_list);
 void			remove_slashes(t_commands *commands);
+void			free_matrix(char **memory);
+void			exit_minishell(int code, char **args, t_envp **envp);
 
 /*
 **	errors treament

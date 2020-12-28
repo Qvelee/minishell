@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/28 10:32:29 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/28 15:01:15 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,9 @@ LIBS :
 	$(make) -C parsing
 	$(make) -C reading
 	$(make) -C libft
-$(NAME): $(OBJ) main.h executor/libexec.a parsing/libparsing.a libft/libft.a
-	$(CC) $(CFLAGS) $(OBJ) $(addprefix -I,$(INCLUDES)) $(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
+$(NAME): $(OBJ) main.h executor/libexec.a parsing/libparsing.a libft/libft.a get_next_line/libget_next_line.a
+	$(CC) $(CFLAGS) $(OBJ) $(addprefix -I,$(INCLUDES)) \
+	$(addprefix -L,$(LIB_DIR)) $(addprefix -l,$(LIB_NAMES)) -o $(NAME)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $(addprefix -I,$(INCLUDES)) $< -o $@
 clean:
@@ -59,4 +60,7 @@ re:
 	make fclean
 	make all
 bonus:
+	make WITH_BONUS=1 all
+rebonus:
+	make fclean
 	make WITH_BONUS=1 all

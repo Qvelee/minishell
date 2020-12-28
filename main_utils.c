@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 16:21:58 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 17:57:18 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	one_command(char **str, t_envp **envp)
 
 	ret = -1;
 	and_or = -1;
-	while (*(*str) && *(*str) != '\n')
+	while (*(*str) && *(*str) != '\n' && ret != 130)
 	{
 		command = parse_command(str, *envp);
 		remove_terminal_mode();

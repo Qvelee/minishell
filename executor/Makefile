@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
+#    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/28 09:28:29 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/28 15:57:59 by nelisabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ COMP =				gcc -g
 FLAGS =				-Wall -Wextra -Werror
 
 EXEC_HEADER = 		./executor.h
+
+INCLUDES =			-I../libft/includes -I.. -I.
 
 #SRC DIRS
 
@@ -85,19 +87,19 @@ $(NAME): $(COMM_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
 
 $(addprefix $(EXEC_OBJ_DIR), %.o): $(addprefix $(EXEC_SRC_DIR), %.c)
 	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) -I../libft/includes -I.. -I. -c $< -o $@ -MMD
+	@$(COMP) $(FLAGS) $(INCLUDES) -c $< -o $@ -MMD
 
 $(addprefix $(COMM_OBJ_DIR), %.o): $(addprefix $(COMM_SRC_DIR), %.c)
 	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) -fPIE  -I../libft/includes -I.. -I. -c $< -o $@ -MMD
+	@$(COMP) $(FLAGS) $(INCLUDES) -fPIE -c $< -o $@ -MMD
 
 $(addprefix $(BTIN_OBJ_DIR), %.o): $(addprefix $(BTIN_SRC_DIR), %.c)
 	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) -I../libft/includes -I.. -c $< -o $@ -MMD
+	@$(COMP) $(FLAGS) $(INCLUDES) -c $< -o $@ -MMD
 
 $(addprefix $(ENVP_OBJ_DIR), %.o): $(addprefix $(ENVP_SRC_DIR), %.c)
 	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) -I../libft/includes -I.. -c $< -o $@ -MMD
+	@$(COMP) $(FLAGS) $(INCLUDES) -c $< -o $@ -MMD
 
 clean:
 	@echo -e "\033[31mDeleting...\033[0m"

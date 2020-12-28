@@ -6,13 +6,16 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 16:16:00 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 17:54:42 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
 # define YELLOW	"\x1b[33m"
 # define GREEN	"\x1b[32m"
 # define RESET	"\x1b[0m"
