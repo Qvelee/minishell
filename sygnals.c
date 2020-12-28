@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 10:49:22 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:43:58 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,38 @@
 #include "libft.h"
 #include "main.h"
 
-void	ft_sigint(int __attribute__((unused)) sig)
+void	ft_sigint_bonus(int __attribute__((unused)) sig)
 {
 	int		j;
 	char	*str;
-	int		i;
 	int		len;
 
-	if (g_line()->sig == 22)
-		g_line()->sig = 20;
+	str = (g_line()->str);
+	len = ft_strlen(str);
+	write(1, "\n", 1);
+	j = (ft_substrlen(str, &str[*(g_line()->i)]) + MSH) / get_term_size().x;
+	len = (ft_substrlen(str, &str[len - 1]) + MSH) / get_term_size().x;
+	while (j++ < len && len)
+		write(1, "\n", 1);
+	invite("minishell: ");
+	if (g_line()->str && *(g_line()->str))
+		*(g_line()->str) = 0;
+	get_cursor()->x = MSH + 1;
+	get_cursor()->y += 1;
+	*(g_line()->i) = 0;
+}
+
+void	ft_sigint(int __attribute__((unused)) sig)
+{
 	if (g_line()->sig == 10)
 	{
-		i = *(g_line()->i);
-		str = (g_line()->str);
-		len = ft_strlen(str);
-		write(1, "\n", 1);
-		j = (ft_substrlen(str, &str[i]) + MSH) / get_term_size().x;
-		len = (ft_substrlen(str, &str[len - 1]) + MSH) / get_term_size().x;
-		while (j++ < len && len)
+		if (BONUS)
+			ft_sigint_bonus(sig);
+		else
+		{
 			write(1, "\n", 1);
-		invite("minishell: ");
-		if (g_line()->str && *(g_line()->str))
-			*(g_line()->str) = 0;
-		get_cursor()->x = MSH + 1;
-		get_cursor()->y += 1;
-		*(g_line()->i) = 0;
+			invite("minishell: ");
+		}
 	}
 	save_ret_value(130, get_envp());
 }

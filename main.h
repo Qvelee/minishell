@@ -6,13 +6,16 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 05:54:18 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:28:30 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
 # define YELLOW	"\x1b[33m"
 # define GREEN	"\x1b[32m"
 # define RESET	"\x1b[0m"

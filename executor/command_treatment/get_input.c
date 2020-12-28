@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:18:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 08:07:37 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:21:13 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 static int	error_read_line(char *memory, int *fd, int ret)
 {
 	errno = 12;
-	error_print_return(NULL);
+	if (ret != 130)
+		error_print_return(NULL);
 	free(memory);
 	try_close(fd, NULL);
 	return (ret);
@@ -55,7 +56,7 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 	char		*line;
 
 	write(1, "msheredoc> ", 11);
-	while (*(line = read_line(envp)) != 3)
+	while (*(line = read_line(envp)) != 3 && *line)
 	{
 		count++;
 		if (line[0] == 4)
@@ -68,10 +69,13 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 			break ;
 		free(line);
 	}
+	if (*line == 3)
+	{
+		free(line);
+		return (130);
+	}
 	free(line);
 	count = 0;
-	if (*line == 3)
-		return (130);
 	if (errno == 12)
 		return (12);
 	return (0);
