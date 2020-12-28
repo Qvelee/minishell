@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 15:30:17 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 20:41:24 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,30 @@ void	signals(void)
 	signal(SIGSEGV, ft_sigint);
 }
 
+void	set_sh(char **envp)
+{
+	char	*shlvl;
+
+	signals();
+	(*get_envp()) = envp_create_list(envp);
+	if (set_terminal_mode(envp_get_var_value((*get_envp()), "TERM")) == -1)
+		do_command((char *[3]){ft_strdup("exit"),
+		ft_strdup("1"), 0}, get_envp());
+	add_histfile((*get_envp()));
+	shlvl = ft_itoa(ft_atoi(envp_get_var_value(*get_envp(), "SHLVL")) + 1);
+	envp_replace_variable(get_envp(), envp_create_envp_str("SHLVL", shlvl), 1);
+	envp_add_to_lst_back(envp_lst_new(envp_create_envp_str("MS_SUBSHELL", "0"),
+	0), get_envp());
+	free(shlvl);
+}
+
 int		main(int __attribute__((unused)) argc,
 	char __attribute__((unused)) **argv, char **envp)
 {
 	char	*str;
 	char	*temp;
 
-	if (set_terminal_mode(envp_get_var_value((*get_envp()), "TERM")) == -1)
-		do_command((char *[3]){ft_strdup("exit"),
-		ft_strdup("1"), 0}, get_envp());
-	signals();
-	(*get_envp()) = envp_create_list(envp);
-	add_histfile((*get_envp()));
+	set_sh(envp);
 	invite("minishell: ");
 	save_ret_value(0, get_envp());
 	str = read_line((*get_envp()));
