@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_management_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:41:17 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 13:05:30 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:49:18 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,10 @@ int		comm_return_int(int return_value, char **memory)
 	if (memory)
 		free(memory);
 	return (return_value);
+}
+
+int		error_return_print(int ret, char *message)
+{
+	write(1, message, ft_strlen(message));
+	return (ret);
 }

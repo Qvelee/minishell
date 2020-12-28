@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 14:03:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 09:53:51 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:15:39 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	create_simple_command(t_commands **commands, char **args, \
 			simple_command[index++] = args[buff[1]++];
 		else if (ret == 0)
 			buff[1] += 2;
-		else if (check_fatal_error(ret))
+		else if (check_fatal_error(ret) || ret == 130)
 			return (comm_return_int(ret, simple_command));
 		else
 			break ;
