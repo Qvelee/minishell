@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 14:58:35 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 15:30:17 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int		main(int __attribute__((unused)) argc,
 	char	*str;
 	char	*temp;
 
+	if (set_terminal_mode(envp_get_var_value((*get_envp()), "TERM")) == -1)
+		do_command((char *[3]){ft_strdup("exit"),
+		ft_strdup("1"), 0}, get_envp());
 	signals();
 	(*get_envp()) = envp_create_list(envp);
 	add_histfile((*get_envp()));
-	if (set_terminal_mode(envp_get_var_value((*get_envp()), "TERM")) == -1)
-		do_command(ft_realloc((char *[3]){ft_strdup("exit"),
-		ft_strdup("1"), 0}, 3, 3), (get_envp()));
 	invite("minishell: ");
 	save_ret_value(0, get_envp());
 	str = read_line((*get_envp()));
@@ -53,6 +53,6 @@ int		main(int __attribute__((unused)) argc,
 		free(temp);
 		str = read_line((*get_envp()));
 	}
-	do_command(ft_realloc((char *[2]){ft_strdup("exit"), 0}, 2, 2), get_envp());
+	do_command((char *[2]){ft_strdup("exit"), 0}, get_envp());
 	return (0);
 }
