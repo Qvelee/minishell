@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 05:54:18 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 16:16:00 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include "structs.h"
 
 int						save_ret_value(int value, t_envp **envp_list);
-int						do_command(char **args, t_envp **envp_list);
+int						do_command(char **args, t_envp **envp_list, \
+	int exec_mode);
 char					**parse_command(char **str, t_envp *envp);
 char					check_validity(char *str);
 t_envp					*envp_create_list(char **envp);

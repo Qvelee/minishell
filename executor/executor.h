@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 14:46:52 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 16:15:41 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,14 @@ int				remove_terminal_mode(void);
 */
 
 int				init_exec(t_exec *exec, t_commands *commands);
-int				run_commands(t_commands *commands, t_envp **envp_list);
+int				run_commands(t_commands *commands, t_envp **envp_list, \
+	int exec_mode);
 int				end_of_commands(t_exec *exec);
 int				error_running(int return_value, t_commands *command, \
 	t_exec *exec);
 int				error_fd(char *path, int fd_1, int fd_2);
 int				try_close(int *fd_1, int *fd_2);
-int				command(char **args, t_envp **envp_list);
+int				command(char **args, t_envp **envp_list, int exec_mode);
 int				save_ret_value(int value, t_envp **envp_list);
 void			remove_slashes(t_commands *commands);
 

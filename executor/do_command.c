@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:10:57 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 05:31:24 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 16:16:04 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int		save_ret_value(int value, t_envp **envp_list)
 	return (0);
 }
 
-int		do_command(char **args, t_envp **envp_list)
+int		do_command(char **args, t_envp **envp_list, int exec_mode)
 {
 	int			return_value;
 	t_commands	*commands;
 
 	if (!(return_value = parse_command_ex(args, &commands, *envp_list)))
 	{
-		if ((return_value = run_commands(commands, envp_list)))
+		if ((return_value = run_commands(commands, envp_list, exec_mode)))
 		{
 			comm_lst_clr(&commands);
 			if (check_fatal_error(return_value))

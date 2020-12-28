@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 05:49:05 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 16:21:58 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	one_command(char **str, t_envp **envp)
 		g_line()->str = (*str);
 		g_line()->sig = 9;
 		if (command && *command && (and_or == -1 || (!and_or && !ret) ||
-		(and_or && ret)))
-			ret = do_command(command, envp);
+			(and_or && ret)))
+			ret = do_command(command, envp, 0);
 		if (**str == '&' && *(*str + 1) == '&' && (*str += 2))
 			and_or = 0;
 		if (**str == '|' && *(*str + 1) == '|' && (*str += 2))

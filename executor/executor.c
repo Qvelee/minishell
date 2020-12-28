@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
+/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:42:49 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 05:40:41 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 16:14:33 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static int	run_command(t_commands *commands, t_envp **envp_list, t_exec *exec)
+static int	run_command(t_commands *commands, t_envp **envp_list, \
+	t_exec *exec, int exec_mode)
 {
 	int		return_value;
 	int		mode;
@@ -30,7 +31,7 @@ static int	run_command(t_commands *commands, t_envp **envp_list, t_exec *exec)
 			return (0);
 		if ((return_value = \
 				built_in(commands->command, envp_list, mode)) == 127)
-			return_value = command(commands->command, envp_list);
+			return_value = command(commands->command, envp_list, exec_mode);
 	}
 	else
 		return_value = 1;
@@ -84,7 +85,7 @@ static int	set_fd_in(int *current_fd_in, int *command_fd_in)
 	return (ret);
 }
 
-int			run_commands(t_commands *commands, t_envp **envp)
+int			run_commands(t_commands *commands, t_envp **envp, int exec_mode)
 {
 	t_exec	exec;
 
@@ -101,7 +102,7 @@ int			run_commands(t_commands *commands, t_envp **envp)
 			return (error_running(exec.fd_out, commands, &exec));
 		if ((exec.return_value = set_fd_out(&exec.fd_out, &commands->fd_out)))
 			return (error_running(exec.return_value, commands, &exec));
-		exec.return_value = run_command(commands, envp, &exec);
+		exec.return_value = run_command(commands, envp, &exec, exec_mode);
 		if (check_fatal_error(exec.return_value))
 			return (error_running(exec.return_value, commands, &exec));
 		exec.pids[exec.index++] = exec.return_value;
