@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 15:18:14 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 22:45:39 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/28 08:07:37 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 	char		*line;
 
 	write(1, "msheredoc> ", 11);
-	g_line()->sig = 22;
-	while ((line = read_line(envp)) && (g_line()->sig == 20))
+	while (*(line = read_line(envp)) != 3)
 	{
 		count++;
 		if (line[0] == 4)
@@ -69,12 +68,12 @@ static int	read_input(int *fd, char *stop_word, t_envp *envp)
 			break ;
 		free(line);
 	}
+	free(line);
 	count = 0;
+	if (*line == 3)
+		return (130);
 	if (errno == 12)
 		return (12);
-	free(line);
-	if (g_line()->sig == 20)
-		return (130);
 	return (0);
 }
 
@@ -84,6 +83,7 @@ int			get_input(char *stop_word, int *fd, t_envp *envp)
 	int		ret;
 
 	set_terminal_mode(envp_get_var_value(envp, "TERM"));
+	set_terminal_mode2();
 	if (!(path = ft_strjoin("/tmp/", stop_word)))
 		return (error_print_return(NULL));
 	if ((*fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644)) == -1)

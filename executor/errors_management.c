@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:39:11 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 13:56:42 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 08:01:08 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ int		check_fatal_error(int code)
 	while (++index < 10)
 		if (code == errors[index])
 			break ;
-	if (index == 10)
+	if (code < 0)
 		return (0);
+	if (code == 127 || code == 13)
+		return (0);
+	/*if (index == 10)
+		return (0);*/
 	return (code);
 }
 

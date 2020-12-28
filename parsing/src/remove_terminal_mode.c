@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:50:48 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 12:21:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 07:58:39 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	remove_terminal_mode(void)
 		return (-1);
 	term.c_lflag |= (ICANON);
 	term.c_lflag |= (ECHO);
+	term.c_lflag |= (ISIG);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) == -1)

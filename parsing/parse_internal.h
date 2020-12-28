@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:36:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 07:05:15 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 08:09:29 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		move_rest(char *str, int i, int ret);
 void		handle_chars(char *str, char *sym, int *i, int ret);
 void		move_to_out(char *str, int fd, int i);
 char		*read_one_sym(int *ret);
-void		handle_one_sym(int ret, t_history *history, int *i, t_envp *envp);
+void		handle_one_sym(int ret, t_history *history, int *i);
 void		cursor_dec(char *start, char *end);
 void		cursor_inc(t_coor *cursor, int len);
 int			handle_escape_sequence(char *c, char **str, int *i, t_history **h);

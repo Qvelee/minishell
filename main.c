@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 04:10:46 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 07:44:03 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		main(int __attribute__((unused)) argc,
 
 	signal(SIGINT, ft_sigint);
 	signal(SIGQUIT, ft_nothing);
+	signal(SIGSEGV, ft_sigint);
 	envp_ = envp_create_list(envp);
 	add_histfile(envp_);
 	if (set_terminal_mode(envp_get_var_value(envp_, "TERM")) == -1)

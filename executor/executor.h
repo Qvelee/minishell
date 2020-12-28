@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/27 05:56:08 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/28 07:30:48 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int				redirect_input(char *path, int *fd_in, int mode, t_envp *envp);
 int				get_input(char *stop_word, int *fd, t_envp *envp);
 char			*read_line(t_envp *envp);
 int				set_terminal_mode(char *term_name);
+int				set_terminal_mode2(void);
 int				remove_terminal_mode(void);
 
 /*
