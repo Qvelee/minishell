@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/28 15:00:38 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/29 04:53:54 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,9 @@ cursor_dec.o\
 read_line_utils.o\
 escape_seqs_utils.o\
 history.o\
-copy_paste.o
+copy_paste.o\
+set_terminal_mode.o\
+remove_terminal_mode.o
 UNAME = $(shell uname)
 REG_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
 BONUS_OBJ_FILES = $(addprefix $(OBJ),$(BONUS_FILES))
