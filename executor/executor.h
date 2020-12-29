@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 15:57:24 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/29 04:42:01 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
-
-# include <linux/limits.h>
+# if LINUX
+#  include <linux/limits.h>
+# else
+#  include <limits.h>
+# endif
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>

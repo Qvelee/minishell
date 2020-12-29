@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 09:55:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/29 03:16:12 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	move_rest(char *str, int i, int ret)
 		str[len + ret] = 0;
 	}
 	tputs(cursor_visible, 1, ft_putchar);
+	tputs(cursor_normal, 1, ft_putchar);
 }
 
 void	handle_chars(char *str, char *sym, int *i, int ret)

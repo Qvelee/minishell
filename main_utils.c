@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 15:33:45 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/29 04:38:35 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	one_command(char **str, t_envp **envp)
 			and_or = 1;
 		set_terminal_mode(envp_get_var_value(*envp, "TERM"));
 		free_commands(command);
-		if (*(*str) == ';' && (and_or = -1))
+		if ((*(*str) == ';' && (and_or = -1))
+		|| ((**str == '&' || **str == '|')))
 			(*str)++;
 	}
 }

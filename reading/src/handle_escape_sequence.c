@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:19:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 09:48:23 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/29 04:43:01 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int		handle_escape_sequence(char *c, char *(*str), int *i, t_history **his)
 		backspace(str, i, len, term);
 	copy_paste(c, str);
 	tputs(cursor_visible, 1, ft_putchar);
+	tputs(cursor_normal, 1, ft_putchar);
 	return (0);
 }

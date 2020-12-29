@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/28 15:01:15 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/29 03:11:29 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJ = main.o main_utils.o sygnals.o
 NAME = minishell
 INCLUDES = . parsing executor libft/includes get_next_line/includes
 LIB_DIR = parsing reading executor get_next_line libft
-LIB_NAMES = exec parsing ft_readline get_next_line ft tinfo
+LIB_NAMES = exec parsing ft_readline get_next_line ft termcap
 UNAME = $(shell uname)
 CFLAGS = -g -Wall -Wextra -Werror
 MAKEFLAGS = --no-print-directory
@@ -27,6 +27,7 @@ ifdef WITH_BONUS
 else
 	make = make
 endif
+
 all: LIBS $(NAME)
 
 LIBS :

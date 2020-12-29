@@ -31,8 +31,7 @@ int	set_terminal_mode2(void)
 int	set_terminal_mode(char *term_name)
 {
 	t_term	term;
-	char	buffer[1024];
-
+	
 	if (!term_name)
 		term_name = "xterm-256color";
 	if (tcgetattr(0, &term) == -1)
@@ -44,7 +43,7 @@ int	set_terminal_mode(char *term_name)
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		return (-1);
-	if (tgetent(buffer, term_name) == -1)
+	if (tgetent(0, term_name) == -1)
 		return (-1);
 	return (1);
 }

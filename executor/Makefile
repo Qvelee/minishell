@@ -3,18 +3,26 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+         #
+#    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/28 15:57:59 by nelisabe         ###   ########.fr        #
+#    Updated: 2020/12/29 03:10:30 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =				libexec.a
 
-COMP =				gcc -g
+COMP =				gcc
 
-FLAGS =				-Wall -Wextra -Werror
+UNAME = 			$(shell uname)
+
+ifeq ($(UNAME), Linux)
+	LINUX = 1
+else
+	LINUX = 0
+endif
+
+FLAGS =				 -g -D LINUX=$(LINUX) -Wall -Wextra -Werror
 
 EXEC_HEADER = 		./executor.h
 
