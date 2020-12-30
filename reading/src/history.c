@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:12:07 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 09:57:02 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/30 09:21:39 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include "term.h"
 #include "ft_readline.h"
 
-void	history_down(t_history **history, char **str, int *i)
+void	history_down(t_history **history, char **str, size_t *i)
 {
-	int len;
+	size_t len;
 
 	if ((*history)->next->str)
 	{
@@ -44,9 +44,9 @@ void	history_down(t_history **history, char **str, int *i)
 	}
 }
 
-void	history_up(t_history **history, char **str, int *i)
+void	history_up(t_history **history, char **str, size_t *i)
 {
-	int len;
+	size_t len;
 
 	if ((*history)->prev->str)
 	{

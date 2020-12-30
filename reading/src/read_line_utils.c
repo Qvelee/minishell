@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/29 03:16:12 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/30 09:20:01 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 #include "executor_external.h"
 #include "ft_readline.h"
 
-void	move_rest(char *str, int i, int ret)
+void	move_rest(char *str, size_t i, int ret)
 {
-	int len;
+	size_t len;
 
 	tputs(cursor_invisible, 1, ft_putchar);
 	len = ft_strlen(str);
@@ -36,10 +36,10 @@ void	move_rest(char *str, int i, int ret)
 	tputs(cursor_normal, 1, ft_putchar);
 }
 
-void	handle_chars(char *str, char *sym, int *i, int ret)
+void	handle_chars(char *str, char *sym, size_t *i, int ret)
 {
-	int len;
-	int j;
+	size_t len;
+	size_t j;
 
 	write(1, sym, ret);
 	len = ft_strlen_term(sym);
@@ -56,14 +56,14 @@ void	handle_chars(char *str, char *sym, int *i, int ret)
 		move_rest(str, *i, ret);
 	else
 		str[*i + ret] = 0;
-	while (j < ret)
+	while (j < (size_t)ret)
 		str[(*i)++] = sym[j++];
 }
 
-void	move_to_out(char *str, int fd, int i)
+void	move_to_out(char *str, int fd, size_t i)
 {
-	int len;
-	int j;
+	size_t len;
+	size_t j;
 
 	len = ft_strlen(str);
 	str[len] = '\n';

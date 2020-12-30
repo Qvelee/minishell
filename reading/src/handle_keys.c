@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_escape_sequence.c                           :+:      :+:    :+:   */
+/*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:19:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/29 04:43:01 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/30 10:02:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 #include "get_static.h"
 #include "ft_readline.h"
 
-void	backspace(char **str, int *i, int len, t_coor term)
+void	backspace(char **str, size_t *i, size_t len, t_coor term)
 {
 	if (get_cursor()->x == 1)
 	{
 		get_cursor()->x = get_term_size().x;
 		get_cursor()->y--;
 		tputs(cursor_up, 1, ft_putchar);
-		tputs(tgoto(tgetstr("ch", 0), 0, term.x), 1, ft_putchar);
+		tputs(tgoto(tgetstr("ch", 0), 0, (int)term.x), 1, ft_putchar);
 	}
 	else
 	{
@@ -41,7 +41,7 @@ void	backspace(char **str, int *i, int len, t_coor term)
 	(*str)[len - term.y] = 0;
 }
 
-void	delete(char **str, int *i, int len)
+void	delete(char **str, size_t *i, size_t len)
 {
 	if ((*str)[*i] < 0)
 		ft_memmove((*str) + *i, (*str) + *i + 2, len - *i);
@@ -69,9 +69,9 @@ void	copy_paste(char *c, char **str)
 	}
 }
 
-int		handle_escape_sequence(char *c, char *(*str), int *i, t_history **his)
+int		handle_keys(char *c, char *(*str), size_t *i, t_history **his)
 {
-	int		len;
+	size_t	len;
 	t_coor	term;
 	int		lc;
 

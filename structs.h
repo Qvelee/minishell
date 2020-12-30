@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:46:49 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/26 11:49:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/30 09:26:47 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 typedef struct			s_coor
 {
-	int x;
-	int y;
+	unsigned long x;
+	unsigned long y;
 }						t_coor;
 
 typedef struct			s_history
@@ -30,10 +30,10 @@ typedef struct			s_history
 
 typedef struct			s_line
 {
-	char	*str;
-	int		*i;
-	char	sig;
-	int		size;
+	char			*str;
+	unsigned long	*i;
+	char			sig;
+	int				size;
 }						t_line;
 
 typedef struct			s_envp
