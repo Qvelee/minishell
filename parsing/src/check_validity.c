@@ -6,11 +6,12 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 15:31:43 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 16:58:01 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/29 11:15:12 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse_internal.h"
+#include "libft.h"
 
 int		check_val(char c, char dc[2])
 {

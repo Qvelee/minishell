@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 20:41:24 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/29 16:42:57 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	signals(void)
 {
 	signal(SIGINT, ft_sigint);
 	signal(SIGQUIT, ft_nothing);
-	signal(SIGSEGV, ft_sigint);
+//	signal(SIGSEGV, ft_sigint);
 }
 
 void	set_sh(char **envp)
@@ -59,8 +59,7 @@ int		main(int __attribute__((unused)) argc,
 	{
 		g_line()->sig = 0;
 		temp = str;
-		if (!syntax_error(check_validity(str)))
-			one_command(&str, (get_envp()));
+		one_command(&str, (get_envp()));
 		invite("minishell: ");
 		free(temp);
 		str = read_line((*get_envp()));

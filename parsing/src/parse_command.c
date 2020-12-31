@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/27 16:43:36 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/31 20:01:27 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "glob.h"
 #include "parse_internal.h"
 
-void	parse_one_step(char **str, char **arg, t_envp *envp)
+void	parse_one_step(char **str, char **arg, t_envp *envp, int full)
 {
 	char	*add;
 
@@ -26,7 +26,7 @@ void	parse_one_step(char **str, char **arg, t_envp *envp)
 			(*arg) = join_free((*arg), (char[2]){*((*str += 2) - 1), 0});
 	else if (**str == '\"' && (*str)++)
 	{
-		add = parse_d_quote(str, envp);
+		add = parse_d_quote(str, envp, full);
 		(*arg) = join_free((*arg), add);
 		free(add);
 	}
@@ -36,7 +36,7 @@ void	parse_one_step(char **str, char **arg, t_envp *envp)
 		(*arg) = join_free((*arg), add);
 		free(add);
 	}
-	else if (**str == '$' && !check_end_arg((*(*str + 1))) &&
+	else if (!full && **str == '$' && !check_end_arg((*(*str + 1))) &&
 	(ft_isalpha(*(*str + 1)) || (*(*str + 1)) == '_' ||
 	(*(*str + 1)) == '?') && (add = parse_env(str, envp)))
 		(*arg) = join_free((*arg), add);
@@ -44,7 +44,7 @@ void	parse_one_step(char **str, char **arg, t_envp *envp)
 		(*arg) = join_free((*arg), (char[2]){(*(*str)++), 0});
 }
 
-char	*parse_arg(char **str, t_envp *envp)
+char	*parse_arg(char **str, t_envp *envp, int full)
 {
 	char	*arg;
 
@@ -57,7 +57,7 @@ char	*parse_arg(char **str, t_envp *envp)
 	else if (**str == '>' || (**str == '<') || **str == '(' || **str == ')')
 		return (ft_substr((*str)++, 0, 1));
 	while (**str != '\n' && **str != ' ' && !check_end_arg(**str))
-		parse_one_step(str, &arg, envp);
+		parse_one_step(str, &arg, envp, full);
 	return (arg);
 }
 
@@ -79,7 +79,7 @@ int		remake_args(char **args, int i)
 	return (i);
 }
 
-char	**parse_command(char **str, t_envp *envp)
+char	**parse_command(char **str, t_envp *envp, int full)
 {
 	int		i;
 	char	**args;
@@ -95,8 +95,8 @@ char	**parse_command(char **str, t_envp *envp)
 	{
 		if (i > size && (args = ft_realloc(args, size, size * 2)))
 			size *= 2;
-		args[i] = parse_arg(str, envp);
-		i = remake_args(args, i);
+		args[i] = parse_arg(str, envp, full);
+		i++;
 		while (**str == ' ')
 			(*str)++;
 	}

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/29 04:42:01 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/31 20:17:54 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ int				try_close(int *fd_1, int *fd_2);
 int				command(char **args, t_envp **envp_list);
 int				save_ret_value(int value, t_envp **envp_list);
 void			remove_slashes(t_commands *commands);
+char			*replace_env(char *arg, t_envp *envp);
 void			free_matrix(char **memory);
 void			exit_minishell(int code, char **args, t_envp **envp);
+int				remake_args(char **args, int i);
 
 /*
 **	errors treament

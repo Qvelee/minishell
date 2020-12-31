@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/29 04:38:35 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:11:03 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "executor.h"
 #include "parse_internal.h"
 #include "get_static.h"
+#include "parse_internal.h"
 
 void	add_histfile(t_envp *envp)
 {
@@ -62,6 +63,22 @@ int		syntax_error(char c)
 	return (c);
 }
 
+int		syntax_error_str(char *c)
+{
+	if (c)
+	{
+		write(1, "minishell: syntax error near unexpected token '", 47);
+		if (!ft_strcmp(c, "\n"))
+			write(1, "\\n", 2);
+		else
+			write(1, c, ft_strlen(c));
+		write(1, "'\n", 2);
+		save_ret_value(1, get_envp());
+		return (1);
+	}
+	return (0);
+}
+
 void	free_commands(char **command)
 {
 	int		i;
@@ -72,31 +89,69 @@ void	free_commands(char **command)
 	free(command);
 }
 
+int		end_command_str(char *str)
+{
+	return (!(ft_strcmp(str,"&") && ft_strcmp(str,"&&") && ft_strcmp(str,"||")
+	&& ft_strcmp(str,"(") && ft_strcmp(str,")")	&& ft_strcmp(str, ";") &&  ft_strcmp(str, "\n") /*&& (!str || !(*str))*/));
+}
+
 void	one_command(char **str, t_envp **envp)
 {
-	char	**command;
+	char	**args;
 	int		ret;
 	int		and_or;
+	int		i;
+	int		j;
+	char 	*end;
 
+	i = 0;
+	j = 0;
 	ret = -1;
 	and_or = -1;
-	while (*(*str) && *(*str) != '\n' && ret != 130)
+	args = parse_string(str);
+	if (syntax_error_str(check_syntax(args)))
 	{
-		command = parse_command(str, *envp);
+		free_matrix(args);
+		return ;
+	}
+	while (args[i] && ft_strcmp (args[i], "\n") && ret != 130)
+	{
+		/*command = make_command(args);
+		i = remake_args(args, i);
+		args[i] = replace_env(args[i], *envp);*/
+		while (args[i] && !end_command_str(args[i]) )
+			i++;
+		end = args[i];
+		args[i] = 0;
 		remove_terminal_mode();
-		g_line()->str = (*str);
 		g_line()->sig = 9;
-		if (command && *command && (and_or == -1 || (!and_or && !ret) ||
+		if (args && args[j] && (and_or == -1 || (!and_or && !ret) ||
 		(and_or && ret)))
-			ret = do_command(command, envp);
-		if (**str == '&' && *(*str + 1) == '&' && (*str += 2))
+			ret = do_command(&args[j], envp);
+		if (!ft_strcmp(end, "&&"))
 			and_or = 0;
-		if (**str == '|' && *(*str + 1) == '|' && (*str += 2))
+		if (!ft_strcmp(end, "||"))
 			and_or = 1;
 		set_terminal_mode(envp_get_var_value(*envp, "TERM"));
-		free_commands(command);
-		if ((*(*str) == ';' && (and_or = -1))
-		|| ((**str == '&' || **str == '|')))
-			(*str)++;
+		if (end_command_str(end) && end)
+			(i)++;
+		free(end);
+	//	while ((args[j]))
+	//		free((args[j++]));;
+		j = i;
 	}
+	free(args);
 }
+
+/*char *make_command(char ***args)
+{
+	char **command;
+
+	command = 0;
+	while (!end_command_str(*(*args)))
+	{
+		command = ft_djoin(command, (*args));
+		(*args)++;
+	}
+	return(command);
+}*/

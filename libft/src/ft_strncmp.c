@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 09:18:33 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/10/23 22:54:37 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/29 11:20:36 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int	ft_strcmp(const char *s1, const char *s2)
 	unsigned int		i;
 
 	i = 0;
+	if (!s1 || !s2)
+	{
+		if (s1 == s2)
+			return (0);
+		else
+			return (1);
+	}
 	while (s1[i])
 	{
 		if (s1[i] != s2[i])

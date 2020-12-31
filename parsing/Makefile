@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/29 04:48:17 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/29 16:43:50 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ OBJ_FILES = \
 check_end.o\
 parse_command.o\
 check_validity.o\
-parse_utils.o 
+parse_utils.o \
+parse_string.o\
+syntax_checked.o
 UNAME = $(shell uname)
 OBJ_OBJ_FILES = $(addprefix $(OBJ),$(OBJ_FILES))
 CFLAGS = -g -Wall -Wextra -Werror

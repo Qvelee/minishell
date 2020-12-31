@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 16:03:57 by nelisabe         ###   ########.fr       */
+/*   Updated: 2020/12/29 06:19:55 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 int						save_ret_value(int value, t_envp **envp_list);
 int						do_command(char **args, t_envp **envp_list);
-char					**parse_command(char **str, t_envp *envp);
+char					**parse_command(char **str, t_envp *envp, int full);
 char					check_validity(char *str);
 t_envp					*envp_create_list(char **envp);
 void					envp_lst_clear(t_envp **envp, void (*delete)(void*));
