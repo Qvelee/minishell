@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:06:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 09:56:03 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/30 10:01:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include "libft.h"
 #include "ft_readline.h"
 
-void	go_right(char *str, int *i)
+void	go_right(char *str, size_t *i)
 {
 	t_coor	cursor;
 	t_coor	term;
-	int		len;
+	size_t	len;
 
 	cursor = *get_cursor();
 	term = get_term_size();
@@ -45,7 +45,7 @@ void	go_right(char *str, int *i)
 	}
 }
 
-void	go_left(char *str, int *i)
+void	go_left(char *str, size_t *i)
 {
 	t_coor cursor;
 	t_coor term;
@@ -72,10 +72,10 @@ void	go_left(char *str, int *i)
 	}
 }
 
-void	check_arrows(char *c, char **str, int *i, t_history **his)
+void	check_arrows(char *c, char **str, size_t *i, t_history **his)
 {
-	int len_c;
-	int len;
+	size_t len_c;
+	size_t len;
 
 	len_c = ft_strlen(c);
 	len = ft_strlen(*str);
@@ -98,10 +98,10 @@ void	check_arrows(char *c, char **str, int *i, t_history **his)
 		*i = len;
 }
 
-void	check_ctrl(char *c, char **str, int *i, int len_c)
+void	check_ctrl(char *c, char **str, size_t *i, size_t len_c)
 {
-	t_coor	term;
-	int		j;
+	t_coor		term;
+	size_t		j;
 
 	term = get_term_size();
 	if (!(j = 0) && !ft_memcmp(tigetstr("kUP5"), c, len_c + 1))
@@ -118,11 +118,11 @@ void	check_ctrl(char *c, char **str, int *i, int len_c)
 			go_left((*str), i);
 	}
 	if (!ft_memcmp(tigetstr("kRIT5"), c, len_c + 1) &&
-	*i < (int)ft_strlen((*str)))
+	*i < ft_strlen((*str)))
 	{
-		while ((*str)[*i] == ' ' && *i < (int)ft_strlen((*str)))
+		while ((*str)[*i] == ' ' && *i < ft_strlen((*str)))
 			go_right((*str), i);
-		while ((*str)[*i] != ' ' && *i < (int)ft_strlen((*str)))
+		while ((*str)[*i] != ' ' && *i < ft_strlen((*str)))
 			go_right((*str), i);
 	}
 }

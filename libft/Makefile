@@ -6,11 +6,13 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/27 08:07:49 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/30 08:03:34 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC ?= gcc
+CFLAGS ?= -c -g -MMD -Wall -Wextra -Werror
+MAKEFLAGS ?= --no-print-directory
 NAME=libft.a
 SRC = src/
 OBJ = obj/
@@ -34,8 +36,7 @@ else
 OBJ_FILES = $(REG_OBJ_FILES)
 endif
 D_FILES = $(OBJ_FILES:.o=.d)
-CFLAGS = -Wall -Wextra -Werror
-MAKEFLAGS = --no-print-directory
+
 
 all: $(OBJ) $(NAME)
 
@@ -46,7 +47,7 @@ $(NAME):  $(addprefix $(OBJ),$(OBJ_FILES))
 	ar rcs $(NAME) $?
 
 $(OBJ)%.o: $(SRC)%.c
-	$(CC) -g -c $(CFLAGS) -I$(INCLUDES) -o $@ $< -MMD
+	$(CC) $(CFLAGS) -I$(INCLUDES) -o $@ $<
 
 clean:
 	rm -rf $(OBJ)

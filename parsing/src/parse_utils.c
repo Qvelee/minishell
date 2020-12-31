@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:32:03 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/29 08:04:57 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:19:34 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	handle_back_slash(char **str, char **arg)
 
 char	*parse_env(char **str, t_envp *envp)
 {
-	int		i;
-	char	*var;
-	char	*add;
+	size_t		i;
+	char		*var;
+	char		*add;
 
 	add = 0;
 	i = 1;
@@ -69,8 +69,8 @@ char	*parse_d_quote(char **str, t_envp *envp, int full)
 
 char	*parse_quote(char **str)
 {
-	int		i;
-	char	*add;
+	size_t		i;
+	char		*add;
 
 	i = 0;
 	while ((*str)[i] != 39 && (*str)[i])

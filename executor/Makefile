@@ -6,27 +6,19 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 14:15:44 by nelisabe          #+#    #+#              #
-#    Updated: 2020/12/29 03:10:30 by sgertrud         ###   ########.fr        #
+#    Updated: 2020/12/30 08:51:20 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =				libexec.a
 
-COMP =				gcc
+CC ?=				gcc
 
-UNAME = 			$(shell uname)
-
-ifeq ($(UNAME), Linux)
-	LINUX = 1
-else
-	LINUX = 0
-endif
-
-FLAGS =				 -g -D LINUX=$(LINUX) -Wall -Wextra -Werror
+CFLAGS ?=			-g -Wall -Wextra -Werror
 
 EXEC_HEADER = 		./executor.h
 
-INCLUDES =			-I../libft/includes -I.. -I.
+INCLUDES ?=			-I../libft/includes -I. -I..
 
 #SRC DIRS
 
@@ -87,27 +79,14 @@ D_FILES = $(patsubst %.o, %.d, $(COMM_OBJ)) $(patsubst %.o, %.d, $(EXEC_OBJ)) $(
 all: $(COMM_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR) $(NAME)
 
 $(COMM_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR):
-	mkdir -p $(COMM_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
+	@mkdir -p $(COMM_OBJ_DIR) $(EXEC_OBJ_DIR) $(BTIN_OBJ_DIR) $(ENVP_OBJ_DIR)
 
-$(NAME): $(COMM_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
+$(NAME):  $(COMM_OBJ) $(EXEC_OBJ) $(BTIN_OBJ) $(ENVP_OBJ)
 	@ar rcs $(NAME) $^
 	@echo -e "\033[1m\033[32m$(NAME) created!\033[0m"
 
-$(addprefix $(EXEC_OBJ_DIR), %.o): $(addprefix $(EXEC_SRC_DIR), %.c)
-	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) $(INCLUDES) -c $< -o $@ -MMD
-
-$(addprefix $(COMM_OBJ_DIR), %.o): $(addprefix $(COMM_SRC_DIR), %.c)
-	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) $(INCLUDES) -fPIE -c $< -o $@ -MMD
-
-$(addprefix $(BTIN_OBJ_DIR), %.o): $(addprefix $(BTIN_SRC_DIR), %.c)
-	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) $(INCLUDES) -c $< -o $@ -MMD
-
-$(addprefix $(ENVP_OBJ_DIR), %.o): $(addprefix $(ENVP_SRC_DIR), %.c)
-	@echo -e "\033[36mCompiling $< ..."
-	@$(COMP) $(FLAGS) $(INCLUDES) -c $< -o $@ -MMD
+temp/%.o : %.c
+	@$(CC) -c $(CFLAGS) $(INCLUDES) -o $@ $< -MMD
 
 clean:
 	@echo -e "\033[31mDeleting...\033[0m"
@@ -124,4 +103,4 @@ bonus: all
 
 include $(wildcard $(D_FILES))
 
-.PHONY: all, re, clean, fclean
+.PHONY: all, re, clean, fclean debug

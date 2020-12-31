@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/31 20:01:27 by sgertrud         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:19:19 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**parse_command(char **str, t_envp *envp, int full)
 {
 	int		i;
 	char	**args;
-	int		size;
+	size_t	size;
 
 	args = (char**)malloc(sizeof(char*) * BUFF_SIZE);
 	i = 0;
@@ -93,7 +93,7 @@ char	**parse_command(char **str, t_envp *envp, int full)
 	while (**str != '\n' && **str != 0 && !check_end_command(**str) &&
 	!(check_and_or(**str, *(*str + 1))))
 	{
-		if (i > size && (args = ft_realloc(args, size, size * 2)))
+		if ((size_t)i > size && (args = ft_realloc(args, size, size * 2)))
 			size *= 2;
 		args[i] = parse_arg(str, envp, full);
 		i++;
