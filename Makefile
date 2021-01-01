@@ -6,16 +6,16 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/31 11:01:18 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 01:28:14 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re main bonus
 export CC CFLAGS MAKEFLAGS LDFLAGS INCLUDES
 CC 			= gcc
-CFLAGS 		= -c -MMD -Wall -Wextra -Werror
-LDFLAGS 	= -Wall -Wextra -Werror
-DFLAGS 		= -g
+CFLAGS 		= -c -O3 -MMD -Wall -Wextra -Werror -Wno-unused-result
+LDFLAGS 	=  -O3 -MMD -Wall -Wextra -Werror -Wno-unused-result
+DFLAGS 		= -g3
 ASFLAGS 	= -fsanitize=address
 HFLAGS		= '-pedantic -std=c99 -O2 -Wshadow -Wformat=2 -Wfloat-equal\
 	-Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align\
@@ -38,10 +38,10 @@ ifeq ($(UNAME), Linux)
 	CFLAGS += -D LINUX=1
 endif
 ifdef WITH_BONUS
-	make = make bonus
+	make = make -j bonus
 	CFLAGS += -D BONUS=1
 	else
-	make = make
+	make = make -j
 endif
 
 all: LIBS $(NAME)
@@ -64,7 +64,7 @@ obj/%.o : %.c
 bonus:
 	make WITH_BONUS=1 all
 debug :
-	make bonus CFLAGS+=$(DFLAGS) LDFLAGS+=$(DFLAGS)
+	make bonus CFLAGS+='$(DFLAGS) -D BONUS=1' LDFLAGS+=$(DFLAGS)
 debugas :
 	make debug CFLAGS+=$(ASFLAGS) LDFLAGS+=$(ASFLAGS)
 debugh :
@@ -88,9 +88,9 @@ fclean:
 	rm -f *.o *.d
 	rm -rf obj
 	rm -f $(NAME)
-%re:
+re%:
 	make fclean
-	make $(patsubst %re, %, $@)
+	make $(patsubst re%, %, $@)
 re:
 	make fclean
 	make

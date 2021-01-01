@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:52:23 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 09:29:19 by nelisabe         ###   ########.fr       */
+/*   Updated: 2021/01/01 13:49:38 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	run_built_in(int index, char **args, t_envp **envp_list, \
 {
 	int		return_value;
 
+	return_value = -1;
 	if (index == 0)
 		return_value = mini_echo(args);
 	if (index == 1)
