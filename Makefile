@@ -6,14 +6,14 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 13:09:25 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 13:36:45 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re main bonus
 export CC CFLAGS MAKEFLAGS LDFLAGS INCLUDES BONUS WITH_BONUS make
 make 		= make
-CC 			= gcc #-std=c99 -Ofast
+CC 			= clang -std=gnu11 -Ofast
 CFLAGS 		= -c -MMD -Wall -Wextra -Werror -Wno-unused-result
 BFLAGS		= '-D BONUS=1'
 LDFLAGS 	= -MMD -Wall -Wextra -Werror -Wno-unused-result
