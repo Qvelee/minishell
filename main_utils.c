@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 04:50:55 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 05:12:39 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	free_commands(char **command)
 
 int		end_command_str(char *str)
 {
-	return (!(ft_strcmp(str, "&") && ft_strcmp(str, "&&") && ft_strcmp(str, "||")
-	&& ft_strcmp(str, "(") && ft_strcmp(str, ")") && ft_strcmp(str, ";")
-	&& ft_strcmp(str, "\n")));
+	return (!(ft_strcmp(str, "&") && ft_strcmp(str, "&&")
+	&& ft_strcmp(str, "||") && ft_strcmp(str, "(") && ft_strcmp(str, ")")
+	&& ft_strcmp(str, ";") && ft_strcmp(str, "\n")));
 }
 
 void	one_command(char **str, t_envp **envp)
