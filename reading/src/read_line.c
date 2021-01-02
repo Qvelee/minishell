@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 17:53:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 06:05:22 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 06:23:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	handle_one_sym(int ret, t_history *history, size_t *i)
 				handle_keys(sym, &g_line()->str, i, &history);
 			else
 				handle_chars(g_line()->str, sym, i, ret);
-			free(sym);
 		}
+		free(sym);
 		sym = read_one_sym(&ret);
 	}
 	free(sym);
