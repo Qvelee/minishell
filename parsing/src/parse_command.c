@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 14:45:27 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 16:16:53 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	parse_one_step(char **str, char **arg, t_envp *envp, int full)
 	(ft_isalpha(*(*str + 1)) || (*(*str + 1)) == '_' ||
 	(*(*str + 1)) == '?') && (add = parse_env(str, envp)))
 		(*arg) = join_free((*arg), add);
-	else
+	else if (**str != '\n')
 		(*arg) = join_free((*arg), (char[2]){(*(*str)++), 0});
+	else
+		(*arg) = join_free((*arg), "");
 }
 
 char	*parse_arg(char **str, t_envp *envp, int full)
