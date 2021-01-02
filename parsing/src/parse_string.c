@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 05:28:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 04:54:26 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 10:09:54 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "get_static.h"
 
-char	**ft_djoin(char **args, char **buff)
+char	**djoin(char **args, char **buff)
 {
 	int		len;
 	int		i;
@@ -42,25 +42,25 @@ char	**ft_djoin(char **args, char **buff)
 
 char	**parse_string(char **str)
 {
-	char	**full;
+	char	**f;
 	char	**buff;
 
-	full = 0;
+	f = 0;
 	while (*(*str))
 	{
 		if (((**str == '&' && *(*str + 1) == '&') ||
 		(**str == '|' && *(*str + 1) == '|')) && (*str += 2))
-			full = ft_djoin(full, (char*[2]){ft_substr(*str - 2, 0, 2), 0});
+			f = djoin(f, (char*[2]){ft_substr(*str - 2, 0, 2), 0});
 		else if (**str == '|' || **str == '&' || **str == ';' || **str == '\n')
-			full = ft_djoin(full, (char*[2]){ft_substr((*str)++, 0, 1), 0});
+			f = djoin(f, (char*[2]){ft_substr((*str)++, 0, 1), 0});
 		else
 		{
 			buff = parse_command(str, *get_envp(), 1);
-			full = ft_djoin(full, buff);
+			f = djoin(f, buff);
 			free(buff);
 		}
 	}
-	return (full);
+	return (f);
 }
 
 char	*replace_env(char *arg, t_envp *envp)
@@ -71,10 +71,12 @@ char	*replace_env(char *arg, t_envp *envp)
 
 	temp = arg;
 	newarg = 0;
-	while (!check_end_arg(*arg))
+	if (!*arg)
+		return (arg);
+	while (*arg)
 		if (*arg == '$' && !check_end_arg(*(arg + 1)) &&
 		(ft_isalpha(*(arg + 1)) || (*(arg + 1)) == '_' ||
-		(*(arg + 1)) == '?') && (add = parse_env(&arg, envp)))
+		(*(arg + 1)) == '?') && ((add = parse_env(&arg, envp)) || !add))
 			newarg = join_free(newarg, add);
 		else
 			newarg = join_free(newarg, (char[2]){(*arg++), 0});
@@ -82,7 +84,7 @@ char	*replace_env(char *arg, t_envp *envp)
 	return (newarg);
 }
 /*
-char	**ft_djoin(char **args, char **buff)
+char	**djoin(char **args, char **buff)
 {
 	int		len;
 	int		i;
@@ -118,13 +120,13 @@ char	***command_by_end(char **str)
 	{
 		if (((**str == '&' && *(*str + 1) == '&') ||
 		(**str == '|' && *(*str + 1) == '|')) && (*str += 2))
-			full = ft_djoin(full, (char*[2]){ft_substr(*str - 2, 0, 2), 0});
+			full = djoin(full, (char*[2]){ft_substr(*str - 2, 0, 2), 0});
 		else if (**str == '|' || **str == '&' || **str == ';')
-			full = ft_djoin(full, (char*[2]){ft_substr((*str)++ , 0, 1), 0});
+			full = djoin(full, (char*[2]){ft_substr((*str)++ , 0, 1), 0});
 		else
 		{
 			buff = parse_command(str, *get_envp(), 1);
-			full = ft_djoin(full, buff);
+			full = djoin(full, buff);
 			free(buff);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 04:54:18 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 09:37:39 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,49 @@ char	*parse_arg(char **str, t_envp *envp, int full)
 	return (arg);
 }
 
-int		remake_args(char **args, int i)
+int		mas_len(char **args)
+{
+	int len;
+
+	len = 0;
+	while (args && args[len])
+		len++;
+	return (len);
+}
+
+char	**remake_args(char **args, int i)
 {
 	glob_t	buff;
 	int		j;
-//	char **newarg;
+	char	**newargs;
 
 	j = 0;
-	glob(args[i], GLOB_NOCHECK, NULL, &buff);
+	glob((args)[i], GLOB_NOCHECK, NULL, &buff);
+	newargs = malloc(sizeof(char*) * (buff.gl_pathc + mas_len(&args[i]) + i + 1));
 	free(args[i]);
-	//args = buff.gl_pathc
+
+	while (j < i)
+	{
+		newargs[j] = args[j];
+		j++;
+	}
+	j = 0;
+
 	while (buff.gl_pathv[j])
 	{
-		args[i] = ft_strdup(buff.gl_pathv[j]);
+		newargs[i + j] = ft_strdup(buff.gl_pathv[j]);
 		j++;
+	}
+	i++;
+	while(args[i])
+	{
+		newargs[i + j -1] = args[i];
 		i++;
 	}
-	args[i] = 0;
+	newargs[i + j - 1] = 0;
 	globfree(&buff);
-	return (i);
+	free(args);
+	return (newargs);
 }
 
 char	**parse_command(char **str, t_envp *envp, int full)

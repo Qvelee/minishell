@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:36:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/29 20:25:11 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 07:47:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSE_INTERNAL_H
 # include "structs.h"
 
-char		**ft_djoin(char **args, char **buff);
+char		**djoin(char **args, char **buff);
 char		*check_syntax(char **c);
 char		*replace_env(char *arg, t_envp *envp);
 char		**parse_string(char **str);

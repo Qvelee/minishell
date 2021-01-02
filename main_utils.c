@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 05:12:39 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 09:40:17 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,12 @@ void	one_command(char **str, t_envp **envp)
 	}
 	while (args[i] && ft_strcmp(args[i], "\n") && ret != 130)
 	{
-		/*command = make_command(args);
-		i = remake_args(args, i);
-		args[i] = replace_env(args[i], *envp);*/
 		while (args[i] && !end_command_str(args[i]))
+		{
+			args[i] = replace_env(args[i], *envp);
+			args = remake_args(args, i);
 			i++;
+		}
 		end = args[i];
 		args[i] = 0;
 		remove_terminal_mode();
@@ -138,12 +139,16 @@ void	one_command(char **str, t_envp **envp)
 			(i)++;
 		free(end);
 		while ((args[j]))
-			free((args[j++]));
-		args[0] = 0;
+		{
+			free((args[j]));
+			args[j++] = 0;
+		}
 		j = i;
 	}
 	j = 0;
-	free_matrix(args);
+	while ((args[i]))
+			free((args[i++]));
+	free (args);
 }
 
 /*char *make_command(char ***args)
@@ -153,7 +158,7 @@ void	one_command(char **str, t_envp **envp)
 	command = 0;
 	while (!end_command_str(*(*args)))
 	{
-		command = ft_djoin(command, (*args));
+		command = djoin(command, (*args));
 		(*args)++;
 	}
 	return(command);

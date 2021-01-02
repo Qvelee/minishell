@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/29 06:19:55 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 08:57:53 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void					invite(char *str);
 int						syntax_error(char c);
 void					one_command(char **str, t_envp **envp);
 int						check_sc(char c);
+char					**remake_args(char **args, int i);
 #endif
