@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 09:40:17 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 10:41:03 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,6 @@ void	invite(char *str)
 	write(1, RESET, 5);
 }
 
-int		syntax_error(char c)
-{
-	if (c)
-	{
-		write(2, "minishell: syntax error near unexpected token '", 47);
-		if (c == '\n')
-			write(2, "\\n", 2);
-		else
-			write(2, &c, 1);
-		write(2, "'\n", 2);
-		save_ret_value(1, get_envp());
-	}
-	return (c);
-}
-
 int		syntax_error_str(char *c)
 {
 	if (c)
@@ -79,14 +64,14 @@ int		syntax_error_str(char *c)
 	return (0);
 }
 
-void	free_commands(char **command)
+void	free_commands(char **command, int i)
 {
-	int		i;
-
-	i = 0;
 	while (command[i])
-		free(command[i++]);
-	free(command);
+	{
+		free(command[i]);
+		command[i] = 0;
+		i++;
+	}
 }
 
 int		end_command_str(char *str)
@@ -138,28 +123,10 @@ void	one_command(char **str, t_envp **envp)
 		if (end_command_str(end) && end)
 			(i)++;
 		free(end);
-		while ((args[j]))
-		{
-			free((args[j]));
-			args[j++] = 0;
-		}
+		free_commands(args, j);
 		j = i;
 	}
 	j = 0;
-	while ((args[i]))
-			free((args[i++]));
-	free (args);
+	free_commands(args, i);
+	free(args);
 }
-
-/*char *make_command(char ***args)
-{
-	char **command;
-
-	command = 0;
-	while (!end_command_str(*(*args)))
-	{
-		command = djoin(command, (*args));
-		(*args)++;
-	}
-	return(command);
-}*/

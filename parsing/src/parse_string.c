@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 05:28:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 10:09:54 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 10:17:00 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,52 +83,3 @@ char	*replace_env(char *arg, t_envp *envp)
 	free(temp);
 	return (newarg);
 }
-/*
-char	**djoin(char **args, char **buff)
-{
-	int		len;
-	int		i;
-	char	**newargs;
-
-	i = 0;
-	len = 0;
-	while (args && args[i++])
-		len++;
-	i = 0;
-	while (buff && buff[i++])
-		len++;
-	newargs = malloc((len + 1) * sizeof(char*));
-	i = -1;
-	len = -1;
-	while (args && args[++i])
-		newargs[++len] = args[i];
-	i = -1;
-	while (buff && buff[++i])
-		newargs[++len] = buff[i];
-	newargs[len + 1] = 0;
-	free(args);
-	return (newargs);
-}
-
-char	***command_by_end(char **str)
-{
-	char	***full;
-	char	**buff;
-
-	full = 0;
-	while (*(*str) && *(*str) != '\n')
-	{
-		if (((**str == '&' && *(*str + 1) == '&') ||
-		(**str == '|' && *(*str + 1) == '|')) && (*str += 2))
-			full = djoin(full, (char*[2]){ft_substr(*str - 2, 0, 2), 0});
-		else if (**str == '|' || **str == '&' || **str == ';')
-			full = djoin(full, (char*[2]){ft_substr((*str)++ , 0, 1), 0});
-		else
-		{
-			buff = parse_command(str, *get_envp(), 1);
-			full = djoin(full, buff);
-			free(buff);
-		}
-	}
-	return (full);
-}*/

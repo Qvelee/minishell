@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2021/01/02 08:57:53 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 10:33:11 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void					ft_sigint(int __attribute__((unused)) sig);
 void					ft_nothing(int __attribute__((unused)) sig);
 void					add_histfile(t_envp *envp);
 void					invite(char *str);
-int						syntax_error(char c);
+int						syntax_error(char *c);
 void					one_command(char **str, t_envp **envp);
 int						check_sc(char c);
 char					**remake_args(char **args, int i);

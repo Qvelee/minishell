@@ -6,12 +6,13 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 06:16:00 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 10:24:48 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re main bonus
 export CC CFLAGS MAKEFLAGS LDFLAGS INCLUDES BONUS WITH_BONUS make
+make 		= make
 CC 			= clang
 CFLAGS 		= -Ofast -c -MMD -Wall -Wextra -Werror -Wno-unused-result
 BFLAGS		= '-D BONUS=1'
@@ -65,14 +66,15 @@ obj/%.o : %.c
 	$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
 
 bonus:
-	make make:='make bonus' CFLAGS+=$(BFLAGS) LDFLAGS+=$(BFLAGS) all
+	make make='make bonus' CFLAGS+=$(BFLAGS) LDFLAGS+=$(BFLAGS) all
 debug :
 	make bonus CFLAGS+=$(DFLAGS) LDFLAGS+=$(DFLAGS)
 debugas :
 	make debug CFLAGS+=$(ASFLAGS) LDFLAGS+=$(ASFLAGS)
 debugh :
 	make debugas CFLAGS+=$(HFLAGS) LDFLAGS+=$(HFLAGS)
-
+norm:
+	make fclean && norminette .
 clean:
 	make -C get_next_line clean
 	make -C executor clean
