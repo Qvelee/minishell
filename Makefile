@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 13:44:42 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 14:22:56 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ HFLAGS		= '-pedantic -O2 -Wshadow -Wformat=2 -Wfloat-equal\
 	-Wno-pointer-arith -Wno-cast-qual -Wno-unused-result'
 endif
 MAKEFLAGS	= --no-print-directory
-OBJ 		:= main.o main_utils.o sygnals.o
+OBJ 		:= main.o main_utils.o sygnals.o command_utils.o
 OBJ 		:= $(addprefix obj/,$(OBJ))
 NAME 		= minishell
 INCLUDES 	= -I$(PWD) -I$(PWD)/parsing -I$(PWD)/reading -I$(PWD)/executor\

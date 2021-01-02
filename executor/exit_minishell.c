@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 15:03:59 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/26 13:07:28 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 14:09:10 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "structs.h"
 #include "executor.h"
 
-void	free_matrix(char **matrix)
+int		free_matrix(char **matrix)
 {
 	int		index;
 
@@ -25,6 +25,7 @@ void	free_matrix(char **matrix)
 			free(matrix[index]);
 		free(matrix);
 	}
+	return (0);
 }
 
 void	exit_minishell(int code, char **args, t_envp **envp_list)

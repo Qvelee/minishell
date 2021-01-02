@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 13:32:46 by nelisabe          #+#    #+#             */
-/*   Updated: 2021/01/02 08:57:14 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 14:09:24 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int				command(char **args, t_envp **envp_list);
 int				save_ret_value(int value, t_envp **envp_list);
 void			remove_slashes(t_commands *commands);
 char			*replace_env(char *arg, t_envp *envp);
-void			free_matrix(char **memory);
+int				free_matrix(char **memory);
 void			exit_minishell(int code, char **args, t_envp **envp);
 
 /*

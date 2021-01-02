@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 13:45:00 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 14:45:27 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		mas_len(char **args)
 	return (len);
 }
 
-char	**remake_args(char **args, int i)
+char	**remake_args(char **args, int i, int *len)
 {
 	glob_t	buff;
 	int		j;
@@ -79,6 +79,7 @@ char	**remake_args(char **args, int i)
 
 	j = -1;
 	glob((args)[i], GLOB_NOCHECK, NULL, &buff);
+	*len = buff.gl_pathc;
 	nargs = malloc(sizeof(char*) * (buff.gl_pathc + mas_len(&args[i]) + i + 1));
 	free(args[i]);
 	while (++j < i)

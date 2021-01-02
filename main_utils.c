@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 10:41:03 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 14:46:30 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,54 +41,47 @@ void	add_histfile(t_envp *envp)
 	free(hf);
 }
 
-void	invite(char *str)
+void	one_command(char **args, t_ijaor s)
 {
-	write(1, GREEN, 5);
-	write(1, str, ft_strlen(str));
-	write(1, RESET, 5);
+	char *end;
+
+	end = args[*(s.i)];
+	args[*(s.i)] = 0;
+	remove_terminal_mode();
+	g_line()->sig = 9;
+	if (args && args[*(s.j)] && (*s.and_or == -1 || (!*s.and_or && !*s.ret) ||
+	(*s.and_or && *s.ret)))
+		*s.ret = do_command(&args[*(s.j)], get_envp());
+	if (!ft_strcmp(end, "&&"))
+		*s.and_or = 0;
+	if (!ft_strcmp(end, "||"))
+		*s.and_or = 1;
+	set_terminal_mode(envp_get_var_value(*get_envp(), "TERM"));
+	if (end_command_str(end) && end)
+		(*(s.i))++;
+	free(end);
 }
 
-int		syntax_error_str(char *c)
+int		replace(char ***args, int *i)
 {
-	if (c)
+	int len;
+
+	while ((*args)[*i] && !end_command_str((*args)[*i]))
 	{
-		write(2, "minishell: syntax error near unexpected token '", 47);
-		if (!ft_strcmp(c, "\n"))
-			write(2, "\\n", 2);
-		else
-			write(2, c, ft_strlen(c));
-		write(2, "'\n", 2);
-		save_ret_value(1, get_envp());
-		return (1);
+		(*args)[*i] = replace_env((*args)[*i], *get_envp());
+		(*args) = remake_args((*args), *i, &len);
+		(*i) += len;
 	}
 	return (0);
 }
 
-void	free_commands(char **command, int i)
-{
-	while (command[i])
-	{
-		free(command[i]);
-		command[i] = 0;
-		i++;
-	}
-}
-
-int		end_command_str(char *str)
-{
-	return (!(ft_strcmp(str, "&") && ft_strcmp(str, "&&")
-	&& ft_strcmp(str, "||") && ft_strcmp(str, "(") && ft_strcmp(str, ")")
-	&& ft_strcmp(str, ";") && ft_strcmp(str, "\n")));
-}
-
-void	one_command(char **str, t_envp **envp)
+int		full_command(char **str)
 {
 	char	**args;
 	int		ret;
 	int		and_or;
 	int		i;
 	int		j;
-	char	*end;
 
 	i = 0;
 	j = 0;
@@ -96,37 +89,15 @@ void	one_command(char **str, t_envp **envp)
 	and_or = -1;
 	args = parse_string(str);
 	if (syntax_error_str(check_syntax(args)))
-	{
-		free_matrix(args);
-		return ;
-	}
+		return (free_matrix(args));
 	while (args[i] && ft_strcmp(args[i], "\n") && ret != 130)
 	{
-		while (args[i] && !end_command_str(args[i]))
-		{
-			args[i] = replace_env(args[i], *envp);
-			args = remake_args(args, i);
-			i++;
-		}
-		end = args[i];
-		args[i] = 0;
-		remove_terminal_mode();
-		g_line()->sig = 9;
-		if (args && args[j] && (and_or == -1 || (!and_or && !ret) ||
-		(and_or && ret)))
-			ret = do_command(&args[j], envp);
-		if (!ft_strcmp(end, "&&"))
-			and_or = 0;
-		if (!ft_strcmp(end, "||"))
-			and_or = 1;
-		set_terminal_mode(envp_get_var_value(*envp, "TERM"));
-		if (end_command_str(end) && end)
-			(i)++;
-		free(end);
+		replace(&args, &i);
+		one_command(args, (t_ijaor){&i, &j, &and_or, &ret});
 		free_commands(args, j);
 		j = i;
 	}
-	j = 0;
 	free_commands(args, i);
 	free(args);
+	return (0);
 }

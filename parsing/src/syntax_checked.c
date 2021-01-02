@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 11:15:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 06:52:30 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 13:48:28 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,13 @@ char	*check_syntax(char **c)
 			par++;
 		if ((par < 0)
 			|| (!ft_strcmp(*c, ";") && (p == 0 || !ft_strcmp(p, ";") || red(p)
-			|| ora(p)))
-			|| (!ft_strcmp(*c, "\n") && red(p))
-			|| (ora(*c) && (ora(p) || red(p) || !ft_strcmp(p, "(")
-			|| p == 0 || !ft_strcmp(p, ";")))
-			|| (!ft_strcmp(*c, "(") && (!(ora(p) && ft_strcmp(p, "(")
+			|| ora(p))) || (!ft_strcmp(*c, "\n") && red(p)) || (ora(*c) &&
+			(ora(p) || red(p) || !ft_strcmp(p, "(") || !ft_strcmp(p, ";") ||
+			p == 0)) || (!ft_strcmp(*c, "(") && (!(ora(p) && ft_strcmp(p, "(")
 			&& ft_strcmp(p, ";")) && ft_strcmp(p, ";") && p != 0))
 			|| (!ft_strcmp(*c, ")") && (red(p) || ora(p) || !ft_strcmp(p, "(")))
-			|| (red(*c) && red(p))
-			|| (!ft_strcmp(p, ")") && !ora(*c) && !red(*c) && ft_strcmp(*c, ";")
-			&& ft_strcmp(*c, "\n")))
+			|| (red(*c) && red(p)) || (!ft_strcmp(p, ")") && !ora(*c)
+			&& !red(*c) && ft_strcmp(*c, ";") && ft_strcmp(*c, "\n")))
 			return (*c);
 		p = *c;
 		c++;

@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:46:49 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/30 09:26:47 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 14:07:22 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ typedef struct			s_envp
 	int				type;
 	struct s_envp	*next;
 }						t_envp;
+
+typedef struct			s_ijaor
+{
+	int *i;
+	int *j;
+	int *and_or;
+	int *ret;
+}						t_ijaor;
 
 typedef struct termios	t_term;
 

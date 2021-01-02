@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:07:08 by nelisabe          #+#    #+#             */
-/*   Updated: 2021/01/02 10:33:11 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 14:46:41 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char					check_validity(char *str);
 t_envp					*envp_create_list(char **envp);
 void					envp_lst_clear(t_envp **envp, void (*delete)(void*));
 int						remove_terminal_mode(void);
-void					free_matrix(char **memory);
+int						free_matrix(char **memory);
 void					exit_minishell(int code, char **args, t_envp **envp);
 int						get_next_line(int fd, char **line);
 void					ft_sigint(int __attribute__((unused)) sig);
@@ -36,7 +36,10 @@ void					ft_nothing(int __attribute__((unused)) sig);
 void					add_histfile(t_envp *envp);
 void					invite(char *str);
 int						syntax_error(char *c);
-void					one_command(char **str, t_envp **envp);
+int						full_command(char **str);
 int						check_sc(char c);
-char					**remake_args(char **args, int i);
+void					free_commands(char **command, int i);
+char					**remake_args(char **args, int i, int *len);
+int						end_command_str(char *str);
+int						syntax_error_str(char *c);
 #endif
