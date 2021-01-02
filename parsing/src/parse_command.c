@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/30 09:07:38 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 12:01:20 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ char	**parse_command(char **str, t_envp *envp)
 		if ((size_t)i > size && (args = ft_realloc(args, size, size * 2)))
 			size *= 2;
 		args[i] = parse_arg(str, envp);
-		i = remake_args(args, i);
+		if (check_wild(args[i]))
+			i = remake_args(args, i);
+		else
+			i++;
 		while (**str == ' ')
 			(*str)++;
 	}

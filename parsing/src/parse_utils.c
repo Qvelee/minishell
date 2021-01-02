@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 05:32:03 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/30 10:00:44 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 11:49:12 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,18 @@ char	*parse_d_quote(char **str, t_envp *envp)
 char	*parse_quote(char **str)
 {
 	size_t		i;
-	char		*add;
+	char		*arg;
 
+	arg = ft_strdup("");
 	i = 0;
 	while ((*str)[i] != 39 && (*str)[i])
+	{
+		if (check_sc((*str)[i]))
+			arg = join_free(arg, (char[3]){'\\', (*str)[i], 0});
+		else
+			arg = join_free(arg, (char[2]){(*str)[i], 0});
 		i++;
-	add = ft_substr(*str, 0, i);
+	}
 	*str += i + 1;
-	return (add);
+	return (arg);
 }
