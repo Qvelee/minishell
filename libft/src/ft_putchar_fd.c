@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 12:17:35 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 01:26:50 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 13:10:40 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	unsigned char	temp[4];
+	unsigned char	*temp;
 	int				i;
 
+	temp = (unsigned char[4]){0, 0, 0, 0};
 	if ((unsigned int)c > 127)
 	{
 		i = 0;

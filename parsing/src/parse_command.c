@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 10:35:40 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 13:45:00 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**remake_args(char **args, int i)
 	while (buff.gl_pathv[++j])
 		nargs[i + j] = ft_strdup(buff.gl_pathv[j]);
 	while (args[++i])
-		nargs[i + j -1] = args[i];
+		nargs[i + j - 1] = args[i];
 	nargs[i + j - 1] = 0;
 	globfree(&buff);
 	free(args);

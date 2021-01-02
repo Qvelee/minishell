@@ -6,27 +6,27 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 10:24:48 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 13:44:42 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re main bonus
 export CC CFLAGS MAKEFLAGS LDFLAGS INCLUDES BONUS WITH_BONUS make
 make 		= make
-CC 			= clang
-CFLAGS 		= -Ofast -c -MMD -Wall -Wextra -Werror -Wno-unused-result
+CC 			= clang -std=gnu11 -Ofast
+CFLAGS 		= -c -MMD -Wall -Wextra -Werror -Wno-unused-result
 BFLAGS		= '-D BONUS=1'
-LDFLAGS 	= -Ofast -MMD -Wall -Wextra -Werror -Wno-unused-result
+LDFLAGS 	= -MMD -Wall -Wextra -Werror -Wno-unused-result
 DFLAGS 		= '-O0 -g3'
 ASFLAGS 	= -fsanitize=address
 ifeq ($(CC), gcc)
-HFLAGS		= '-pedantic -std=c99 -Wshadow -Wformat=2 -Wfloat-equal\
+HFLAGS		= '-pedantic -Wshadow -Wformat=2 -Wfloat-equal\
 	-Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align\
 	-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2\
 	-fsanitize=undefined -fno-sanitize-recover -fstack-protector\
 	-Wno-pointer-arith -Wno-cast-qual -Wno-unused-result'
 else
-HFLAGS		= '-pedantic -std=c99 -O2 -Wshadow -Wformat=2 -Wfloat-equal\
+HFLAGS		= '-pedantic -O2 -Wshadow -Wformat=2 -Wfloat-equal\
 	-Wshift-overflow -Wcast-qual -Wcast-align\
 	-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2\
 	-fsanitize=undefined -fno-sanitize-recover=all -fstack-protector\
