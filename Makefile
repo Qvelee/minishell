@@ -6,14 +6,14 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 13:36:45 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 22:26:46 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re main bonus
 export CC CFLAGS MAKEFLAGS LDFLAGS INCLUDES BONUS WITH_BONUS make
 make 		= make
-CC 			= clang -std=gnu11 -Ofast
+CC 			= clang -std=gnu11 -O2
 CFLAGS 		= -c -MMD -Wall -Wextra -Werror -Wno-unused-result
 BFLAGS		= '-D BONUS=1'
 LDFLAGS 	= -MMD -Wall -Wextra -Werror -Wno-unused-result
@@ -26,7 +26,7 @@ HFLAGS		= '-pedantic -Wshadow -Wformat=2 -Wfloat-equal\
 	-fsanitize=undefined -fno-sanitize-recover -fstack-protector\
 	-Wno-pointer-arith -Wno-cast-qual -Wno-unused-result'
 else
-HFLAGS		= '-pedantic -O2 -Wshadow -Wformat=2 -Wfloat-equal\
+HFLAGS		= '-pedantic -Wshadow -Wformat=2 -Wfloat-equal\
 	-Wshift-overflow -Wcast-qual -Wcast-align\
 	-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2\
 	-fsanitize=undefined -fno-sanitize-recover=all -fstack-protector\
