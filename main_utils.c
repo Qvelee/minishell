@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/29 04:38:35 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 02:53:23 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ int		syntax_error(char c)
 {
 	if (c)
 	{
-		write(1, "minishell: syntax error near unexpected token '", 47);
+		write(2, "minishell: syntax error near unexpected token '", 47);
 		if (c == '\n')
-			write(1, "\\n", 2);
+			write(2, "\\n", 2);
 		else
-			write(1, &c, 1);
-		write(1, "'\n", 2);
+			write(2, &c, 1);
+		write(2, "'\n", 2);
 		save_ret_value(1, get_envp());
 	}
 	return (c);
-}
+}e
 
 void	free_commands(char **command)
 {
