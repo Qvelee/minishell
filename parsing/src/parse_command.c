@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/31 21:19:19 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 02:41:34 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,19 @@ int		remake_args(char **args, int i)
 {
 	glob_t	buff;
 	int		j;
+//	char **newarg;
 
 	j = 0;
 	glob(args[i], GLOB_NOCHECK, NULL, &buff);
 	free(args[i]);
+	//args = buff.gl_pathc
 	while (buff.gl_pathv[j])
 	{
 		args[i] = ft_strdup(buff.gl_pathv[j]);
 		j++;
 		i++;
 	}
+	args[i] = 0;
 	globfree(&buff);
 	return (i);
 }

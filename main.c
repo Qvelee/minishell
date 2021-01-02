@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/29 16:42:57 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 03:06:40 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,17 @@ int		main(int __attribute__((unused)) argc,
 	invite("minishell: ");
 	save_ret_value(0, get_envp());
 	str = read_line((*get_envp()));
+	temp = str;
 	while (str && *str != 4 && *str)
 	{
 		g_line()->sig = 0;
-		temp = str;
 		one_command(&str, (get_envp()));
 		invite("minishell: ");
 		free(temp);
 		str = read_line((*get_envp()));
+		temp = str;
 	}
+	free(temp);
 	do_command((char *[2]){ft_strdup("exit"), 0}, get_envp());
 	return (0);
 }

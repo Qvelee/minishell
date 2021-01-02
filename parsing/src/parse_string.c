@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 05:28:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/31 20:40:34 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 02:41:19 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ char	**parse_string(char **str)
 		if (((**str == '&' && *(*str + 1) == '&') ||
 		(**str == '|' && *(*str + 1) == '|')) && (*str += 2))
 			full = ft_djoin(full, (char*[2]){ft_substr(*str - 2, 0, 2), 0});
-		else if (**str == '|' || **str == '&' || **str == ';'|| **str == '\n')
-			full = ft_djoin(full, (char*[2]){ft_substr((*str)++ , 0, 1), 0});
+		else if (**str == '|' || **str == '&' || **str == ';' || **str == '\n')
+			full = ft_djoin(full, (char*[2]){ft_substr((*str)++, 0, 1), 0});
 		else
 		{
 			buff = parse_command(str, *get_envp(), 1);

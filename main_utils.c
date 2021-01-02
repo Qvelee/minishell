@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/31 21:11:03 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 04:02:05 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int		syntax_error(char c)
 {
 	if (c)
 	{
-		write(1, "minishell: syntax error near unexpected token '", 47);
+		write(2, "minishell: syntax error near unexpected token '", 47);
 		if (c == '\n')
-			write(1, "\\n", 2);
+			write(2, "\\n", 2);
 		else
-			write(1, &c, 1);
-		write(1, "'\n", 2);
+			write(2, &c, 1);
+		write(2, "'\n", 2);
 		save_ret_value(1, get_envp());
 	}
 	return (c);
@@ -67,12 +67,12 @@ int		syntax_error_str(char *c)
 {
 	if (c)
 	{
-		write(1, "minishell: syntax error near unexpected token '", 47);
+		write(2, "minishell: syntax error near unexpected token '", 47);
 		if (!ft_strcmp(c, "\n"))
-			write(1, "\\n", 2);
+			write(2, "\\n", 2);
 		else
-			write(1, c, ft_strlen(c));
-		write(1, "'\n", 2);
+			write(2, c, ft_strlen(c));
+		write(2, "'\n", 2);
 		save_ret_value(1, get_envp());
 		return (1);
 	}
@@ -91,8 +91,9 @@ void	free_commands(char **command)
 
 int		end_command_str(char *str)
 {
-	return (!(ft_strcmp(str,"&") && ft_strcmp(str,"&&") && ft_strcmp(str,"||")
-	&& ft_strcmp(str,"(") && ft_strcmp(str,")")	&& ft_strcmp(str, ";") &&  ft_strcmp(str, "\n") /*&& (!str || !(*str))*/));
+	return (!(ft_strcmp(str, "&") && ft_strcmp(str, "&&") && ft_strcmp(str, "||")
+	&& ft_strcmp(str, "(") && ft_strcmp(str, ")") && ft_strcmp(str, ";")
+	&& ft_strcmp(str, "\n")));
 }
 
 void	one_command(char **str, t_envp **envp)
@@ -102,7 +103,7 @@ void	one_command(char **str, t_envp **envp)
 	int		and_or;
 	int		i;
 	int		j;
-	char 	*end;
+	char	*end;
 
 	i = 0;
 	j = 0;
@@ -114,12 +115,12 @@ void	one_command(char **str, t_envp **envp)
 		free_matrix(args);
 		return ;
 	}
-	while (args[i] && ft_strcmp (args[i], "\n") && ret != 130)
+	while (args[i] && ft_strcmp(args[i], "\n") && ret != 130)
 	{
 		/*command = make_command(args);
 		i = remake_args(args, i);
 		args[i] = replace_env(args[i], *envp);*/
-		while (args[i] && !end_command_str(args[i]) )
+		while (args[i] && !end_command_str(args[i]))
 			i++;
 		end = args[i];
 		args[i] = 0;
@@ -136,11 +137,13 @@ void	one_command(char **str, t_envp **envp)
 		if (end_command_str(end) && end)
 			(i)++;
 		free(end);
-	//	while ((args[j]))
-	//		free((args[j++]));;
+		while ((args[j]))
+			free((args[j++]));
+		args[0] = 0;
 		j = i;
 	}
-	free(args);
+	j = 0;
+	free_matrix(args);
 }
 
 /*char *make_command(char ***args)
