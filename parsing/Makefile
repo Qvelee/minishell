@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2020/12/31 21:19:02 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 04:51:06 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ $(NAME): $(OBJ_OBJ_FILES)
 	ar rcs $@ $?
 
 $(OBJ)%.o: $(SRC)%.c
-	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) $< -o $@
 
 clean:
 	rm -rf $(OBJ)
