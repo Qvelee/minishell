@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_treatment_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 14:27:23 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/10 14:00:42 by nelisabe         ###   ########.fr       */
+/*   Updated: 2021/01/02 15:57:20 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,6 @@ char	**envp_lst_to_matrix(t_envp *envp_list)
 			envp[++index] = envp_list->variable;
 		envp_list = envp_list->next;
 	}
-	envp[index] = NULL;
+	envp[++index] = NULL;
 	return (envp);
 }
