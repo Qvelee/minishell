@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 16:46:57 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 16:16:53 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 20:03:26 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,12 @@ void	parse_one_step(char **str, char **arg, t_envp *envp, int full)
 			(*arg) = join_free((*arg), (char[3]){92, *((*str += 2) - 1), 0});
 		else
 			(*arg) = join_free((*arg), (char[2]){*((*str += 2) - 1), 0});
-	else if (**str == '\"' && (*str)++)
+	else if ((**str == '\"' || **str == 39) && (*str)++)
 	{
-		add = parse_d_quote(str, envp, full);
-		(*arg) = join_free((*arg), add);
-		free(add);
-	}
-	else if (**str == 39 && (*str)++)
-	{
-		add = parse_quote(str);
+		if (*(*str - 1) == '\"')
+			add = parse_d_quote(str, envp, full);
+		else
+			add = parse_quote(str);
 		(*arg) = join_free((*arg), add);
 		free(add);
 	}
