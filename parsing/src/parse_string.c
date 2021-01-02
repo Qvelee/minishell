@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 05:28:22 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 10:17:00 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 22:09:19 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*replace_env(char *arg, t_envp *envp)
 		(ft_isalpha(*(arg + 1)) || (*(arg + 1)) == '_' ||
 		(*(arg + 1)) == '?') && ((add = parse_env(&arg, envp)) || !add))
 			newarg = join_free(newarg, add);
+		else if (*arg == '\\' && check_sc(*(arg + 1)) && ((arg += 2) || !arg))
+			newarg = join_free(newarg, (char[3]){*(arg - 2), *(arg - 1), 0});
 		else
 			newarg = join_free(newarg, (char[2]){(*arg++), 0});
 	free(temp);

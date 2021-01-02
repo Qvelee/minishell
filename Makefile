@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 14:22:56 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 20:09:16 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ HFLAGS		= '-pedantic -Wshadow -Wformat=2 -Wfloat-equal\
 	-fsanitize=undefined -fno-sanitize-recover -fstack-protector\
 	-Wno-pointer-arith -Wno-cast-qual -Wno-unused-result'
 else
-HFLAGS		= '-pedantic -O2 -Wshadow -Wformat=2 -Wfloat-equal\
+HFLAGS		= '-pedantic -Wshadow -Wformat=2 -Wfloat-equal\
 	-Wshift-overflow -Wcast-qual -Wcast-align\
 	-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2\
 	-fsanitize=undefined -fno-sanitize-recover=all -fstack-protector\
