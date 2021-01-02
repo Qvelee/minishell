@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 05:17:59 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 06:14:54 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC 			= clang
 CFLAGS 		= -Ofast -c -MMD -Wall -Wextra -Werror -Wno-unused-result
 BFLAGS		= '-D BONUS=1'
 LDFLAGS 	= -Ofast -MMD -Wall -Wextra -Werror -Wno-unused-result
-DFLAGS 		= '-Og -g3'
+DFLAGS 		= '-O0 -g3'
 ASFLAGS 	= -fsanitize=address
 ifeq ($(CC), gcc)
 HFLAGS		= '-pedantic -std=c99 -Wshadow -Wformat=2 -Wfloat-equal\
