@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 05:19:06 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 05:47:04 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,20 @@ char	*read_one_sym(int *ret)
 	sym = 0;
 	*ret = 0;
 	out = read(0, buff, BUFF_SIZE - 1);
-	*ret += out;
-	buff[out] = 0;
-	sym = join_free(sym, buff);
-	while (ioctl(0, FIONREAD, &n) == 0 && n > 0)
+	if (out > 0)
 	{
-		out = read(0, buff, BUFF_SIZE - 1);
 		*ret += out;
 		buff[out] = 0;
 		sym = join_free(sym, buff);
+		while (ioctl(0, FIONREAD, &n) == 0 && n > 0)
+		{
+			out = read(0, buff, BUFF_SIZE - 1);
+			*ret += out;
+			buff[out] = 0;
+			sym = join_free(sym, buff);
+		}
+		*ret = ft_strlen(sym);
 	}
-	*ret = ft_strlen(sym);
 	return (sym);
 }
 
