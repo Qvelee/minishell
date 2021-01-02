@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 23:40:05 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 03:06:40 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 06:07:46 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	signals(void)
 {
 	signal(SIGINT, ft_sigint);
 	signal(SIGQUIT, ft_nothing);
-//	signal(SIGSEGV, ft_sigint);
 }
 
 void	set_sh(char **envp)
