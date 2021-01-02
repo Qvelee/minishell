@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 10:28:59 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 05:16:25 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/02 05:40:14 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ void	move_to_out(char *str, int fd, size_t i)
 	if (*str && *str != '\n' && fd > 0)
 		write(fd, str, ft_strlen(str));
 	write(1, "\n", 1);
-	j = (ft_substrlen(str, &str[i]) + MSH) / get_term_size().x;
-	len = (ft_substrlen(str, &str[len - 1]) + MSH) / get_term_size().x;
-	while (j++ < len && len)
-		write(1, "\n", 1);
+	if (len)
+	{
+		j = (ft_substrlen(str, &str[i]) + MSH) / get_term_size().x;
+		len = (ft_substrlen(str, &str[len - 1]) + MSH) / get_term_size().x;
+		while (j++ < len && len)
+			write(1, "\n", 1);
+	}
 }
 
 char	*read_one_sym(int *ret)

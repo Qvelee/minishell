@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 05:01:48 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/02 05:40:06 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LDFLAGS 	= -Ofast -MMD -Wall -Wextra -Werror -Wno-unused-result
 DFLAGS 		= '-Og -g3'
 ASFLAGS 	= -fsanitize=address
 ifeq ($(CC), gcc)
-HFLAGS		= '-pedantic -std=c99 -O2 -Wshadow -Wformat=2 -Wfloat-equal\
+HFLAGS		= '-pedantic -std=c99 -Wshadow -Wformat=2 -Wfloat-equal\
 	-Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align\
 	-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2\
 	-fsanitize=undefined -fno-sanitize-recover -fstack-protector\
