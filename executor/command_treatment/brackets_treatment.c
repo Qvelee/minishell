@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 18:24:33 by nelisabe          #+#    #+#             */
-/*   Updated: 2020/12/28 23:09:24 by nelisabe         ###   ########.fr       */
+/*   Updated: 2021/01/09 19:38:13 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,25 @@ int		open_bracket_found(t_shell *shell, int *ret)
 {
 	pid_t	pid;
 	int		index;
-	
+
+	if (shell->flag)
+	{
+		shell->flag++;
+		shell->command = &shell->command[1];
+		return (2);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
-		shell->lvl++;
 		shell->command = &shell->command[1];
 		return (2);
 	}
 	else if (pid > 0)
 		wait_subprocess(pid, ret);
+	index = -1;
+	while (shell->command[++index])
+		if (!ft_strcmp(shell->command[index], "("))
+			shell->flag++;
 	index = -1;
 	while (shell->command[++index] && ft_strcmp(shell->command[index], ")"))
 		;
@@ -55,19 +64,16 @@ int		open_bracket_found(t_shell *shell, int *ret)
 	{
 		shell->command = &shell->command[index + 1];
 		shell->mode = 0;
-		if (shell->command[0])
-			exit(*ret);
-		shell->flag = 0;
+		// if (shell->command[0])
+		// 	exit(*ret);
+		shell->flag = !shell->flag ? 0 : shell->flag - 1;
 		return (0);
 	}
 	else
-	{
-		shell->flag = 1;
 		return (1);
-	}
 }
 
-int		command_found(t_shell *shell, int *ret)
+int		command_found(t_shell *shell)
 {
 	int		index;
 
@@ -83,8 +89,8 @@ int		command_found(t_shell *shell, int *ret)
 	}
 	else if (shell->flag)
 	{
-		if (shell->lvl != 0)
-			exit(*ret);
+		if (shell->command[index])
+			shell->flag--;
 		return (1);
 	}
 	else
@@ -94,28 +100,61 @@ int		command_found(t_shell *shell, int *ret)
 	}
 }
 
-// void	delete_brackets(t_shell *shell)
-// {
-// 	int		begin;
-// 	int		end;
+void	remove_excess_brackets(t_shell *shell, int open, int close)
+{
+	int		index;
+	int		tmp_open;
+	int		tmp_close;
+
+	index = 0;
+	tmp_open = open;
+	tmp_close = close;
+	while (shell->command[index] && \
+		!ft_strcmp(shell->command[index], "(") && tmp_open-- && tmp_close--)
+		index++;
+	shell->command = &shell->command[index];
+	index = 0;
+	tmp_open = open;
+	tmp_close = close;
+	while (shell->command[index] && ft_strcmp(shell->command[index], ")"))
+		index++;
+	while (shell->command[++index] && tmp_open-- && tmp_close--)
+		if (!ft_strcmp(shell->command[index], ")"))
+		{
+			free(shell->command[index]);
+			shell->command[index] = NULL;
+		}
+}
+
+void	delete_brackets(t_shell *shell)
+{
+	int		open;
+	int		close;
+	int		index;
 	
-// 	begin = 0;
-	
-// 	while (begin < end)
-// 	{
-		
-// 	}
-// }
+	open = -1;
+	close = -1;
+	index = -1;
+	while (shell->command[++index] && !ft_strcmp(shell->command[index], "("))
+		open++;
+	index = -1;
+	while (shell->command[++index])
+		;
+	while (shell->command[--index] && !ft_strcmp(shell->command[index], ")"))
+		close++;
+	if (open != -1 && close != -1)
+		remove_excess_brackets(shell, open, close);
+}
 
 int		brackets_treatment(t_shell *shell, int *ret)
 {
 	int		tmp;
 
-	// delete_brackets(shell);
+	delete_brackets(shell);
 	while (1)
 	{
 		if (ft_strcmp(shell->command[0], "("))
-			return (command_found(shell, ret));
+			return (command_found(shell));
 		else
 		{
 			if ((tmp = open_bracket_found(shell, ret)) == 0)

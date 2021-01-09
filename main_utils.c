@@ -6,7 +6,7 @@
 /*   By: nelisabe <nelisabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:44:00 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/28 22:27:54 by nelisabe         ###   ########.fr       */
+/*   Updated: 2021/01/09 18:21:21 by nelisabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	one_command(char **str, t_envp **envp)
 	ret = -1;
 	and_or = -1;
 	shell.flag = 0;
-	shell.lvl = 0;
 	while (*(*str) && *(*str) != '\n' && ret != 130)
 	{
 		command = parse_command(str, *envp);
@@ -99,6 +98,7 @@ void	one_command(char **str, t_envp **envp)
 			if (shell.mode)
 				exit_minishell(ret, command, envp);
 		}
+		save_ret_value(ret, envp);
 		if (**str == '&' && *(*str + 1) == '&' && (*str += 2))
 			and_or = 0;
 		if (**str == '|' && *(*str + 1) == '|' && (*str += 2))
