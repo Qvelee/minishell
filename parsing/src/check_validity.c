@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 15:31:43 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/15 11:28:11 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/15 14:08:56 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	check_validity(char *str)
 	int		par;
 
 	par = 0;
-	dc = (char[2]){0, 0};
+	dc = (char[2]){*str, 0};
 	quote = 0;
 	while (*str)
 	{
@@ -75,7 +75,8 @@ char	check_validity(char *str)
 			return (')');
 		if (check_validity_helper_2(&str, &quote, dc))
 			return (*str);
-		dc[0] = *str;
+		if (!quote)
+			dc[0] = *str;
 		if (!check_red(*str, *(str + 1)) && str++)
 			dc[1] = 0;
 		else
