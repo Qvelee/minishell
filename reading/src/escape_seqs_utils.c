@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 11:06:12 by sgertrud          #+#    #+#             */
-/*   Updated: 2020/12/30 10:01:05 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/14 21:38:35 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,17 @@ void	check_ctrl(char *c, char **str, size_t *i, size_t len_c)
 			go_right((*str), i);
 	if (!ft_memcmp(tigetstr("kLFT5"), c, len_c + 1) && *i > 0)
 	{
-		while (*i > 0 && (*str)[*i - 1] == ' ')
+		while (*i > 0 && !ft_isalnum((*str)[*i]))
 			go_left((*str), i);
-		while (*i > 0 && (*str)[*i - 1] != ' ')
+		while (*i > 0 && ft_isalnum((*str)[*i]))
 			go_left((*str), i);
 	}
 	if (!ft_memcmp(tigetstr("kRIT5"), c, len_c + 1) &&
 	*i < ft_strlen((*str)))
 	{
-		while ((*str)[*i] == ' ' && *i < ft_strlen((*str)))
+		while (!ft_isalnum((*str)[*i]) && *i < ft_strlen((*str)))
 			go_right((*str), i);
-		while ((*str)[*i] != ' ' && *i < ft_strlen((*str)))
+		while (ft_isalnum((*str)[*i]) && *i < ft_strlen((*str)))
 			go_right((*str), i);
 	}
 }

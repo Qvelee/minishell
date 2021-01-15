@@ -6,7 +6,7 @@
 /*   By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 15:31:43 by sgertrud          #+#    #+#             */
-/*   Updated: 2021/01/02 01:34:47 by sgertrud         ###   ########.fr       */
+/*   Updated: 2021/01/15 11:28:11 by sgertrud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ int		check_validity_helper_2(char **str, char *quote, char dc[2])
 {
 	if ((*(*str) == '"' || *(*str) == '\'') && !(*quote))
 		(*quote) = *(*str)++;
-	else if (*(*str) == '\\' && !(*quote) && *((*str) + 1) && (dc[0] = '\\'))
+	if (**str == '\\' && ((!(*quote) && *((*str) + 1) && (dc[0] = '\\'))
+		|| *(*str + 1) == '"'))
 		dc[1] = *(((*str) += 2) - 1);
-	else if ((*(*str) == '"' || *(*str) == '\'') && (*quote) == *(*str))
-		(*quote) = 0;
-	else if (!(*quote) && check_val(*(*str), dc))
+	if ((*(*str) == '"' || *(*str) == '\'') && (*quote) == *(*str))
+		(*quote) = !*(*str)++;
+	if (!(*quote) && check_val(*(*str), dc))
 		return (*(*str));
 	return (0);
 }
