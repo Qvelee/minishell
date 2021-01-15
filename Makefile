@@ -6,7 +6,7 @@
 #    By: sgertrud <msnazarow@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/04 20:40:17 by sgertrud          #+#    #+#              #
-#    Updated: 2021/01/02 22:26:46 by sgertrud         ###   ########.fr        #
+#    Updated: 2021/01/15 11:34:13 by sgertrud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,9 @@ ifeq ($(UNAME), Linux)
 	CFLAGS += -D LINUX=1
 endif
 
+bonus:
+	make make='make bonus' CFLAGS+=$(BFLAGS) LDFLAGS+=$(BFLAGS) all
+
 all: LIBS $(NAME)
 
 LIBS : P_OBJ
@@ -65,8 +68,6 @@ $(NAME): $(OBJ) executor/libexec.a parsing/libparsing.a libft/libft.a get_next_l
 obj/%.o : %.c
 	$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
 
-bonus:
-	make make='make bonus' CFLAGS+=$(BFLAGS) LDFLAGS+=$(BFLAGS) all
 debug :
 	make bonus CFLAGS+=$(DFLAGS) LDFLAGS+=$(DFLAGS)
 debugas :
