@@ -19,4 +19,4 @@ To remove all files created by program run `make fclean`, or `make clean` to rem
  
 ### Usage
 
-Just run `minishell` and use like usual command line shell like bash.
+Just run `minishell` and use like usual command line shell.
