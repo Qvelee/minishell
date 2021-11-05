@@ -13,7 +13,7 @@ This project is implementation of linux command line shell. Supports quotes, red
 
 ### Build
 
-Run `make` in project root directory to create executable **minishell**.
+Run `make` in project root directory to create executable `minishell`.
  
 To remove all files created by program run `make fclean`, or `make clean` to remove all except executable.
  
