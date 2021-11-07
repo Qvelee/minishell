@@ -23,4 +23,4 @@ To remove all files created by program run `make fclean`, or `make clean` to rem
 
 Just run `minishell` and use like usual command line shell.
 
-![ezgif com-gif-maker(5)](https://user-images.githubusercontent.com/36854467/140644290-b243ec31-8717-44d6-b3a3-3fb0ab80bdb4.gif)
+![ezgif com-gif-maker(6)](https://user-images.githubusercontent.com/36854467/140644770-6a8eb7b3-d672-4165-9504-aa70338742b3.gif)
