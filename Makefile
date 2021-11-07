@@ -40,7 +40,7 @@ INCLUDES 	= -I$(PWD) -I$(PWD)/parsing -I$(PWD)/reading -I$(PWD)/executor\
 			-I$(PWD)/libft/includes -I$(PWD)/get_next_line/includes
 LIB_DIR 	= parsing reading executor get_next_line libft
 VPATH 		= parsing reading executor get_next_line libft
-LIB_NAMES 	= exec parsing ft_readline get_next_line ft termcap
+LIB_NAMES 	= exec parsing ft_readline get_next_line ft tinfo
 CLIBS		= $(addprefix lib, $(LIB_NAMES))
 UNAME 		= $(shell uname)
 
